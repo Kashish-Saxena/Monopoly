@@ -1,6 +1,7 @@
 package Monopoly;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 
 public class Player {
     private String playerName;
@@ -28,8 +29,33 @@ public class Player {
         return money;
     }
 
-    private void buyProperty(Property property){
-        money -= getPurchasingCost();
+    private void buyProperty(Player player,Property property){
+        ArrayList<Property> properties = ownedProperties.get(player);
+        if(properties == null){
+            properties = new ArrayList<Property>();
+            ownedProperties.put(player,properties);
+        }else{
+            if(!properties.contains(property)) properties.add(property);
+        }
 
+    }
+    private void updateCurrentPosition(int amount){
+        currentPosition += amount;
+    }
+
+
+    @Override
+    public String toString(){
+        return "Player name: " + playerName + "\nOwned Properties: " + ownedProperties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+    }
+
+    @Override
+    public boolean equals(Object o){
+        if(this == o)return true;
+        Player player = (Player) o;
+        return Objects.equals(playerName,player.playerName) &&
+                Objects.equals(ownedProperties,player.ownedProperties) &&
+                Objects.equals(money,player.money) &&
+                Objects.equals(currentPosition,player.currentPosition);
     }
 }
