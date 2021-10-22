@@ -1,0 +1,150 @@
+{
+   "brown":[
+      {
+         "name":"Mediterranean Avenue",
+         "purchasingCost":"60",
+         "baseRentCost":"2",
+         "position":"1"
+      },
+      {
+         "name":"Baltic Avenue",
+         "purchasingCost":"60",
+         "baseRentCost":"4",
+         "position":"3"
+      }
+   ],
+   "pink":[
+      {
+         "name":"St. Charles Place",
+         "purchasingCost":"140",
+         "baseRentCost":"10",
+         "position":"11"
+      },
+      {
+         "name":"States Avenue",
+         "purchasingCost":"140",
+         "baseRentCost":"10",
+         "position":"13"
+      },
+      {
+         "name":"Virginia Avenue",
+         "purchasingCost":"160",
+         "baseRentCost":"12",
+         "position":"14"
+      }
+   ],
+   "lightBlue":[
+      {
+         "name":"Oriental Avenue",
+         "purchasingCost":"100",
+         "baseRentCost":"6",
+         "position":"6"
+      },
+      {
+         "name":"Connecticut Avenue",
+         "purchasingCost":"120",
+         "baseRentCost":"8",
+         "position":"9"
+      },
+      {
+         "name":"Vermont Avenue",
+         "purchasingCost":"100",
+         "baseRentCost":"6",
+         "position":"8"
+      }
+   ],
+   "orange":[
+      {
+         "name":"St. James Place",
+         "purchasingCost":"180",
+         "baseRentCost":"14",
+         "position":"16"
+      },
+      {
+         "name":"Tennessee Avenue",
+         "purchasingCost":"180",
+         "baseRentCost":"14",
+         "position":"18"
+      },
+      {
+         "name":"New York Avenue",
+         "purchasingCost":"200",
+         "baseRentCost":"16",
+         "position":"19"
+      }
+   ],
+   "red":[
+      {
+         "name":"Kentucky Avenue",
+         "purchasingCost":"220",
+         "baseRentCost":"18",
+         "position":"21"
+      },
+      {
+         "name":"Indiana Avenue",
+         "purchasingCost":"220",
+         "baseRentCost":"18",
+         "position":"23"
+      },
+      {
+         "name":"Illinois Avenue",
+         "purchasingCost":"240",
+         "baseRentCost":"20",
+         "position":"24"
+      }
+   ],
+   "yellow":[
+      {
+         "name":"Atlantic Avenue",
+         "purchasingCost":"260",
+         "baseRentCost":"22",
+         "position":"26"
+      },
+      {
+         "name":"Ventnor Avenue",
+         "purchasingCost":"260",
+         "baseRentCost":"22",
+         "position":"27"
+      },
+      {
+         "name":"Marvin Gardens",
+         "purchasingCost":"280",
+         "baseRentCost":"24",
+         "position":"29"
+      }
+   ],
+   "green":[
+      {
+         "name":"Pacific Avenue",
+         "purchasingCost":"300",
+         "baseRentCost":"26",
+         "position":"31"
+      },
+      {
+         "name":"North Carolina Avenue",
+         "purchasingCost":"300",
+         "baseRentCost":"26",
+         "position":"32"
+      },
+      {
+         "name":"Pennsylvania Avenue",
+         "purchasingCost":"320",
+         "baseRentCost":"28",
+         "position":"34"
+      }
+   ],
+   "darkBlue":[
+      {
+         "name":"Park Place",
+         "purchasingCost":"350",
+         "baseRentCost":"35",
+         "position":"37"
+      },
+      {
+         "name":"Boardwalk",
+         "purchasingCost":"400",
+         "baseRentCost":"50",
+         "position":"39"
+      }
+   ]
+}
