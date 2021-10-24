@@ -20,6 +20,9 @@ public class Game {
         players = new ArrayList<>();
     }
 
+    /**
+     * Creates the Monopoly board
+     */
     private void createBoard(){
 
     }
