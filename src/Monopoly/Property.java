@@ -1,6 +1,8 @@
+package Monopoly;
+
 import java.util.Objects;
 /**
- * The Property class represents a property in the Monopoly game.
+ * The Monopoly.Property class represents a property in the Monopoly game.
  *
  * @author Kashish Saxena - 101107204
  * @version October 22, 2021
@@ -15,7 +17,7 @@ public class Property {
     private boolean isAvailable;
 
     /**
-     * Constructor of the Property class
+     * Constructor of the Monopoly.Property class
      *
      * @param name Name of the property
      * @param initialCost initial cost of the property
@@ -84,13 +86,13 @@ public class Property {
     }
 
     /**
-     * Returns the string representation of the Property object
-     * @return String representation of the Property object
+     * Returns the string representation of the Monopoly.Property object
+     * @return String representation of the Monopoly.Property object
      */
     @Override
     public String toString(){
 
-       return "Property: " + name + "\nOwner: "+ owner + "\nPurchasing Cost: "+ PURCHASINGCOST;
+       return "Monopoly.Property: " + name + "\nOwner: "+ owner + "\nPurchasing Cost: "+ PURCHASINGCOST;
     }
 
     /**
