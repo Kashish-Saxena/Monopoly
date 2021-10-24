@@ -10,6 +10,7 @@ public class Game {
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
+    private int currentPlayerIndex;
     ArrayList<Square> squares = new ArrayList<Square>(40);
     int currentTurn = 0;
 	int totalPlayers;
@@ -23,6 +24,7 @@ public class Game {
         parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
+        currentPlayerIndex = 0;
     }
 
     /**
@@ -33,6 +35,7 @@ public class Game {
     }
 
     public void play(){
+        printWelcome();
         System.out.println("How many people are playing today?");
         Scanner sc = new Scanner(System.in);
         totalPlayers = sc.nextInt();
@@ -98,7 +101,14 @@ public class Game {
         System.out.println("You are lost");
         System.out.println();
         System.out.println("Your command words are:");
-        //parser.showCommands();
+        parser.showCommands();
+    }
+
+    /**
+     * Returns the current player from the players list
+     */
+    private Player getCurrentPlayer(){
+        return players.get(currentPlayerIndex);
     }
 
     private int rollDice(){
@@ -106,7 +116,14 @@ public class Game {
     }
 
     private void passTurn(){
+        currentPlayerIndex++;
+        if (currentPlayerIndex >= totalPlayers){
+            currentPlayerIndex = 0;
+        }
+        System.out.println("It is Player "+ players.get(currentPlayerIndex).getPlayerName() + "'s turn.");
 
+        //next player rolls dice
+        rollDice();
     }
 
 
