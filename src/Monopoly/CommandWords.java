@@ -1,3 +1,5 @@
+package Monopoly;
+
 import java.util.HashMap;
 
 /**

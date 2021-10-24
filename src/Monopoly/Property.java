@@ -13,7 +13,7 @@ public class Property {
     private Player owner;
     public static Money PURCHASINGCOST;
     private Money rentCost;
-    private boolean isAvailable;
+    //private boolean isAvailable;
 
     /**
      * Constructor of the Monopoly.Property class
@@ -24,7 +24,7 @@ public class Property {
     public Property(String name, Money initialCost) {
         this.name = name;
         PURCHASINGCOST = initialCost;
-        isAvailable = true;
+       // isAvailable = true;
     }
 
     /**
@@ -65,7 +65,7 @@ public class Property {
      */
     private void setOwner(Player owner) {
         this.owner = owner;
-        isAvailable = false;
+        //isAvailable = false;
     }
 
     /**
@@ -80,9 +80,9 @@ public class Property {
      * Return true if property is available, false otherwise
      * @return true if property is available, false otherwise
      */
-    public boolean isAvailable(){
+    /**public boolean isAvailable(){
         return isAvailable;
-    }
+    }*/
 
     /**
      * Returns the string representation of the Monopoly.Property object
