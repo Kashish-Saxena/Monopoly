@@ -1,6 +1,8 @@
 package Monopoly;
 
 public enum SquareType {
-    Property;
-    Square BLANK;
+    PROPERTY,
+    BLANK,
+    ISAVAILABLE,
+    NOTAVAILABLE
     }

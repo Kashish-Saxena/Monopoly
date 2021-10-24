@@ -21,10 +21,10 @@ public class Player {
      * @param money inital money that the player starts with
      * @param currentPosition the position of the player on the board
      */
-    public Player(String playerName, int money, int currentPosition){
+    public Player(String playerName){
         this.playerName = playerName;
-        this.money = money;
-        this.currentPosition = currentPosition;
+        this.money = 1000;
+        this.currentPosition = 0;
         ownedProperties = new HashMap<>();
     }
 
