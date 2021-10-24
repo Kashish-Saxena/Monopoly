@@ -1,5 +1,4 @@
 package Monopoly;
-
 import java.util.Objects;
 /**
  * The Monopoly.Property class represents a property in the Monopoly game.

@@ -1,3 +1,5 @@
+package Monopoly;
+
 /**
  * This class is taken from the Zuul with enumerations v2 project from the lectures
  * with some modifications to work with the monopoly project.
@@ -12,7 +14,7 @@ public enum CommandWord
 {
     // A value for each command word along with its
     // corresponding user interface string.
-    PLAYER_STATE("state"), BUY_PROPERTY("buy"), PASS_TURN("pass"), UNKNOWN("?");;
+    PLAYER_STATE("state"), BUY_PROPERTY("buy"), PASS_TURN("pass"), HELP("help"), UNKNOWN("?");
 
     // The command string.
     private String commandString;

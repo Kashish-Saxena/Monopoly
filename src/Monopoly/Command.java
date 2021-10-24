@@ -1,3 +1,5 @@
+package Monopoly;
+
 /**
  * This class is taken from the Zuul with enumerations v2 project from the lectures.
  *
@@ -38,7 +40,7 @@ public class Command
      * Return the command word (the first word) of this command.
      * @return The command word.
      */
-    public CommandWord getCommandWord()
+    public static CommandWord getCommandWord()
     {
         return commandWord;
     }
