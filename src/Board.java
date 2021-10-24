@@ -1,7 +1,7 @@
 import java.util.*;
 
 public class Board {
-    ArrayList<Square> squares = new ArrayList<Square>();
+    ArrayList<Square> squares = new ArrayList<Square>(40);
     int currentTurn = 0;
 	int totalPlayer = 0;
 	Player[] players;
@@ -12,4 +12,5 @@ public class Board {
 		for(int i = 0;i < players.length;i++){
 			players[i] = new Player(i, "Player " + (i + 1));
 		}
+    }
 }
