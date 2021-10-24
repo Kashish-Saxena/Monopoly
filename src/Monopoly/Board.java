@@ -1,5 +1,5 @@
+package Monopoly;
 import java.util.*;
-
 public class Board {
     ArrayList<Square> squares = new ArrayList<Square>(40);
     int currentTurn = 0;

@@ -1,3 +1,4 @@
+package Monopoly;
 public abstract class Square {
 	String name;
 	int position;
