@@ -1,6 +1,7 @@
 package Monopoly;
 
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Game {
 
@@ -9,6 +10,10 @@ public class Game {
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
+    ArrayList<Square> squares = new ArrayList<Square>(40);
+    int currentTurn = 0;
+	int totalPlayers;
+
 
     /**
      * Create the game and initialise its internal map.
@@ -24,10 +29,18 @@ public class Game {
      * Creates the Monopoly board
      */
     private void createBoard(){
-
+        
     }
 
     public void play(){
+        System.out.println("How many people are playing today?");
+        Scanner sc = new Scanner(System.in);
+        totalPlayers = sc.nextInt();
+        for(int i = 1; i <= totalPlayers; i++){
+            Scanner username = new Scanner(System.in);
+            String playername= username.nextLine();
+			players.add(new Player(playername));
+        }
     }
 
     /**
