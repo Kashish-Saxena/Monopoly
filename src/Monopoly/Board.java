@@ -10,7 +10,7 @@ public class Board {
 		players = new Player[totalPlayer];
 		this.totalPlayer = totalPlayer;
 		for(int i = 0;i < players.length;i++){
-			players[i] = new Player(i, "Player " + (i + 1));
+			//players[i] = new Player(i, "Player " + (i + 1));
 		}
     }
 }

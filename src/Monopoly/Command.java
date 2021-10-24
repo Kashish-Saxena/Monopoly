@@ -20,7 +20,7 @@ package Monopoly;
 
 public class Command
 {
-    private CommandWord commandWord;
+    private static CommandWord commandWord;
     //private String secondWord;
 
     /**
@@ -32,7 +32,7 @@ public class Command
      */
     public Command(CommandWord commandWord/*, String secondWord*/)
     {
-        this.commandWord = commandWord;
+        Command.commandWord = commandWord;
         //this.secondWord = secondWord;
     }
 
