@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game {
 
     private InputParser parser;
-    private CommandWord commandWord;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
@@ -44,11 +43,14 @@ public class Game {
         totalPlayers = sc.nextInt();
         for(int i = 1; i <= totalPlayers; i++){
             Scanner username = new Scanner(System.in);
-            String playername= username.nextLine();
+            String playername = username.nextLine();
 			players.add(new Player(playername));
         }
     }
-
+    int i = 0;
+    private void print() {
+        System.out.printf("%d", i);
+    }
     /**
      * Print out the opening message for the player.
      */
@@ -91,11 +93,11 @@ public class Game {
                 break;
 
             case BUY_PROPERTY:
-                System.out.println("Are you sure you want to buy this property? Y/N");
+                System.out.printf("Are you sure you want to buy %s? Y/N", getProperty(currentPlayer.currentPosition).getName());
                 Scanner buyScn = new Scanner(System.in);
                 String buyAns = buyScn.nextLine();
                 if (buyAns.equals("Y")) {
-                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    currentPlayer.buyProperty(getProperty(currentPlayer.currentPosition));
                     break;
                 } else if (buyAns.equals("N")) {
                     break;
@@ -113,7 +115,7 @@ public class Game {
                 Scanner quitScn = new Scanner(System.in);
                 String quitAns = quitScn.nextLine();
                 if (quitAns.equals("Y")) {
-                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    wantToQuit = true;
                     break;
                 } else if (quitAns.equals("N")) {
                     break;
