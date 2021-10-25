@@ -152,6 +152,7 @@ public class Game {
         int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
         int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
         return dice1 + dice2;
+
     }
 
     private void passTurn(){
