@@ -11,9 +11,10 @@ public class Property {
 
     private String name;
     private Player owner;
-    private static int PURCHASINGCOST;
+    private boolean isAvailable;
+    private int purchasingCost;
     private int rentCost;
-    //private boolean isAvailable;
+    private int position;
 
     /**
      * Constructor of the Monopoly.Property class
@@ -21,10 +22,12 @@ public class Property {
      * @param name Name of the property
      * @param initialCost initial cost of the property
      */
-    public Property(String name, int initialCost) {
+    public Property(String name, int initialCost, int rentCost, Player owner, int position) {
         this.name = name;
-        PURCHASINGCOST = initialCost;
-       // isAvailable = true;
+        purchasingCost = initialCost;
+        isAvailable = true;
+        this.rentCost = rentCost;
+        this.position = position;
     }
 
     /**
@@ -47,8 +50,8 @@ public class Property {
      * Returns the purchasing cost of the property
      * @return the purchasing cost of the property
      */
-    public static int getPurchasingCost() {
-        return PURCHASINGCOST;
+    public int getPurchasingCost() {
+        return purchasingCost;
     }
 
     /**
@@ -65,7 +68,14 @@ public class Property {
      */
     private void setOwner(Player owner) {
         this.owner = owner;
-        //isAvailable = false;
+        isAvailable = false;
+    }
+
+    /**
+     * Returns the position of the property on the board
+     */
+    public int getPosition(){
+        return position;
     }
 
     /**
@@ -80,9 +90,9 @@ public class Property {
      * Return true if property is available, false otherwise
      * @return true if property is available, false otherwise
      */
-    /**public boolean isAvailable(){
+    public boolean isAvailable(){
         return isAvailable;
-    }*/
+    }
 
     /**
      * Returns the string representation of the Monopoly.Property object
@@ -91,7 +101,7 @@ public class Property {
     @Override
     public String toString(){
 
-       return "Monopoly.Property: " + name + "\nOwner: "+ owner + "\nPurchasing Cost: "+ PURCHASINGCOST;
+       return "Monopoly.Property: " + name + "\nOwner: "+ owner + "\nPurchasing Cost: "+ purchasingCost;
     }
 
     /**

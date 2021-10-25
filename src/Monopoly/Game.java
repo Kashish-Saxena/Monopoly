@@ -1,9 +1,7 @@
 package Monopoly;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Scanner;
-import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
@@ -12,10 +10,11 @@ public class Game {
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
+    private int currentPlayerIndex;
     ArrayList<Square> squares = new ArrayList<Square>(40);
     int currentTurn = 0;
 	int totalPlayers;
-    public HashMap<Player, ArrayList<Property>> ownedProperties;
+
 
     /**
      * Create the game and initialise its internal map.
@@ -25,7 +24,7 @@ public class Game {
         parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
-        ownedProperties = new HashMap<>();
+        currentPlayerIndex = 0;
     }
 
     /**
@@ -36,9 +35,7 @@ public class Game {
     }
 
     public void play(){
-
         printWelcome();
-
         System.out.println("How many people are playing today?");
         Scanner sc = new Scanner(System.in);
         totalPlayers = sc.nextInt();
@@ -47,13 +44,6 @@ public class Game {
             String playername= username.nextLine();
 			players.add(new Player(playername));
         }
-
-        boolean finished = false;
-        while (!finished) {
-            Command command = InputParser.getCommand();
-            finished = processCommand(command);
-        }
-        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -73,6 +63,11 @@ public class Game {
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
+    /**
+     * Given a command, process (that is: execute) the command.
+     * @param command The command to be processed.
+     * @return true If the command ends the game, false otherwise.
+     */
     private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
@@ -86,6 +81,10 @@ public class Game {
 
             case HELP:
                 printHelp();
+                break;
+
+            case PLAYER_STATE:
+                System.out.println(currentPlayer.toString());
                 break;
 
             case BUY_PROPERTY:
@@ -123,6 +122,7 @@ public class Game {
         return wantToQuit;
     }
 
+
     // implementations of user commands:
 
     /**
@@ -138,13 +138,27 @@ public class Game {
         parser.showCommands();
     }
 
+    /**
+     * Returns the current player from the players list
+     */
+    private Player getCurrentPlayer(){
+        return players.get(currentPlayerIndex);
+    }
+
     private int rollDice(){
-        return ThreadLocalRandom.current().nextInt(1, 7);
+        return (int) ((Math.random() * 11) + 1);
     }
 
     private void passTurn(){
+        currentPlayerIndex++;
+        if (currentPlayerIndex >= totalPlayers){
+            currentPlayerIndex = 0;
+        }
+        currentPlayer = players.get(currentPlayerIndex);
+        System.out.println("It is Player "+ currentPlayer.getPlayerName() + "'s turn.");
 
+        //next player rolls dice
+        rollDice();
     }
-
 
 }
