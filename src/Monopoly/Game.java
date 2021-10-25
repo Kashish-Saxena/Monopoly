@@ -63,7 +63,12 @@ public class Game {
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    /*private boolean processCommand(CommandWord command)
+    /**
+     * Given a command, process (that is: execute) the command.
+     * @param command The command to be processed.
+     * @return true If the command ends the game, false otherwise.
+     */
+    private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -71,23 +76,52 @@ public class Game {
 
         switch (commandWord) {
             case UNKNOWN:
-                System.out.println("I don't know what you mean...");
+                System.out.println("Unknown command.");
                 break;
 
             case HELP:
                 printHelp();
                 break;
 
-            case GO:
-                goRoom(command);
+            case PLAYER_STATE:
+                System.out.println(currentPlayer.toString());
+                break;
+
+            case BUY_PROPERTY:
+                System.out.println("Are you sure you want to buy this property? Y/N");
+                Scanner buyScn = new Scanner(System.in);
+                String buyAns = buyScn.nextLine();
+                if (buyAns.equals("Y")) {
+                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    break;
+                } else if (buyAns.equals("N")) {
+                    break;
+                } else {
+                    System.out.println("Unknown answer, please try the command again.");
+                    break;
+                }
+
+            case PASS_TURN:
+                passTurn();
                 break;
 
             case QUIT:
-                wantToQuit = quit(command);
-                break;
+                System.out.println("Are you sure you want to quit? The game will end and your progress will be lost. Y/N");
+                Scanner quitScn = new Scanner(System.in);
+                String quitAns = quitScn.nextLine();
+                if (quitAns.equals("Y")) {
+                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    break;
+                } else if (quitAns.equals("N")) {
+                    break;
+                } else {
+                    System.out.println("Unknown answer, please try the command again.");
+                    break;
+                }
         }
         return wantToQuit;
-    }*/
+    }
+
 
     // implementations of user commands:
 
@@ -120,11 +154,11 @@ public class Game {
         if (currentPlayerIndex >= totalPlayers){
             currentPlayerIndex = 0;
         }
-        System.out.println("It is Player "+ players.get(currentPlayerIndex).getPlayerName() + "'s turn.");
+        currentPlayer = players.get(currentPlayerIndex);
+        System.out.println("It is Player "+ currentPlayer.getPlayerName() + "'s turn.");
 
         //next player rolls dice
         rollDice();
     }
-
 
 }

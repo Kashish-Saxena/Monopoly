@@ -20,7 +20,7 @@ package Monopoly;
 
 public class Command
 {
-    private CommandWord commandWord;
+    private static CommandWord commandWord;
     //private String secondWord;
 
     /**
