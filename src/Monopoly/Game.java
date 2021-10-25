@@ -1,7 +1,9 @@
 package Monopoly;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
@@ -11,9 +13,10 @@ public class Game {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private int currentPlayerIndex;
-    ArrayList<Square> squares = new ArrayList<Square>(40);
-    int currentTurn = 0;
-	int totalPlayers;
+    private ArrayList<Square> squares = new ArrayList<Square>(40);
+    private int currentTurn = 1;
+	private int totalPlayers;
+    private HashMap<Player, ArrayList<Property>> ownedProperties = new HashMap<>();
 
 
     /**
@@ -145,8 +148,10 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    private int rollDice(){
-        return (int) ((Math.random() * 11) + 1);
+    private int rollDice() {
+        int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
+        int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
+        return dice1 + dice2;
     }
 
     private void passTurn(){

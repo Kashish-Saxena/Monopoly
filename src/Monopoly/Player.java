@@ -5,7 +5,6 @@
  */
 package Monopoly;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Player {
@@ -38,7 +37,7 @@ public class Player {
      * Returns the properties owned by a player
      * @return properties owned by a player
      */
-    public ArrayList<Property> getOwnedProperties() {
+    public ArrayList<Property> getProperties() {
         return this.properties;
 
     }
@@ -83,7 +82,7 @@ public class Player {
      */
     @Override
     public String toString(){
-        return "Player name: " + playerName + "\nOwned Properties: " + properties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+        return "Player name: " + playerName + "\nOwned Properties: " + getProperties().toString() + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
 
     /**
