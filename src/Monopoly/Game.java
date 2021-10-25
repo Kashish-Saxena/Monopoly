@@ -1,7 +1,9 @@
 package Monopoly;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Scanner;
+import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
@@ -13,7 +15,7 @@ public class Game {
     ArrayList<Square> squares = new ArrayList<Square>(40);
     int currentTurn = 0;
 	int totalPlayers;
-
+    public HashMap<Player, ArrayList<Property>> ownedProperties;
 
     /**
      * Create the game and initialise its internal map.
@@ -23,6 +25,7 @@ public class Game {
         parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
+        ownedProperties = new HashMap<>();
     }
 
     /**
@@ -33,6 +36,9 @@ public class Game {
     }
 
     public void play(){
+
+        printWelcome();
+
         System.out.println("How many people are playing today?");
         Scanner sc = new Scanner(System.in);
         totalPlayers = sc.nextInt();
@@ -41,6 +47,13 @@ public class Game {
             String playername= username.nextLine();
 			players.add(new Player(playername));
         }
+
+        boolean finished = false;
+        while (!finished) {
+            Command command = InputParser.getCommand();
+            finished = processCommand(command);
+        }
+        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -60,7 +73,7 @@ public class Game {
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
      */
-    /*private boolean processCommand(CommandWord command)
+    private boolean processCommand(Command command)
     {
         boolean wantToQuit = false;
 
@@ -68,23 +81,47 @@ public class Game {
 
         switch (commandWord) {
             case UNKNOWN:
-                System.out.println("I don't know what you mean...");
+                System.out.println("Unknown command.");
                 break;
 
             case HELP:
                 printHelp();
                 break;
 
-            case GO:
-                goRoom(command);
+            case BUY_PROPERTY:
+                System.out.println("Are you sure you want to buy this property? Y/N");
+                Scanner buyScn = new Scanner(System.in);
+                String buyAns = buyScn.nextLine();
+                if (buyAns.equals("Y")) {
+                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    break;
+                } else if (buyAns.equals("N")) {
+                    break;
+                } else {
+                    System.out.println("Unknown answer, please try the command again.");
+                    break;
+                }
+
+            case PASS_TURN:
+                passTurn();
                 break;
 
             case QUIT:
-                wantToQuit = quit(command);
-                break;
+                System.out.println("Are you sure you want to quit? The game will end and your progress will be lost. Y/N");
+                Scanner quitScn = new Scanner(System.in);
+                String quitAns = quitScn.nextLine();
+                if (quitAns.equals("Y")) {
+                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    break;
+                } else if (quitAns.equals("N")) {
+                    break;
+                } else {
+                    System.out.println("Unknown answer, please try the command again.");
+                    break;
+                }
         }
         return wantToQuit;
-    }*/
+    }
 
     // implementations of user commands:
 
@@ -98,11 +135,11 @@ public class Game {
         System.out.println("You are lost");
         System.out.println();
         System.out.println("Your command words are:");
-        //parser.showCommands();
+        parser.showCommands();
     }
 
     private int rollDice(){
-        return (int) ((Math.random() * 11) + 1);
+        return ThreadLocalRandom.current().nextInt(1, 7);
     }
 
     private void passTurn(){

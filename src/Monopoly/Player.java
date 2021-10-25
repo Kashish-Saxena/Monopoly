@@ -10,7 +10,7 @@ import java.util.Objects;
 
 public class Player {
     private String playerName;
-    public HashMap<Player, ArrayList<Property>> ownedProperties;
+    private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;
     public int currentPosition;
 
@@ -18,14 +18,12 @@ public class Player {
      * Constructor for the player
      *
      * @param playerName PLayer name
-     * @param money inital money that the player starts with
-     * @param currentPosition the position of the player on the board
      */
     public Player(String playerName){
         this.playerName = playerName;
         this.money = 1000;
         this.currentPosition = 0;
-        ownedProperties = new HashMap<>();
+
     }
 
     /**
@@ -40,8 +38,8 @@ public class Player {
      * Returns the properties owned by a player
      * @return properties owned by a player
      */
-    public HashMap<Player, ArrayList<Property>> getOwnedProperties() {
-        return this.ownedProperties;
+    public ArrayList<Property> getOwnedProperties() {
+        return this.properties;
 
     }
 
@@ -55,18 +53,20 @@ public class Player {
 
     /**
      * Adds a property to a player if they decide to buy it
-     * @param player the player that wants to buy
      * @param property the property they want to buy
      */
-    private void buyProperty(Player player,Property property){
-        ArrayList<Property> properties = ownedProperties.get(player);
+    public void buyProperty(Property property) {
+        /*
         if(properties == null){
             properties = new ArrayList<Property>();
             ownedProperties.put(player,properties);
         }else{
             if(!properties.contains(property)) properties.add(property);
         }
+         */
+        if (!properties.contains(property)) { properties.add(property); }
 
+        else { System.out.println("You already own this property."); }
     }
 
     /**
@@ -83,7 +83,7 @@ public class Player {
      */
     @Override
     public String toString(){
-        return "Player name: " + playerName + "\nOwned Properties: " + ownedProperties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+        return "Player name: " + playerName + "\nOwned Properties: " + properties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
 
     /**
@@ -96,7 +96,7 @@ public class Player {
         if(this == o)return true;
         Player player = (Player) o;
         return Objects.equals(playerName,player.playerName) &&
-                Objects.equals(ownedProperties,player.ownedProperties) &&
+                Objects.equals(properties,player.properties) &&
                 Objects.equals(money,player.money) &&
                 Objects.equals(currentPosition,player.currentPosition);
     }

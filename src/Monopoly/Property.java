@@ -11,8 +11,8 @@ public class Property {
 
     private String name;
     private Player owner;
-    public static Money PURCHASINGCOST;
-    private Money rentCost;
+    private static int PURCHASINGCOST;
+    private int rentCost;
     //private boolean isAvailable;
 
     /**
@@ -21,7 +21,7 @@ public class Property {
      * @param name Name of the property
      * @param initialCost initial cost of the property
      */
-    public Property(String name, Money initialCost) {
+    public Property(String name, int initialCost) {
         this.name = name;
         PURCHASINGCOST = initialCost;
        // isAvailable = true;
@@ -47,7 +47,7 @@ public class Property {
      * Returns the purchasing cost of the property
      * @return the purchasing cost of the property
      */
-    public static Money getPurchasingCost() {
+    public static int getPurchasingCost() {
         return PURCHASINGCOST;
     }
 
@@ -55,7 +55,7 @@ public class Property {
      * Returns the rental cost of the property
      * @return the rental cost of the property
      */
-    public Money getRentCost() {
+    public int getRentCost() {
         return rentCost;
     }
 
@@ -72,7 +72,7 @@ public class Property {
      * Sets the rent of the property to the specified rent
      * @param rentCost specififed rent
      */
-    private void setRentCost(Money rentCost) {
+    private void setRentCost(int rentCost) {
         this.rentCost = rentCost;
     }
 
