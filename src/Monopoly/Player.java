@@ -18,8 +18,6 @@ public class Player {
      * Constructor for the player
      *
      * @param playerName PLayer name
-     * @param money inital money that the player starts with
-     * @param currentPosition the position of the player on the board
      */
     public Player(String playerName){
         this.playerName = playerName;
@@ -83,7 +81,7 @@ public class Player {
      */
     @Override
     public String toString(){
-        return "Player name: " + playerName + "\nOwned Properties: " + ownedProperties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+        return "Player name: " + playerName + "\nOwned Properties: " + getOwnedProperties().toString() + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
 
     /**
