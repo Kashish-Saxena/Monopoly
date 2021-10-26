@@ -83,12 +83,12 @@ public class Game {
     {
         System.out.println();
         System.out.println("Welcome to Monopoly!");
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
+        //System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         //System.out.println(currentRoom.getLongDescription());
     }
 
-    /**
+    /**4
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
      * @return true If the command ends the game, false otherwise.
