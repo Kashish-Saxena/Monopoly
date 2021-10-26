@@ -5,14 +5,14 @@
  */
 package Monopoly;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Objects;
 
 public class Player {
     private String playerName;
-    public HashMap<Player, ArrayList<Property>> ownedProperties;
+    private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;
     public int currentPosition;
+    private int diceResult;
 
     /**
      * Constructor for the player
@@ -23,7 +23,7 @@ public class Player {
         this.playerName = playerName;
         this.money = 1000;
         this.currentPosition = 0;
-        ownedProperties = new HashMap<>();
+
     }
 
     /**
@@ -38,8 +38,8 @@ public class Player {
      * Returns the properties owned by a player
      * @return properties owned by a player
      */
-    public HashMap<Player, ArrayList<Property>> getOwnedProperties() {
-        return this.ownedProperties;
+    public ArrayList<Property> getProperties() {
+        return this.properties;
 
     }
 
@@ -57,25 +57,41 @@ public class Player {
 
     /**
      * Adds a property to a player if they decide to buy it
-     * @param player the player that wants to buy
      * @param property the property they want to buy
      */
-    private void buyProperty(Player player,Property property){
-        ArrayList<Property> properties = ownedProperties.get(player);
+    public void buyProperty(Property property) {
+        /*
         if(properties == null){
             properties = new ArrayList<Property>();
             ownedProperties.put(player,properties);
         }else{
             if(!properties.contains(property)) properties.add(property);
         }
+         */
+        if (!properties.contains(property)) { properties.add(property); }
 
+        else { System.out.println("You already own this property."); }
+    }
+
+    /**
+     * Returns the dice result of the player
+     */
+    public int getDiceResults(){
+        return diceResult;
+    }
+
+    /**
+     * Returns the dice result of the player
+     */
+    public void setDiceResults(int result){
+        diceResult = result;
     }
 
     /**
      * Updates the players position
      * @param amount how many spaces the player moves
      */
-    private void updateCurrentPosition(int amount){
+    void updateCurrentPosition(int amount){
         currentPosition += amount;
     }
 
@@ -85,7 +101,7 @@ public class Player {
      */
     @Override
     public String toString(){
-        return "Player name: " + playerName + "\nOwned Properties: " + ownedProperties + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+        return "Player name: " + playerName + "\nOwned Properties: " + getProperties().toString() + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
 
     /**
@@ -98,7 +114,7 @@ public class Player {
         if(this == o)return true;
         Player player = (Player) o;
         return Objects.equals(playerName,player.playerName) &&
-                Objects.equals(ownedProperties,player.ownedProperties) &&
+                Objects.equals(properties,player.properties) &&
                 Objects.equals(money,player.money) &&
                 Objects.equals(currentPosition,player.currentPosition);
     }

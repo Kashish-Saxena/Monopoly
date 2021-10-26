@@ -32,7 +32,7 @@ public class Command
      */
     public Command(CommandWord commandWord/*, String secondWord*/)
     {
-        this.commandWord = commandWord;
+        Command.commandWord = commandWord;
         //this.secondWord = secondWord;
     }
 
