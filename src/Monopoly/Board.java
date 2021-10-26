@@ -24,248 +24,213 @@ public class Board {
         return propertyList;
     }
 
-    static String json ="{\n" +
-            "\t\"0\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
+    static String json = "{\n" +
+            "  \"0\": {\n" +
+            "    \"name\":\"Free Square (GO)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
             "\n" +
-            "\t\"1\": {\n" +
-            "\t\t\"name\": \"Mediterranean Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"60\",\n" +
-            "\t\t\"baseRentCost\": \"2\",\n" +
-            "\t\t\"colour\": \"brown\"\n" +
-            "\t},\n" +
-            "\t\"2\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"3\": {\n" +
-            "\t\t\"name\": \"Baltic Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"60\",\n" +
-            "\t\t\"baseRentCost\": \"4\",\n" +
-            "\t\t\"colour\": \"brown\"\n" +
-            "\t},\n" +
-            "\t\"4\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"5\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"6\": {\n" +
-            "\t\t\"name\": \"Oriental Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"100\",\n" +
-            "\t\t\"baseRentCost\": \"6\",\n" +
-            "\t\t\"colour\": \"lightblue\"\n" +
-            "\t},\n" +
-            "\t\"7\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"8\": {\n" +
-            "\t\t\"name\": \"Vermont Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"100\",\n" +
-            "\t\t\"baseRentCost\": \"6\",\n" +
-            "\t\t\"colour\": \"lightblue\"\n" +
-            "\t},\n" +
-            "\t\"9\": {\n" +
-            "\t\t\"name\": \"Connecticut Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"120\",\n" +
-            "\t\t\"baseRentCost\": \"8\",\n" +
-            "\t\t\"colour\": \"lightblue\"\n" +
-            "\t},\n" +
-            "\t\"10\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"11\": {\n" +
-            "\t\t\"name\": \"St. Charles Place\",\n" +
-            "\t\t\"purchasingCost\": \"140\",\n" +
-            "\t\t\"baseRentCost\": \"10\",\n" +
-            "\t\t\"colour\": \"pink\"\n" +
-            "\t},\n" +
-            "\t\"12\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"13\": {\n" +
-            "\t\t\"name\": \"States Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"140\",\n" +
-            "\t\t\"baseRentCost\": \"10\",\n" +
-            "\t\t\"colour\": \"pink\"\n" +
-            "\t},\n" +
-            "\t\"14\": {\n" +
-            "\t\t\"name\": \"Virginia Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"160\",\n" +
-            "\t\t\"baseRentCost\": \"12\",\n" +
-            "\t\t\"colour\": \"pink \"\n" +
-            "\t},\n" +
-            "\t\"15\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"16\": {\n" +
-            "\t\t\"name\": \"St. James Place\",\n" +
-            "\t\t\"purchasingCost\": \"180\",\n" +
-            "\t\t\"baseRentCost\": \"14\",\n" +
-            "\t\t\"colour\": \"orange\"\n" +
-            "\t},\n" +
-            "\t\"17\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"18\": {\n" +
-            "\t\t\"name\": \"Tennessee Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"180\",\n" +
-            "\t\t\"baseRentCost\": \"14\",\n" +
-            "\t\t\"colour\": \"orange\"\n" +
-            "\t},\n" +
-            "\t\"19\": {\n" +
-            "\t\t\"name\": \"New York Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"200\",\n" +
-            "\t\t\"baseRentCost\": \"16\",\n" +
-            "\t\t\"colour\": \"orange\"\n" +
-            "\t},\n" +
-            "\t\"20\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"21\": {\n" +
-            "\t\t\"name\": \"Kentucky Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"220\",\n" +
-            "\t\t\"baseRentCost\": \"18\",\n" +
-            "\t\t\"colour\": \"red\"\n" +
-            "\t},\n" +
-            "\t\"22\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"23\": {\n" +
-            "\t\t\"name\": \"Indiana Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"220\",\n" +
-            "\t\t\"baseRentCost\": \"18\",\n" +
-            "\t\t\"colour\": \"red\"\n" +
-            "\t},\n" +
-            "\t\"24\": {\n" +
-            "\t\t\"name\": \"Illinois Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"240\",\n" +
-            "\t\t\"baseRentCost\": \"20\",\n" +
-            "\t\t\"colour\": \"red\"\n" +
-            "\t},\n" +
-            "\t\"25\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"26\": {\n" +
-            "\t\t\"name\": \"Atlantic Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"260\",\n" +
-            "\t\t\"baseRentCost\": \"22\",\n" +
-            "\t\t\"colour\": \"yellow\"\n" +
-            "\t},\n" +
-            "\t\"27\": {\n" +
-            "\t\t\"name\": \"Ventnor Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"260\",\n" +
-            "\t\t\"baseRentCost\": \"22\",\n" +
-            "\t\t\"colour\": \"yellow\"\n" +
-            "\t},\n" +
-            "\t\"28\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"29\": {\n" +
-            "\t\t\"name\": \"Marvin Gardens\",\n" +
-            "\t\t\"purchasingCost\": \"280\",\n" +
-            "\t\t\"baseRentCost\": \"24\",\n" +
-            "\t\t\"colour\": \"yellow\"\n" +
-            "\t},\n" +
-            "\t\"30\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"31\": {\n" +
-            "\t\t\"name\": \"Pacific Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"300\",\n" +
-            "\t\t\"baseRentCost\": \"26\",\n" +
-            "\t\t\"colour\": \"green\"\n" +
-            "\t},\n" +
-            "\t\"32\": {\n" +
-            "\t\t\"name\": \"North Carolina Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"300\",\n" +
-            "\t\t\"baseRentCost\": \"26\",\n" +
-            "\t\t\"colour\": \"green\"\n" +
-            "\t},\n" +
-            "\t\"33\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"34\": {\n" +
-            "\t\t\"name\": \"Pennsylvania Avenue\",\n" +
-            "\t\t\"purchasingCost\": \"320\",\n" +
-            "\t\t\"baseRentCost\": \"28\",\n" +
-            "\t\t\"colour\": \"green\"\n" +
-            "\t},\n" +
-            "\t\"35\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"36\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"37\": {\n" +
-            "\t\t\"name\": \"Park Place\",\n" +
-            "\t\t\"purchasingCost\": \"350\",\n" +
-            "\t\t\"baseRentCost\": \"35\",\n" +
-            "\t\t\"colour\": \"darkblue\"\n" +
-            "\t},\n" +
-            "\t\"38\": {\n" +
-            "\t\t\"name\": \"Free Square\",\n" +
-            "\t\t\"purchasingCost\": \"0\",\n" +
-            "\t\t\"baseRentCost\": \"0\",\n" +
-            "\t\t\"colour\": \"none\"\n" +
-            "\t},\n" +
-            "\t\"39\": {\n" +
-            "\t\t\"name\": \"Boardwalk\",\n" +
-            "\t\t\"purchasingCost\": \"400\",\n" +
-            "\t\t\"baseRentCost\": \"50\",\n" +
-            "\t\t\"colour\": \"darkblue\"\n" +
-            "\t}\n" +
+            "  \"1\": {\n" +
+            "    \"name\":\"Mediterranean Avenue\",\n" +
+            "    \"purchasingCost\":\"60\",\n" +
+            "    \"baseRentCost\":\"2\",\n" +
+            "    \"colour\":\"brown\"\n" +
+            "  },\n" +
+            "  \"2\": {\"name\":\"Free Square (Community Chest)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"3\": {\n" +
+            "    \"name\":\"Baltic Avenue\",\n" +
+            "    \"purchasingCost\":\"60\",\n" +
+            "    \"baseRentCost\":\"4\",\n" +
+            "    \"colour\":\"brown\"\n" +
+            "  },\n" +
+            "  \"4\": {\"name\":\"Free Square (Income Tax)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"5\": {\"name\":\"Free Square (Reading Railroad)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"6\": {\n" +
+            "    \"name\":\"Oriental Avenue\",\n" +
+            "    \"purchasingCost\":\"100\",\n" +
+            "    \"baseRentCost\":\"6\",\n" +
+            "    \"colour\":\"lightblue\"\n" +
+            "  },\n" +
+            "  \"7\": {\"name\":\"Free Square (Chance)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"8\": {\n" +
+            "    \"name\":\"Vermont Avenue\",\n" +
+            "    \"purchasingCost\":\"100\",\n" +
+            "    \"baseRentCost\":\"6\",\n" +
+            "    \"colour\":\"lightblue\"\n" +
+            "  },\n" +
+            "  \"9\": {\n" +
+            "    \"name\":\"Connecticut Avenue\",\n" +
+            "    \"purchasingCost\":\"120\",\n" +
+            "    \"baseRentCost\":\"8\",\n" +
+            "    \"colour\":\"lightblue\"\n" +
+            "  },\n" +
+            "  \"10\": {\"name\":\"Free Square (Jail)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"11\": {\n" +
+            "    \"name\":\"St. Charles Place\",\n" +
+            "    \"purchasingCost\":\"140\",\n" +
+            "    \"baseRentCost\":\"10\",\n" +
+            "    \"colour\":\"pink\"\n" +
+            "  },\n" +
+            "  \"12\": {\"name\":\"Free Square (Electric Company)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"13\": {\n" +
+            "    \"name\":\"States Avenue\",\n" +
+            "    \"purchasingCost\":\"140\",\n" +
+            "    \"baseRentCost\":\"10\",\n" +
+            "    \"colour\":\"pink\"\n" +
+            "  },\n" +
+            "  \"14\": {\n" +
+            "    \"name\":\"Virginia Avenue\",\n" +
+            "    \"purchasingCost\":\"160\",\n" +
+            "    \"baseRentCost\":\"12\",\n" +
+            "    \"colour\":\"pink \"\n" +
+            "  },\n" +
+            "  \"15\": {\"name\":\"Free Square (Pennsylvania Railroad)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"16\": {\n" +
+            "    \"name\":\"St. James Place\",\n" +
+            "    \"purchasingCost\":\"180\",\n" +
+            "    \"baseRentCost\":\"14\",\n" +
+            "    \"colour\":\"orange\"\n" +
+            "  },\n" +
+            "  \"17\": {\"name\":\"Free Square (Community Chest)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"18\": {\n" +
+            "    \"name\":\"Tennessee Avenue\",\n" +
+            "    \"purchasingCost\":\"180\",\n" +
+            "    \"baseRentCost\":\"14\",\n" +
+            "    \"colour\":\"orange\"\n" +
+            "  },\n" +
+            "  \"19\": {\n" +
+            "    \"name\":\"New York Avenue\",\n" +
+            "    \"purchasingCost\":\"200\",\n" +
+            "    \"baseRentCost\":\"16\",\n" +
+            "    \"colour\":\"orange\"\n" +
+            "  },\n" +
+            "  \"20\": {\"name\":\"Free Square (Free Parking)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"21\": {\n" +
+            "    \"name\":\"Kentucky Avenue\",\n" +
+            "    \"purchasingCost\":\"220\",\n" +
+            "    \"baseRentCost\":\"18\",\n" +
+            "    \"colour\":\"red\"\n" +
+            "  },\n" +
+            "  \"22\": {\"name\":\"Free Square (Chance)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"23\": {\n" +
+            "    \"name\":\"Indiana Avenue\",\n" +
+            "    \"purchasingCost\":\"220\",\n" +
+            "    \"baseRentCost\":\"18\",\n" +
+            "    \"colour\":\"red\"\n" +
+            "  },\n" +
+            "  \"24\": {\n" +
+            "    \"name\":\"Illinois Avenue\",\n" +
+            "    \"purchasingCost\":\"240\",\n" +
+            "    \"baseRentCost\":\"20\",\n" +
+            "    \"colour\":\"red\"\n" +
+            "  },\n" +
+            "  \"25\": {\"name\":\"Free Square (B&O Railroad)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"26\": {\n" +
+            "    \"name\":\"Atlantic Avenue\",\n" +
+            "    \"purchasingCost\":\"260\",\n" +
+            "    \"baseRentCost\":\"22\",\n" +
+            "    \"colour\":\"yellow\"\n" +
+            "  },\n" +
+            "  \"27\": {\n" +
+            "    \"name\":\"Ventnor Avenue\",\n" +
+            "    \"purchasingCost\":\"260\",\n" +
+            "    \"baseRentCost\":\"22\",\n" +
+            "    \"colour\":\"yellow\"\n" +
+            "  },\n" +
+            "  \"28\": {\"name\":\"Free Square (Waterworks)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"29\": {\n" +
+            "    \"name\":\"Marvin Gardens\",\n" +
+            "    \"purchasingCost\":\"280\",\n" +
+            "    \"baseRentCost\":\"24\",\n" +
+            "    \"colour\":\"yellow\"\n" +
+            "  },\n" +
+            "  \"30\": {\"name\":\"Free Square (Go to Jail)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"31\": {\n" +
+            "    \"name\":\"Pacific Avenue\",\n" +
+            "    \"purchasingCost\":\"300\",\n" +
+            "    \"baseRentCost\":\"26\",\n" +
+            "    \"colour\":\"green\"\n" +
+            "  },\n" +
+            "  \"32\": {\n" +
+            "    \"name\":\"North Carolina Avenue\",\n" +
+            "    \"purchasingCost\":\"300\",\n" +
+            "    \"baseRentCost\":\"26\",\n" +
+            "    \"colour\":\"green\"\n" +
+            "  },\n" +
+            "  \"33\": {\"name\":\"Free Square (Community Chest)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"34\": {\n" +
+            "    \"name\":\"Pennsylvania Avenue\",\n" +
+            "    \"purchasingCost\":\"320\",\n" +
+            "    \"baseRentCost\":\"28\",\n" +
+            "    \"colour\":\"green\"\n" +
+            "  },\n" +
+            "  \"35\": {\"name\":\"Free Square (Short Line)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"36\": {\"name\":\"Free Square (Chance)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"37\": {\n" +
+            "    \"name\":\"Park Place\",\n" +
+            "    \"purchasingCost\":\"350\",\n" +
+            "    \"baseRentCost\":\"35\",\n" +
+            "    \"colour\":\"darkblue\"\n" +
+            "  },\n" +
+            "  \"38\": {\"name\":\"Free Square (Luxury Tax)\",\n" +
+            "    \"purchasingCost\":\"0\",\n" +
+            "    \"baseRentCost\":\"0\",\n" +
+            "    \"colour\":\"none\"},\n" +
+            "  \"39\": {\n" +
+            "    \"name\":\"Boardwalk\",\n" +
+            "    \"purchasingCost\":\"400\",\n" +
+            "    \"baseRentCost\":\"50\",\n" +
+            "    \"colour\":\"darkblue\"\n" +
+            "  }\n" +
             "\n" +
             "}";
 }
