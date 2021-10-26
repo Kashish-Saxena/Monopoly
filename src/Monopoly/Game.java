@@ -175,6 +175,34 @@ public class Game {
                     System.out.println("Unknown answer, please try the command again.");
                     break;
                 }
+
+            case ROLL:
+
+                System.out.println("Now rolling for your turn!");
+                int diceRoll = rollDice();
+                System.out.println("You have moved " + diceRoll + " positions!");
+                int startingPos = currentPlayer.currentPosition;
+                currentPlayer.currentPosition = startingPos + diceRoll;
+                System.out.println("Welcome to " + propertyList.get(currentPlayer.currentPosition).getName());
+                if(propertyList.get(currentPlayer.currentPosition).checkAvailability()){
+                    System.out.println("You can buy this property for: " + propertyList.get(currentPlayer.currentPosition).getPurchasingCost());
+                }else if(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")){
+                    System.out.println("Under Construction. Stay tuned for this in a later update!");
+                }
+                else{
+                    System.out.println("This property is owned by " + propertyList.get(currentPlayer.currentPosition).getOwner());
+                    System.out.println("The rent for this property is: " + propertyList.get(currentPlayer.currentPosition).getRentCost());
+                    System.out.println("The rent cost will be taken from your account");
+                    if(getCurrentPlayer().getMoney() < propertyList.get(currentPlayer.currentPosition).getRentCost()){
+                        System.out.println("You cannot afford the rent. You have gone bankrupt");
+                        players.remove(currentPlayer);
+                    }else{
+                        currentPlayer.setMoney(currentPlayer.getMoney()-propertyList.get(currentPlayer.currentPosition).getRentCost());
+                    }
+                }
+
+
+
         }
         return wantToQuit;
     }
