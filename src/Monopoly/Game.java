@@ -1,8 +1,6 @@
 package Monopoly;
 
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
@@ -20,8 +18,7 @@ public class Game {
     private ArrayList<Square> squares = new ArrayList<Square>(40);
     private int currentTurn = 1;
 	private int totalPlayers;
-    private HashMap<Player, ArrayList<Property>> ownedProperties = new HashMap<>();
-
+    private int maxPlayers = 6;
 
     /**
      * Create the game and initialise its internal map.
@@ -45,11 +42,31 @@ public class Game {
 
     public void play(){
         printWelcome();
-        System.out.println("How many people are playing today?");
-        Scanner sc = new Scanner(System.in);
-        totalPlayers = sc.nextInt();
+        System.out.println("How many people are playing today? Minimum 2, Maximum 6.");
+
+        boolean confirmedPlayers = false;
+        while (!confirmedPlayers) {
+            Scanner sc = new Scanner(System.in);
+            if (!(sc.hasNextInt())) {
+                System.out.println("Unknown entry. Please enter the number again.");
+                continue;
+            }
+
+            totalPlayers = sc.nextInt();
+
+            if (totalPlayers > maxPlayers) {
+                System.out.println("Too many players. Please enter the number again.");
+                continue;
+
+            } else if (totalPlayers < 2) {
+                System.out.println("Not enough players. Please enter the number again.");
+                continue;
+            }
+            confirmedPlayers = true;
+        }
+
         int i;
-        int j;
+        //int j;
 
         for (i = 1; i <= totalPlayers; i++){
             System.out.printf("\nPlease write Player %d's name:\n", i);
@@ -57,21 +74,26 @@ public class Game {
             String playerName = username.nextLine();
             Player p = new Player(playerName);
 			players.add(p);
-            p.setDiceResults(rollDice());
+            //p.setDiceResults(rollDice());
         }
 
+        /*
         for (j = 0; j < players.size(); j++) {
             while (players.get(j).getDiceResults() == players.get(j + 1).getDiceResults()) {
                 players.get(j).setDiceResults(rollDice()); //roll until all players have different results
             }
             setPlayerOrder();
         }
+        */
 
         boolean finished = false;
 
         while (!finished) {
+            System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
             Command command = InputParser.getCommand();
+            System.out.println();
             finished = processCommand(command);
+
         }
         System.out.println("Thank you for playing Monopoly!");
     }
@@ -83,7 +105,6 @@ public class Game {
     {
         System.out.println();
         System.out.println("Welcome to Monopoly!");
-        System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
         System.out.println();
         //System.out.println(currentRoom.getLongDescription());
     }
@@ -158,8 +179,6 @@ public class Game {
      */
     private void printHelp()
     {
-        System.out.println("You are lost");
-        System.out.println();
         System.out.println("Your command words are:");
         parser.showCommands();
     }
@@ -194,6 +213,7 @@ public class Game {
      * Sets the player starting the game based on their roll results
      * value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
      */
+    /*
     private void setPlayerOrder(){
         for (int i=0; i<players.size();i++){
             // i < i+1
@@ -207,7 +227,7 @@ public class Game {
                 currentPlayer = players.get(i);
         }
     }
-
+    */
     /**
      * Compares two players dice results
      * @param a Player one
