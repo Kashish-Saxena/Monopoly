@@ -55,6 +55,12 @@ public class Game {
             }
             setPlayerOrder();
         }
+        boolean finished = false;
+        while (!finished) {
+            Command command = parser.getCommand();
+            finished = processCommand(command);
+        }
+        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -69,11 +75,6 @@ public class Game {
         //System.out.println(currentRoom.getLongDescription());
     }
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
@@ -104,6 +105,7 @@ public class Game {
                 String buyAns = buyScn.nextLine();
                 if (buyAns.equals("Y")) {
                     currentPlayer.buyProperty(getProperty(currentPlayer.currentPosition));
+                    getProperty(currentPlayer.currentPosition).setOwner(currentPlayer);
                     break;
                 } else if (buyAns.equals("N")) {
                     break;

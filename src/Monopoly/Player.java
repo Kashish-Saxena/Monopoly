@@ -64,7 +64,9 @@ public class Player {
             if(!properties.contains(property)) properties.add(property);
         }
          */
-        if (!properties.contains(property)) { properties.add(property); }
+        if (!properties.contains(property)) {
+            properties.add(property);
+        }
 
         else { System.out.println("You already own this property."); }
     }
