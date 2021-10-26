@@ -117,7 +117,7 @@ public class Property {
     @Override
     public String toString(){
 
-       return "Monopoly.Property: " + name + "\nOwner: "+ owner + "\nPurchasing Cost: "+ purchasingCost;
+       return "Property: " + name + ", Colour: "+ colour + ", Purchasing Cost: " + purchasingCost + ", Rent cost: " + rentCost + "\n";
     }
 
     /**

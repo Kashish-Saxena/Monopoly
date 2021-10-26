@@ -134,22 +134,32 @@ public class Game {
                 break;
 
             case PLAYER_STATE:
-                System.out.println(currentPlayer.toString());
+                System.out.println(currentPlayer.getPlayerState());
                 break;
 
             case BUY_PROPERTY:
-                if (currentProperty.getColour().equals("none") || currentProperty.getOwner() != null) {
+                if (currentProperty.getColour().equals("none")) {
                     System.out.println("You cannot buy this property.");
                     break;
+                } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
+                    System.out.println("You do not have enough funds to buy this property.");
+                } else if (currentProperty.getOwner() != null) {
+                    System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
                 }
 
-                System.out.printf("Are you sure you want to buy %s? Y/N", currentProperty.getName());
+                System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
                 Scanner buyScn = new Scanner(System.in);
                 String buyAns = buyScn.nextLine();
 
                 if (buyAns.equals("Y")) {
                     currentPlayer.buyProperty(currentProperty);
                     currentProperty.setOwner(currentPlayer);
+                    int propertyCost = currentProperty.getPurchasingCost();
+
+                    currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                    System.out.println("You are now the owner of " + currentProperty.getName() + ".");
+                    System.out.println("Your balance is now $" + currentPlayer.getMoney());
+
                     break;
                 } else if (buyAns.equals("N")) {
                     break;

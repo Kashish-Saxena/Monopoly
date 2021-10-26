@@ -22,7 +22,7 @@ public class Player {
     public Player(String playerName){
         this.playerName = playerName;
         this.money = 1000;
-        this.currentPosition = 0;
+        this.currentPosition = 1;
 
     }
 
@@ -101,9 +101,8 @@ public class Player {
      * The String representation of Monopoly.Player
      * @return String representation of Monopoly.Player
      */
-    @Override
-    public String toString(){
-        return "Player name: " + playerName + "\nOwned Properties: " + getProperties().toString() + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
+    public String getPlayerState(){
+        return "Player name: " + playerName + "\nOwned Properties: \n" + getProperties().toString().replace("[", "").replace("]", "") + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
 
     /**
