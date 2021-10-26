@@ -1,6 +1,7 @@
 package Monopoly;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -43,14 +44,19 @@ public class Game {
         totalPlayers = sc.nextInt();
         for(int i = 1; i <= totalPlayers; i++){
             Scanner username = new Scanner(System.in);
-            String playername = username.nextLine();
-			players.add(new Player(playername));
+            String playername= username.nextLine();
+            Player p = new Player(playername);
+			players.add(p);
+            p.setDiceResults(rollDice());
+        }
+        for (int i = 0; i < players.size(); i++) {
+            while (players.get(i).getDiceResults() == players.get(i + 1).getDiceResults()) {
+                players.get(i).setDiceResults(rollDice()); //roll until all players have different results
+            }
+            setPlayerOrder();
         }
     }
-    int i = 0;
-    private void print() {
-        System.out.printf("%d", i);
-    }
+
     /**
      * Print out the opening message for the player.
      */
@@ -154,6 +160,7 @@ public class Game {
         int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
         int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
         return dice1 + dice2;
+
     }
 
     private void passTurn(){
@@ -168,4 +175,39 @@ public class Game {
         rollDice();
     }
 
+    /**
+     * Sets the player starting the game based on their roll results
+     * value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
+     */
+    private void setPlayerOrder(){
+        for (int i=0; i<players.size();i++){
+            // i < i+1
+            if (compareDiceRolls(players.get(i), players.get(i+1)) < 0) {
+                Collections.swap(players, i, i + 1);
+                currentPlayer = players.get(i);
+                break;
+            }
+            else
+                // i > i+1
+                currentPlayer = players.get(i);
+        }
+    }
+
+    /**
+     * Compares two players dice results
+     * @param a Player one
+     * @param b Player two
+     * @return comparison result
+     */
+    private int compareDiceRolls(Player a, Player b){
+        return Integer.compare(a.getDiceResults(), b.getDiceResults());
+    }
+
+    private void movePlayer(Player p){
+        p.updateCurrentPosition (p.getDiceResults());
+    }
+
+    public static void main(String[] args) {
+        new Game().play();
+    }
 }

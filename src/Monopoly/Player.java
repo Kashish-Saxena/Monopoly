@@ -12,6 +12,7 @@ public class Player {
     private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;
     public int currentPosition;
+    private int diceResult;
 
     /**
      * Constructor for the player
@@ -69,10 +70,24 @@ public class Player {
     }
 
     /**
+     * Returns the dice result of the player
+     */
+    public int getDiceResults(){
+        return diceResult;
+    }
+
+    /**
+     * Returns the dice result of the player
+     */
+    public void setDiceResults(int result){
+        diceResult = result;
+    }
+
+    /**
      * Updates the players position
      * @param amount how many spaces the player moves
      */
-    private void updateCurrentPosition(int amount){
+    void updateCurrentPosition(int amount){
         currentPosition += amount;
     }
 
