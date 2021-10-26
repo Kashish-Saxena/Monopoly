@@ -1,15 +1,13 @@
 package Monopoly;
 import org.json.JSONObject;
-import java.io.IOException;
 import java.util.ArrayList;
 
 public class Board {
     public ArrayList<Property> propertyList;
 
     public Board() {
-        ArrayList<Property> propertyList = new ArrayList<Property>();
+        ArrayList<Property> propertyList = new ArrayList<>();
         JSONObject o = new JSONObject(json);
-        System.out.println(o.length());
         for(int i = 0 ; i < o.length(); i++) {
             String toS = Integer.toString(i);
             JSONObject pos = o.getJSONObject(toS);
