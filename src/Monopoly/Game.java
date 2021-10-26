@@ -18,7 +18,7 @@ public class Game {
     private int currentTurn = 1;
 	private int totalPlayers;
     private HashMap<Player, ArrayList<Property>> ownedProperties = new HashMap<>();
-
+    private boolean isFinished = false;
 
     /**
      * Create the game and initialise its internal map.
@@ -56,6 +56,7 @@ public class Game {
             }
             setPlayerOrder();
         }
+        while (boolean )
     }
 
     /**
@@ -193,7 +194,21 @@ public class Game {
                 currentPlayer = players.get(i);
         }
     }
+    private void currentPlay() {
+        for (int i = 0, i < players.size(), i++) {
 
+        }
+    }
+
+    /**
+     * Runs player's current turn
+     * @param a
+     * @param b
+     * @return
+     */
+    private void gamePlay() {
+        if ()
+        }
     /**
      * Compares two players dice results
      * @param a Player one
@@ -211,4 +226,5 @@ public class Game {
     public static void main(String[] args) {
         new Game().play();
     }
+
 }
