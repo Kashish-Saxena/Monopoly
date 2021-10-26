@@ -19,17 +19,12 @@ public class Board {
             int rCost = Integer.parseInt(rentCost);
             String val = pos.getString("colour");
             propertyList.add(new Property(pos.getString("name"), cost, rCost, i,val));
-
         }
-
-
-
     }
+
     public ArrayList<Property> getBoard(){
         return propertyList;
     }
-
-
 
     static String json ="{\n" +
             "\t\"0\": {\n" +

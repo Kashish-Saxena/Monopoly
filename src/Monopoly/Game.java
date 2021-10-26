@@ -48,20 +48,27 @@ public class Game {
         System.out.println("How many people are playing today?");
         Scanner sc = new Scanner(System.in);
         totalPlayers = sc.nextInt();
-        for(int i = 1; i <= totalPlayers; i++){
+        int i;
+        int j;
+
+        for (i = 1; i <= totalPlayers; i++){
+            System.out.printf("\nPlease write Player %d's name:\n", i);
             Scanner username = new Scanner(System.in);
-            String playername= username.nextLine();
-            Player p = new Player(playername);
+            String playerName = username.nextLine();
+            Player p = new Player(playerName);
 			players.add(p);
             p.setDiceResults(rollDice());
         }
-        for (int i = 0; i < players.size(); i++) {
-            while (players.get(i).getDiceResults() == players.get(i + 1).getDiceResults()) {
-                players.get(i).setDiceResults(rollDice()); //roll until all players have different results
+
+        for (j = 0; j < players.size(); j++) {
+            while (players.get(j).getDiceResults() == players.get(j + 1).getDiceResults()) {
+                players.get(j).setDiceResults(rollDice()); //roll until all players have different results
             }
             setPlayerOrder();
         }
+
         boolean finished = false;
+
         while (!finished) {
             Command command = InputParser.getCommand();
             finished = processCommand(command);
