@@ -22,7 +22,7 @@ public class Player {
     public Player(String playerName){
         this.playerName = playerName;
         this.money = 1000;
-        this.currentPosition = 1;
+        this.currentPosition = 0;
 
     }
 

@@ -90,7 +90,7 @@ public class Game {
         currentPlayer = players.get(currentPlayerIndex);
 
         boolean finished = false;
-
+        boolean roll = false;
         while (!finished) {
             System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
             Command command = InputParser.getCommand();
@@ -143,7 +143,7 @@ public class Game {
                     break;
                 } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
                     System.out.println("You do not have enough funds to buy this property.");
-                } else if (currentProperty.getOwner() != null) {
+                } else if (!currentProperty.checkAvailability()) {
                     System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
                 }
 
@@ -189,14 +189,26 @@ public class Game {
             case ROLL:
 
                 System.out.println("Now rolling for your turn!");
+
                 int diceRoll = rollDice();
+                //Add doubles, which would keep rolled to false so the player can roll again.
                 System.out.println("You have moved " + diceRoll + " positions!");
+
                 int startingPos = currentPlayer.currentPosition;
-                currentPlayer.currentPosition = startingPos + diceRoll;
+                int endingPos = startingPos + diceRoll;
+
+                if (endingPos > 39) {
+                    int placesBefore39 = 39 - startingPos;
+                    currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
+                } else {
+                    currentPlayer.currentPosition = startingPos + diceRoll;
+                }
+
                 System.out.println("Welcome to " + propertyList.get(currentPlayer.currentPosition).getName());
-                if(propertyList.get(currentPlayer.currentPosition).checkAvailability()){
+
+                if(!(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")) || currentProperty.checkAvailability()) {
                     System.out.println("You can buy this property for: " + propertyList.get(currentPlayer.currentPosition).getPurchasingCost());
-                }else if(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")){
+                }else if(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")) {
                     System.out.println("Under Construction. Stay tuned for this in a later update!");
                 }
                 else{
@@ -207,7 +219,9 @@ public class Game {
                         System.out.println("You cannot afford the rent. You have gone bankrupt");
                         players.remove(currentPlayer);
                     }else{
-                        currentPlayer.setMoney(currentPlayer.getMoney()-propertyList.get(currentPlayer.currentPosition).getRentCost());
+                        int rent = currentProperty.getRentCost();
+                        currentPlayer.setMoney(currentPlayer.getMoney() - rent);
+                        currentProperty.getOwner().setMoney(currentProperty.getOwner().getMoney() + rent);
                     }
                 }
 
