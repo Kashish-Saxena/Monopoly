@@ -86,6 +86,8 @@ public class Game {
         }
         */
 
+        currentPlayer = players.get(currentPlayerIndex);
+
         boolean finished = false;
 
         while (!finished) {
@@ -206,7 +208,7 @@ public class Game {
         System.out.println("It is Player "+ currentPlayer.getPlayerName() + "'s turn.");
 
         //next player rolls dice
-        rollDice();
+        //rollDice();
     }
 
     /**
