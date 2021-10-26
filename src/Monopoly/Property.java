@@ -68,9 +68,17 @@ public class Property {
      * Sets the owner of the property to the specified owner
      * @param owner specififed owner
      */
-    private void setOwner(Player owner) {
+    public void setOwner(Player owner) {
         this.owner = owner;
         isAvailable = false;
+    }
+
+    /**
+     * Removes the owner of the property
+     */
+    public void removeOwner() {
+        this.owner = null;
+        isAvailable = true;
     }
 
     /**
@@ -92,7 +100,7 @@ public class Property {
      * Return true if property is available, false otherwise
      * @return true if property is available, false otherwise
      */
-    public boolean isAvailable(){
+    public boolean checkAvailability(){
         return isAvailable;
     }
 

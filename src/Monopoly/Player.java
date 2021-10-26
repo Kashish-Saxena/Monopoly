@@ -17,7 +17,7 @@ public class Player {
     /**
      * Constructor for the player
      *
-     * @param playerName PLayer name
+     * @param playerName Player name
      */
     public Player(String playerName){
         this.playerName = playerName;
@@ -68,7 +68,9 @@ public class Player {
             if(!properties.contains(property)) properties.add(property);
         }
          */
-        if (!properties.contains(property)) { properties.add(property); }
+        if (!properties.contains(property)) {
+            properties.add(property);
+        }
 
         else { System.out.println("You already own this property."); }
     }

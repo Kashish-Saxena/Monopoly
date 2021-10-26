@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
-
 public class Game {
 
     private InputParser parser;
@@ -19,7 +18,7 @@ public class Game {
     private int currentTurn = 1;
 	private int totalPlayers;
     private HashMap<Player, ArrayList<Property>> ownedProperties = new HashMap<>();
-    private boolean isFinished = false;
+
 
     /**
      * Create the game and initialise its internal map.
@@ -57,7 +56,12 @@ public class Game {
             }
             setPlayerOrder();
         }
-        while (boolean )
+        boolean finished = false;
+        while (!finished) {
+            Command command = parser.getCommand();
+            finished = processCommand(command);
+        }
+        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -72,11 +76,6 @@ public class Game {
         //System.out.println(currentRoom.getLongDescription());
     }
 
-    /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
@@ -102,11 +101,12 @@ public class Game {
                 break;
 
             case BUY_PROPERTY:
-                System.out.println("Are you sure you want to buy this property? Y/N");
+                System.out.printf("Are you sure you want to buy %s? Y/N", getProperty(currentPlayer.currentPosition).getName());
                 Scanner buyScn = new Scanner(System.in);
                 String buyAns = buyScn.nextLine();
                 if (buyAns.equals("Y")) {
-                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    currentPlayer.buyProperty(getProperty(currentPlayer.currentPosition));
+                    getProperty(currentPlayer.currentPosition).setOwner(currentPlayer);
                     break;
                 } else if (buyAns.equals("N")) {
                     break;
@@ -124,7 +124,7 @@ public class Game {
                 Scanner quitScn = new Scanner(System.in);
                 String quitAns = quitScn.nextLine();
                 if (quitAns.equals("Y")) {
-                    //currentPlayer.buyProperty(currentPlayer.currentPosition);
+                    wantToQuit = true;
                     break;
                 } else if (quitAns.equals("N")) {
                     break;
