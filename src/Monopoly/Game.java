@@ -20,6 +20,7 @@ public class Game {
 	private int totalPlayers;
     private int maxPlayers = 6;
 
+
     /**
      * Create the game and initialise its internal map.
      */
@@ -121,6 +122,7 @@ public class Game {
         boolean wantToQuit = false;
 
         CommandWord commandWord = Command.getCommandWord();
+        Property currentProperty = propertyList.get(currentPlayer.currentPosition);
 
         switch (commandWord) {
             case UNKNOWN:
@@ -136,12 +138,18 @@ public class Game {
                 break;
 
             case BUY_PROPERTY:
-                System.out.printf("Are you sure you want to buy %s? Y/N", propertyList.get(currentPlayer.currentPosition).getName());
+                if (currentProperty.getColour().equals("none") || currentProperty.getOwner() != null) {
+                    System.out.println("You cannot buy this property.");
+                    break;
+                }
+
+                System.out.printf("Are you sure you want to buy %s? Y/N", currentProperty.getName());
                 Scanner buyScn = new Scanner(System.in);
                 String buyAns = buyScn.nextLine();
+
                 if (buyAns.equals("Y")) {
-                    currentPlayer.buyProperty(propertyList.get(currentPlayer.currentPosition));
-                    propertyList.get(currentPlayer.currentPosition).setOwner(currentPlayer);
+                    currentPlayer.buyProperty(currentProperty);
+                    currentProperty.setOwner(currentPlayer);
                     break;
                 } else if (buyAns.equals("N")) {
                     break;

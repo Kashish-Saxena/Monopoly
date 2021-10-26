@@ -23,7 +23,7 @@ public class Property {
      * @param name Name of the property
      * @param initialCost initial cost of the property
      */
-    public Property(String name, int initialCost, int rentCost,  int position,String colour) {
+    public Property(String name, int initialCost, int rentCost,  int position, String colour) {
         this.name = name;
         purchasingCost = initialCost;
         isAvailable = true;
@@ -63,6 +63,12 @@ public class Property {
     public int getRentCost() {
         return rentCost;
     }
+
+    /**
+     * Returns the colour of the property
+     * @return the colour of the property
+     */
+    public String getColour() {return colour; }
 
     /**
      * Sets the owner of the property to the specified owner

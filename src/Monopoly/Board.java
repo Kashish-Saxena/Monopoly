@@ -6,9 +6,9 @@ public class Board {
     public ArrayList<Property> propertyList;
 
     public Board() {
-        ArrayList<Property> propertyList = new ArrayList<>();
+        propertyList = new ArrayList<>();
         JSONObject o = new JSONObject(json);
-        for(int i = 0 ; i < o.length(); i++) {
+        for (int i = 0 ; i < o.length(); i++) {
             String toS = Integer.toString(i);
             JSONObject pos = o.getJSONObject(toS);
             String costS = pos.getString("purchasingCost");
