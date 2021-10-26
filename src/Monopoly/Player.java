@@ -1,7 +1,7 @@
 /**
  * Monopoly.Player class creates a player for the game
  * @author: Sahil Agrawal
- * @version: October 21 2020
+ * @version: October 24 2020
  */
 package Monopoly;
 import java.util.ArrayList;
@@ -18,8 +18,6 @@ public class Player {
      * Constructor for the player
      *
      * @param playerName PLayer name
-     * @param money inital money that the player starts with
-     * @param currentPosition the position of the player on the board
      */
     public Player(String playerName){
         this.playerName = playerName;
@@ -30,7 +28,7 @@ public class Player {
 
     /**
      * Returns the name of the player
-     * @return Syring of the player name
+     * @return String of the player name
      */
     public String getPlayerName() {
         return playerName;
@@ -51,6 +49,10 @@ public class Player {
      */
     public int getMoney() {
         return money;
+    }
+
+    public void setMoney(int money){
+        this.money = money;
     }
 
     /**

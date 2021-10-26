@@ -3,6 +3,7 @@ package Monopoly;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Game {
 
     private InputParser parser;
