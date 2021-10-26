@@ -9,6 +9,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
+    private Board board;
+    ArrayList<Property> propertyList;
     private InputParser parser;
     private CommandWord commandWord;
     private ArrayList<Integer> dice;
@@ -26,6 +28,8 @@ public class Game {
      */
     public Game()
     {
+        board = new Board();
+        propertyList = board.getBoard();
         parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
@@ -59,7 +63,7 @@ public class Game {
         }
         boolean finished = false;
         while (!finished) {
-            Command command = parser.getCommand();
+            Command command = InputParser.getCommand();
             finished = processCommand(command);
         }
         System.out.println("Thank you for playing Monopoly!");
@@ -102,12 +106,12 @@ public class Game {
                 break;
 
             case BUY_PROPERTY:
-                System.out.printf("Are you sure you want to buy %s? Y/N", getProperty(currentPlayer.currentPosition).getName());
+                System.out.printf("Are you sure you want to buy %s? Y/N", propertyList.get(currentPlayer.currentPosition).getName());
                 Scanner buyScn = new Scanner(System.in);
                 String buyAns = buyScn.nextLine();
                 if (buyAns.equals("Y")) {
-                    currentPlayer.buyProperty(getProperty(currentPlayer.currentPosition));
-                    getProperty(currentPlayer.currentPosition).setOwner(currentPlayer);
+                    currentPlayer.buyProperty(propertyList.get(currentPlayer.currentPosition));
+                    propertyList.get(currentPlayer.currentPosition).setOwner(currentPlayer);
                     break;
                 } else if (buyAns.equals("N")) {
                     break;
@@ -196,21 +200,7 @@ public class Game {
                 currentPlayer = players.get(i);
         }
     }
-    private void currentPlay() {
-        for (int i = 0, i < players.size(), i++) {
 
-        }
-    }
-
-    /**
-     * Runs player's current turn
-     * @param a
-     * @param b
-     * @return
-     */
-    private void gamePlay() {
-        if ()
-        }
     /**
      * Compares two players dice results
      * @param a Player one

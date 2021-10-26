@@ -25,7 +25,7 @@ public class Board {
 
 
     }
-    public ArrayList getBoard(){
+    public ArrayList<Property> getBoard(){
         return propertyList;
     }
 
