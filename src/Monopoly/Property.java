@@ -9,13 +9,13 @@ import java.util.Objects;
 
 public class Property {
 
-    private String name;
+    private final String name;
     private Player owner;
     private boolean isAvailable;
-    private int purchasingCost;
+    private final int purchasingCost;
     private int rentCost;
-    private int position;
-    private String colour;
+    private final int position;
+    private final String colour;
 
     /**
      * Constructor of the Monopoly.Property class
@@ -75,8 +75,8 @@ public class Property {
      * @param owner specififed owner
      */
     public void setOwner(Player owner) {
+        isAvailable = owner == null;
         this.owner = owner;
-        isAvailable = false;
     }
 
     /**

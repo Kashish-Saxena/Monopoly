@@ -14,7 +14,8 @@ public enum CommandWord
 {
     // A value for each command word along with its
     // corresponding user interface string.
-    PLAYER_STATE("state"), BUY_PROPERTY("buy"), PASS_TURN("pass"), HELP("help"), QUIT("quit"), UNKNOWN("?"),ROLL("roll");
+    BUY_PROPERTY("buy"), DEBUG_ROLL("debug"), HELP("help"), PASS_TURN("pass"),
+    QUIT("quit"), ROLL("roll"), PLAYER_STATE("state"), UNKNOWN("?");
 
     // The command string.
     private String commandString;

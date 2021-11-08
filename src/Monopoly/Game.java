@@ -7,10 +7,8 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game {
 
-    private Board board;
     ArrayList<Property> propertyList;
-    private InputParser parser;
-    private CommandWord commandWord;
+    private final InputParser parser;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
@@ -18,7 +16,6 @@ public class Game {
     private ArrayList<Square> squares = new ArrayList<Square>(40);
     private int currentTurn = 1;
 	private int totalPlayers;
-    private int maxPlayers = 6;
 
 
     /**
@@ -26,7 +23,7 @@ public class Game {
      */
     public Game()
     {
-        board = new Board();
+        Board board = new Board();
         propertyList = board.getBoard();
         parser = new InputParser();
         dice = new ArrayList<>();
@@ -55,6 +52,7 @@ public class Game {
 
             totalPlayers = sc.nextInt();
 
+            int maxPlayers = 6;
             if (totalPlayers > maxPlayers) {
                 System.out.println("Too many players. Please enter the number again.");
                 continue;
@@ -91,11 +89,17 @@ public class Game {
 
         boolean finished = false;
         boolean roll = false;
+        System.out.println("\nTurn " + currentTurn + ". It is " + currentPlayer.getPlayerName() + "'s turn.");
+
         while (!finished) {
             System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
             Command command = InputParser.getCommand();
             System.out.println();
             finished = processCommand(command);
+            if (totalPlayers == 1) {
+                System.out.println(players.get(0).getPlayerName() + " won!");
+                finished = true;
+            }
 
         }
         System.out.println("Thank you for playing Monopoly!");
@@ -112,6 +116,40 @@ public class Game {
         //System.out.println(currentRoom.getLongDescription());
     }
 
+    private void getDetails(int currentPos) {
+        Property currentProperty = propertyList.get(currentPos);
+
+        System.out.println("Welcome to " + propertyList.get(currentPos).getName() + " (Position " + currentPos + ")");
+
+        if(propertyList.get(currentPos).getColour().equals("none")) {
+            System.out.println("Under Construction. Stay tuned for this in a later update!");
+        }else if(!(propertyList.get(currentPos).getColour().equals("none")) && currentProperty.checkAvailability()) {
+            System.out.println("You can buy this property for: " + propertyList.get(currentPos).getPurchasingCost());
+        }
+        else{
+            System.out.println("This property is owned by " + propertyList.get(currentPos).getOwner().getPlayerName());
+            System.out.println("The rent for this property is: " + propertyList.get(currentPos).getRentCost());
+
+
+            int rent = currentProperty.getRentCost();
+            if(getCurrentPlayer().getMoney() < propertyList.get(currentPos).getRentCost()){
+                System.out.println("You cannot afford the rent. You have paid what you could and gone bankrupt.");
+                currentProperty.getOwner().setMoney(currentProperty.getOwner().getMoney() + currentPlayer.getMoney());
+                currentPlayer.setMoney(0);
+                for (int i = 0; i < currentPlayer.getProperties().size(); i++) {
+                    currentPlayer.getProperties().get(i).setOwner(null);
+                }
+                System.out.println(currentPlayer.getPlayerName() + " lost. All their properties have been liberated and are now available to buy.");
+                players.remove(currentPlayer);
+                totalPlayers--;
+            }else{
+                System.out.println("The rent cost will be taken from your account");
+                currentPlayer.setMoney(currentPlayer.getMoney() - rent);
+                currentProperty.getOwner().setMoney(currentProperty.getOwner().getMoney() + rent);
+            }
+        }
+    }
+
     /**
      * Given a command, process (that is: execute) the command.
      * @param command The command to be processed.
@@ -125,18 +163,6 @@ public class Game {
         Property currentProperty = propertyList.get(currentPlayer.currentPosition);
 
         switch (commandWord) {
-            case UNKNOWN:
-                System.out.println("Unknown command.");
-                break;
-
-            case HELP:
-                printHelp();
-                break;
-
-            case PLAYER_STATE:
-                System.out.println(currentPlayer.getPlayerState());
-                break;
-
             case BUY_PROPERTY:
                 if (currentProperty.getColour().equals("none")) {
                     System.out.println("You cannot buy this property.");
@@ -145,28 +171,52 @@ public class Game {
                     System.out.println("You do not have enough funds to buy this property.");
                 } else if (!currentProperty.checkAvailability()) {
                     System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
-                }
-
-                System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
-                Scanner buyScn = new Scanner(System.in);
-                String buyAns = buyScn.nextLine();
-
-                if (buyAns.equals("Y")) {
-                    currentPlayer.buyProperty(currentProperty);
-                    currentProperty.setOwner(currentPlayer);
-                    int propertyCost = currentProperty.getPurchasingCost();
-
-                    currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                    System.out.println("You are now the owner of " + currentProperty.getName() + ".");
-                    System.out.println("Your balance is now $" + currentPlayer.getMoney());
-
-                    break;
-                } else if (buyAns.equals("N")) {
-                    break;
                 } else {
-                    System.out.println("Unknown answer, please try the command again.");
+                    System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
+                    Scanner buyScn = new Scanner(System.in);
+                    String buyAns = buyScn.nextLine();
+
+                    if (buyAns.equals("Y")) {
+                        currentPlayer.buyProperty(currentProperty);
+                        currentProperty.setOwner(currentPlayer);
+                        int propertyCost = currentProperty.getPurchasingCost();
+
+                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                        System.out.println("You are now the owner of " + currentProperty.getName() + ".");
+                        System.out.println("Your balance is now $" + currentPlayer.getMoney());
+
+                        break;
+                    } else if (buyAns.equals("N")) {
+                        break;
+                    } else {
+                        System.out.println("Unknown answer, please try the command again.");
+                        break;
+                    }
+                }
+
+            case DEBUG_ROLL:
+                System.out.println("Welcome to the secret debug roll! Please enter the position you want Player " + currentPlayer.getPlayerName() + " to move to: \n");
+                Scanner posScn = new Scanner(System.in);
+                if (!(posScn.hasNextInt())) {
+                    System.out.println("Unknown entry. Please try the command again.");
                     break;
                 }
+
+                int newPos = posScn.nextInt();
+                if (newPos > 39) {
+                    System.out.println("Requested position is too high (Maximum is 39). Please try the command again.");
+                    break;
+                }
+                currentPlayer.currentPosition = newPos;
+                System.out.println("Your new position is " + currentPlayer.currentPosition + " (" + propertyList.get(currentPlayer.currentPosition).getName() + ")");
+
+                getDetails(currentPlayer.currentPosition);
+
+                break;
+
+            case HELP:
+                printHelp();
+                break;
 
             case PASS_TURN:
                 passTurn();
@@ -187,7 +237,6 @@ public class Game {
                 }
 
             case ROLL:
-
                 System.out.println("Now rolling for your turn!");
 
                 int diceRoll = rollDice();
@@ -204,28 +253,28 @@ public class Game {
                     currentPlayer.currentPosition = startingPos + diceRoll;
                 }
 
-                System.out.println("Welcome to " + propertyList.get(currentPlayer.currentPosition).getName());
+                getDetails(currentPlayer.currentPosition);
+                break;
 
-                if(!(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")) || currentProperty.checkAvailability()) {
-                    System.out.println("You can buy this property for: " + propertyList.get(currentPlayer.currentPosition).getPurchasingCost());
-                }else if(propertyList.get(currentPlayer.currentPosition).getColour().equals("none")) {
-                    System.out.println("Under Construction. Stay tuned for this in a later update!");
-                }
-                else{
-                    System.out.println("This property is owned by " + propertyList.get(currentPlayer.currentPosition).getOwner());
-                    System.out.println("The rent for this property is: " + propertyList.get(currentPlayer.currentPosition).getRentCost());
-                    System.out.println("The rent cost will be taken from your account");
-                    if(getCurrentPlayer().getMoney() < propertyList.get(currentPlayer.currentPosition).getRentCost()){
-                        System.out.println("You cannot afford the rent. You have gone bankrupt");
-                        players.remove(currentPlayer);
-                    }else{
-                        int rent = currentProperty.getRentCost();
-                        currentPlayer.setMoney(currentPlayer.getMoney() - rent);
-                        currentProperty.getOwner().setMoney(currentProperty.getOwner().getMoney() + rent);
+            case PLAYER_STATE:
+
+                System.out.println("Which player's state?");
+                System.out.println("Options: " + getPlayerList());
+                Scanner playerScn = new Scanner(System.in);
+                String playerAns = playerScn.nextLine();
+
+                for (int i = 0; i < totalPlayers; i++) {
+                    if (playerAns.equals(players.get(i).getPlayerName())) {
+                        System.out.println(players.get(i).getPlayerState());
+                        break;
                     }
                 }
+                System.out.println("Unknown Entry. Please try the command again.");
+                break;
 
-
+            case UNKNOWN:
+                System.out.println("Unknown command.");
+                break;
 
         }
         return wantToQuit;
@@ -259,16 +308,25 @@ public class Game {
 
     }
 
-    private void passTurn(){
+    private String getPlayerList() {
+        StringBuilder playerList = new StringBuilder();
+        for (int i = 0; i < totalPlayers - 1; i++) {
+            playerList.append(players.get(i).getPlayerName()).append(" ");
+        }
+
+        playerList.append(players.get(totalPlayers - 1).getPlayerName());
+
+        return playerList.toString();
+    }
+
+    private void passTurn() {
         currentPlayerIndex++;
         if (currentPlayerIndex >= totalPlayers){
             currentPlayerIndex = 0;
         }
         currentPlayer = players.get(currentPlayerIndex);
-        System.out.println("It is Player "+ currentPlayer.getPlayerName() + "'s turn.");
-
-        //next player rolls dice
-        //rollDice();
+        currentTurn++;
+        System.out.println("Turn " + currentTurn + ". It is "+ currentPlayer.getPlayerName() + "'s turn.");
     }
 
     /**
