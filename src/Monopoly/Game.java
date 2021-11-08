@@ -16,6 +16,8 @@ public class Game {
     private ArrayList<Square> squares = new ArrayList<Square>(40);
     private int currentTurn = 1;
 	private int totalPlayers;
+    private int min_players = 2;
+    private int max_players = 6;
 
 
     /**
@@ -348,6 +350,44 @@ public class Game {
         }
     }
     */
+
+    /**
+     * Returns the total number of players
+     */
+    int getTotalPlayers(){
+        return totalPlayers;
+    }
+
+    /**
+     * Sets the total number of players
+     * @param num Total number of players
+     */
+    void setTotalPlayers(int num){
+        totalPlayers = num;
+    }
+
+    /**
+     *  Returns the minimum number of players allowed in the game
+     */
+    int getMinPlayers(){
+        return min_players;
+    }
+
+    /**
+     * Returns the minimum number of players allowed in the game
+     */
+    int getMaxPlayers(){
+        return max_players;
+    }
+
+    /**
+     * Adds a player to the list of players
+     * @param p Player to be added
+     */
+    void addPlayer(Player p){
+        players.add(p);
+    }
+
     /**
      * Compares two players dice results
      * @param a Player one
