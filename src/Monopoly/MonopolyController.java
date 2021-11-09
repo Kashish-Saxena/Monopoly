@@ -12,7 +12,16 @@ public class MonopolyController implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        String[] coordinates = e.getActionCommand().split(" ");
-        game.play();
+        if(e.getActionCommand().equals("pass")){
+            game.passTurn();
+        }
+
+        else if (e.getActionCommand().equals("buyproperty")){
+            game.buyProperty();
+        }
+
+        //else if (e.getActionCommand().equals("roll")){
+          //  game.rollDice();
+        //}
     }
 }
