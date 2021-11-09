@@ -19,6 +19,8 @@ public class Game {
     private int min_players = 2;
     private int max_players = 6;
 
+    private ArrayList<MonopolyView> views;
+
 
     /**
      * Create the game and initialise its internal map.
@@ -30,6 +32,7 @@ public class Game {
         parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
+        views = new ArrayList<>();
         currentPlayerIndex = 0;
     }
 
@@ -38,6 +41,16 @@ public class Game {
      */
     private void createBoard(){
         
+    }
+
+    public void addView(MonopolyView mview){
+        views.add(mview);
+    }
+
+    private void notifyAllViews(MonopolyEvent e){
+        for (MonopolyView v : views){
+            v.handleMonopolyUpdate(e);
+        }
     }
 
     public void play(){

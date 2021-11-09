@@ -3,7 +3,7 @@ package Monopoly;
 import javax.swing.*;
 import java.io.IOException;
 
-public class MonopolyFrame extends JFrame {
+public class MonopolyFrame extends JFrame implements MonopolyView {
 
     private Game game;
 
@@ -32,9 +32,10 @@ public class MonopolyFrame extends JFrame {
 
         frame.pack();
         frame.setVisible(true);
+        game.addView(this);
     }
 
-    private void handleGameEvent(MonopolyEvent e){
+    private void handleInitialSetup(MonopolyEvent e){
         String str = "";
         String name = "";
         while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
@@ -57,6 +58,11 @@ public class MonopolyFrame extends JFrame {
             game.addPlayer(player);
         }
         game.play();
+    }
+
+    @Override
+    public void handleMonopolyUpdate(MonopolyEvent e) {
+        handleInitialSetup(e);
     }
 
     public static void main(String[] args) throws IOException {
