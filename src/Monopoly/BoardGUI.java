@@ -13,7 +13,7 @@ public class BoardGUI extends JPanel {
 	JTextArea[] properties;
 	int numPlayers;
 	
-	private String[] playerIcon = {"playerOne.jpg", "playerTwo.jpg", "playerThree.jpg", "playerFour.jpg", "playerFive.jpg", "playerSix.jpg"};
+	private String[] playerIcon = {"Players_Icons/playerOne.jpg", "Players_Icons/playerTwo.jpg", "Players_Icons/playerThree.jpg", "Players_Icons/playerFour.jpg", "Players_Icons/playerFive.jpg", "Players_Icons/playerSix.jpg"};
 	
     public BoardGUI(int numPlayers)
 	{
