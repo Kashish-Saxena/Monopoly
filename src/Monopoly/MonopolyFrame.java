@@ -24,35 +24,82 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         this.game = game;
         propertyPictures = new ArrayList<JLabel>();
 
+
+        handleInitialSetup();
+
+        boardGUI = new BoardGUI(game.getTotalPlayers());
         JFrame frame = new JFrame("Monopoly");
-        JPanel panel = new JPanel();
 
         frame.setLayout(new BorderLayout());
 
-        panel.setSize(900, 50);
-        panel.setBackground(Color.lightGray);
-
-        JPanel inputPanel = new JPanel();
-        //panel.add();
+        //JPanel inputPanel = new JPanel();
 
         // main window
         JFrame.setDefaultLookAndFeelDecorated(true);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        // add the JPanel to the main window
 
         boardGUI = new BoardGUI(game.getTotalPlayers());
-        frame.add(panel, BorderLayout.PAGE_START);
+
+        //right panel
+
+        JPanel rightPanel = new JPanel(new BorderLayout());
+        rightPanel.setSize(200, 400);
+
+        //add buttons
+        JButton rollButton = new JButton("roll");
+        rollButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                int diceRoll = game.rollDice();
+                //TODO: Add doubles, which would keep rolled to false so the player can roll again.
+                Player currentPlayer = game.getCurrentPlayer();
+
+                int startingPos = currentPlayer.currentPosition;
+                int endingPos = startingPos + diceRoll;
+
+                if (endingPos > 39) {
+                    int placesBefore39 = 39 - startingPos;
+                    currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
+                } else {
+                    currentPlayer.currentPosition = startingPos + diceRoll;
+                }
+
+                Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
+                JOptionPane.showMessageDialog(frame, "You have rolled a " + diceRoll + ".");
+                try {
+                    propertyPopUp();
+
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+            }
+        });
+
+        JButton quitButton = new JButton("quit");
+
+
+        JPanel frameButtonPanel = new JPanel();
+        frameButtonPanel.setSize(200, 100);
+        frameButtonPanel.add(rollButton);
+        frameButtonPanel.add(quitButton);
+
+        rightPanel.add(frameButtonPanel, BorderLayout.PAGE_END);
+
         frame.add(boardGUI, BorderLayout.CENTER);
+        frame.add(rightPanel, BorderLayout.EAST);
+
         frame.setSize(1800, 1000);
         frame.setBackground(Color.lightGray);
 
         frame.setVisible(true);
 
         game.addView(this);
+        game.play();
     }
 
-    private void handleInitialSetup(MonopolyEvent e){
+    private void handleInitialSetup(){
         String str = "";
         String name = "";
         while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
@@ -74,18 +121,13 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
             Player player = new Player(name);
             game.addPlayer(player);
         }
-        game.play();
     }
 
     @Override
     public void handleMonopolyUpdate(MonopolyEvent e) {
-        handleInitialSetup(e);
+        handleInitialSetup();
     }
 
-    public static void main(String[] args) throws IOException {
-        Game game = new Game();
-        MonopolyFrame mainFrame = new MonopolyFrame(game);
-    }
 
 
     public void propertyPopUp() throws IOException{
@@ -129,8 +171,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
                         int propertyCost = currentProperty.getPurchasingCost();
 
                         currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                        System.out.println("You are now the owner of " + currentProperty.getName() + ".");
-                        System.out.println("Your balance is now $" + currentPlayer.getMoney());
                     }
                 }
             }
@@ -174,5 +214,10 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         frame.setLocationRelativeTo(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+    }
+
+    public static void main(String[] args) throws IOException {
+        Game game = new Game();
+        MonopolyFrame mainFrame = new MonopolyFrame(game);
     }
 }

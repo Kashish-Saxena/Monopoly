@@ -1,5 +1,6 @@
 package Monopoly;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
@@ -55,6 +56,7 @@ public class Game {
 
     public void play(){
         printWelcome();
+        /*
         System.out.println("How many people are playing today? Minimum 2, Maximum 6.");
 
         boolean confirmedPlayers = false;
@@ -78,6 +80,7 @@ public class Game {
             }
             confirmedPlayers = true;
         }
+        */
 
         int i;
         //int j;
@@ -288,7 +291,7 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    private int rollDice() {
+    int rollDice() {
         int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
         int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
         return dice1 + dice2;
