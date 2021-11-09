@@ -17,11 +17,12 @@ public class MonopolyController implements ActionListener {
         }
 
         else if (e.getActionCommand().equals("buyproperty")){
-            game.buyProperty();
+
+            //game.buyProperty();
         }
 
-        //else if (e.getActionCommand().equals("roll")){
-          //  game.rollDice();
-        //}
+        else if (e.getActionCommand().equals("roll")){
+            //game.rollDice();
+        }
     }
 }
