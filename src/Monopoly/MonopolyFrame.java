@@ -14,8 +14,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         JFrame frame = new JFrame("Monopoly");
         JPanel panel = new JPanel();
-        JLabel gametitle = new JLabel("Welcome to Monopoly");
-        panel.add(gametitle);
+        JLabel gameTitle = new JLabel("Welcome to Monopoly");
+        panel.add(gameTitle);
         //BufferedImage image = ImageIO.read(new File("./java.jpg"));
         //JLabel label = new JLabel(new ImageIcon(image));
         //panel.add(label);
@@ -44,7 +44,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
                 if (str != null) {
                     game.setTotalPlayers(Integer.parseInt(str));
                 }
-            } catch (NumberFormatException excp) {
+            } catch (NumberFormatException exception) {
                 game.setTotalPlayers(0);
             }
         }
@@ -67,6 +67,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
     public static void main(String[] args) throws IOException {
         Game game = new Game();
-        MonopolyFrame mframe = new MonopolyFrame(game);
+        MonopolyFrame mainFrame = new MonopolyFrame(game);
     }
 }

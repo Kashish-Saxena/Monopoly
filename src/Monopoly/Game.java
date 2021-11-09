@@ -21,6 +21,7 @@ public class Game {
 
     private ArrayList<MonopolyView> views;
 
+    public enum Status {PLAYER1_WON, PLAYER2_WON, PLAYER3_WON, PLAYER4_WON, PLAYER5_WON, PLAYER6_WON, UNDECIDED}
 
     /**
      * Create the game and initialise its internal map.
@@ -255,7 +256,7 @@ public class Game {
                 System.out.println("Now rolling for your turn!");
 
                 int diceRoll = rollDice();
-                //Add doubles, which would keep rolled to false so the player can roll again.
+                //TODO: Add doubles, which would keep rolled to false so the player can roll again.
                 System.out.println("You have moved " + diceRoll + " positions!");
 
                 int startingPos = currentPlayer.currentPosition;
@@ -411,12 +412,8 @@ public class Game {
         return Integer.compare(a.getDiceResults(), b.getDiceResults());
     }
 
-    private void movePlayer(Player p){
-        p.updateCurrentPosition (p.getDiceResults());
-    }
-
-    public static void main(String[] args) {
+    /*public static void main(String[] args) {
         new Game().play();
-    }
+    }*/
 
 }

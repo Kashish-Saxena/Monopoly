@@ -27,13 +27,11 @@ public class Command
      * Create a command object. First and second words must be supplied, but
      * the second may be null.
      * @param commandWord The CommandWord. UNKNOWN if the command word
-     *                  was not recognised.
-     * //@param secondWord The second word of the command. May be null.
+     * was not recognised.
      */
-    public Command(CommandWord commandWord/*, String secondWord*/)
+    public Command(CommandWord commandWord)
     {
         Command.commandWord = commandWord;
-        //this.secondWord = secondWord;
     }
 
     /**
@@ -46,15 +44,6 @@ public class Command
     }
 
     /**
-     * @return The second word of this command. Returns null if there was no
-     * second word.
-     */
-    /*public String getSecondWord()
-    {
-        return secondWord;
-    }*/
-
-    /**
      * @return true if this command was not understood.
      */
     public boolean isUnknown()
@@ -62,11 +51,4 @@ public class Command
         return (commandWord == CommandWord.UNKNOWN);
     }
 
-    /**
-     * @return true if the command has a second word.
-     */
-    /*public boolean hasSecondWord()
-    {
-        return (secondWord != null);
-    }*/
 }
