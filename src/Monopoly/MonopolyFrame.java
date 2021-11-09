@@ -78,7 +78,17 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         });
 
         JButton quitButton = new JButton("quit");
+        quitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
 
+                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
+                if (code == JOptionPane.OK_OPTION) {
+                    frame.dispose();
+                }
+
+            }
+        });
 
         JPanel frameButtonPanel = new JPanel();
         frameButtonPanel.setSize(200, 100);
