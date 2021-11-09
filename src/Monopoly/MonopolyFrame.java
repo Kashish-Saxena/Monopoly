@@ -1,7 +1,15 @@
 package Monopoly;
 
+import javax.imageio.ImageIO;
 import javax.swing.*;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class MonopolyFrame extends JFrame implements MonopolyView {
 
@@ -12,13 +20,25 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         this.game = game;
 
+
+
+
         JFrame frame = new JFrame("Monopoly");
         JPanel panel = new JPanel();
-        JLabel gameTitle = new JLabel("Welcome to Monopoly");
-        panel.add(gameTitle);
-        //BufferedImage image = ImageIO.read(new File("./java.jpg"));
-        //JLabel label = new JLabel(new ImageIcon(image));
-        //panel.add(label);
+
+        frame.setLayout(new BorderLayout());
+
+
+
+        panel.setSize(900, 50);
+        panel.setBackground(Color.lightGray);
+
+
+        BufferedImage image = ImageIO.read(MonopolyFrame.class.getResourceAsStream("board.jpg"));
+        JLabel label = new JLabel(new ImageIcon(image));
+        label.setSize(400, 400);
+        label.setBackground(Color.lightGray);
+
 
         JPanel inputpanel = new JPanel();
         //panel.add();
@@ -28,10 +48,15 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         // add the JPanel to the main window
-        frame.add(panel);
+        frame.add(panel, BorderLayout.PAGE_START);
+        frame.add(label, BorderLayout.CENTER);
+        frame.setSize(1800, 1000);
+        frame.setBackground(Color.lightGray);
 
-        frame.pack();
+
+
         frame.setVisible(true);
+
         game.addView(this);
     }
 
