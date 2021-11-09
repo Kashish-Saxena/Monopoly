@@ -13,7 +13,7 @@ public class BoardGUI extends JPanel {
 	JTextArea[] properties;
 	int numPlayers;
 	
-	private String[] playerIcon = {"playerOne.jpg", "playerTwo.jpg", "playerThree.jpg", "playerFour.jpg"};
+	private String[] playerIcon = {"playerOne.jpg", "playerTwo.jpg", "playerThree.jpg", "playerFour.jpg", "playerFive.jpg", "playerSix.jpg"};
 	
     public BoardGUI(int numPlayers)
 	{
@@ -28,7 +28,7 @@ public class BoardGUI extends JPanel {
 		for(int x = 0; x < numPlayers; x++)
 		{
 			this.players[x] = new JLabel();
-			this.players[x].setIcon(new ImageIcon(BoardGUI.class.getResource(playerIcon[x]))); // set the image
+			this.players[x].setIcon(new ImageIcon(BoardGUI.class.getResource(playerIcon[x]))); 
 			this.players[x].setSize(20, 20);
 			this.movement(x, 0); 
 			this.players[x].setOpaque(true);
@@ -36,8 +36,8 @@ public class BoardGUI extends JPanel {
 		}
 		
 		
-		Box createBox = Box.createVerticalBox(); // creating boxes that represent each position
-		createBox.setBorder(new LineBorder(new Color(0, 0, 0))); // needs border
+		Box createBox = Box.createVerticalBox();
+		createBox.setBorder(new LineBorder(new Color(0, 0, 0)));
 		createBox.setBounds(550, 550, 100, 100);
 		add(createBox);
 		
@@ -81,10 +81,6 @@ public class BoardGUI extends JPanel {
 		property4.setBorder(new LineBorder(new Color(0, 0, 0)));
 		property4.setBounds(350, 550, 50, 100);
 		add(property4);
-		
-		JLabel imageTaxOne = new JLabel("");
-		imageTaxOne.setIcon(new ImageIcon(BoardGUI.class.getResource("/gui/Images/taxOne.jpg")));
-		property4.add(imageTaxOne);
 		
 		Box property5 = Box.createVerticalBox();
 		property5.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -434,10 +430,6 @@ public class BoardGUI extends JPanel {
 		property35.setBorder(new LineBorder(new Color(0, 0, 0)));
 		property35.setBounds(550, 450, 100, 50);
 		add(property35);
-		
-		JLabel imageTaxTwo = new JLabel("");
-		imageTaxTwo.setIcon(new ImageIcon(BoardGUI.class.getResource("/gui/Images/taxTwo.jpg")));
-		property35.add(imageTaxTwo);
 		
 		Box property36 = Box.createHorizontalBox();
 		property36.setBorder(new LineBorder(new Color(0, 0, 0)));
