@@ -40,7 +40,7 @@ public class Game {
      * Creates the Monopoly board
      */
     private void createBoard(){
-        
+
     }
 
     public void addView(MonopolyView mview){
@@ -179,35 +179,7 @@ public class Game {
 
         switch (commandWord) {
             case BUY_PROPERTY:
-                if (currentProperty.getColour().equals("none")) {
-                    System.out.println("You cannot buy this property.");
-                    break;
-                } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
-                    System.out.println("You do not have enough funds to buy this property.");
-                } else if (!currentProperty.checkAvailability()) {
-                    System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
-                } else {
-                    System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
-                    Scanner buyScn = new Scanner(System.in);
-                    String buyAns = buyScn.nextLine();
 
-                    if (buyAns.equals("Y")) {
-                        currentPlayer.buyProperty(currentProperty);
-                        currentProperty.setOwner(currentPlayer);
-                        int propertyCost = currentProperty.getPurchasingCost();
-
-                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                        System.out.println("You are now the owner of " + currentProperty.getName() + ".");
-                        System.out.println("Your balance is now $" + currentPlayer.getMoney());
-
-                        break;
-                    } else if (buyAns.equals("N")) {
-                        break;
-                    } else {
-                        System.out.println("Unknown answer, please try the command again.");
-                        break;
-                    }
-                }
 
             case DEBUG_ROLL:
                 System.out.println("Welcome to the secret debug roll! Please enter the position you want Player " + currentPlayer.getPlayerName() + " to move to: \n");
@@ -312,7 +284,7 @@ public class Game {
     /**
      * Returns the current player from the players list
      */
-    private Player getCurrentPlayer(){
+    public Player getCurrentPlayer(){
         return players.get(currentPlayerIndex);
     }
 
@@ -334,7 +306,11 @@ public class Game {
         return playerList.toString();
     }
 
-    private void passTurn() {
+    public ArrayList<Property> getPropertyList() {
+        return propertyList;
+    }
+
+    public void passTurn() {
         currentPlayerIndex++;
         if (currentPlayerIndex >= totalPlayers){
             currentPlayerIndex = 0;
