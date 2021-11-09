@@ -384,7 +384,7 @@ public class Game {
         return playerList.toString();
     }
 
-    private void passTurn() {
+    void passTurn() {
         currentPlayerIndex++;
         if (currentPlayerIndex >= totalPlayers){
             currentPlayerIndex = 0;
@@ -392,6 +392,10 @@ public class Game {
         currentPlayer = players.get(currentPlayerIndex);
         currentTurn++;
         System.out.println("Turn " + currentTurn + ". It is "+ currentPlayer.getPlayerName() + "'s turn.");
+    }
+
+    void buyProperty(){
+
     }
 
     /**
