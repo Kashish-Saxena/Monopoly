@@ -22,12 +22,12 @@ public class BoardGUI extends JPanel {
 		this.players = new JLabel[numPlayers];
 		this.properties = new JTextArea[22];
 		
-		this.setSize(500, 500); // set size of panel
-		this.setLayout(null); // set by absolute values
+		this.setSize(500, 500);
+		this.setLayout(null);
 		
 		for(int x = 0; x < numPlayers; x++)
 		{
-			this.players[x] = new JLabel(); // new label
+			this.players[x] = new JLabel();
 			this.players[x].setIcon(new ImageIcon(BoardGUI.class.getResource(playerIcon[x]))); // set the image
 			this.players[x].setSize(20, 20);
 			this.movement(x, 0); 
@@ -161,10 +161,6 @@ public class BoardGUI extends JPanel {
 		property11.setBorder(new LineBorder(new Color(0, 0, 0)));
 		property11.setBounds(0, 450, 100, 50);
 		add(property11);
-		
-		JLabel imageUtilityOne = new JLabel("");
-		property11.add(imageUtilityOne);
-		imageUtilityOne.setIcon(new ImageIcon(BoardGUI.class.getResource("/gui/Images/utilityApp.jpg")));
 		
 		Box property12 = Box.createHorizontalBox();
 		property12.setBorder(new LineBorder(new Color(0, 0, 0)));
@@ -341,10 +337,6 @@ public class BoardGUI extends JPanel {
 		property26.setBorder(new LineBorder(new Color(0, 0, 0)));
 		property26.setBounds(450, 0, 50, 100);
 		add(property26);
-		
-		JLabel imageUtilityTwo = new JLabel("");
-		property26.add(imageUtilityTwo);
-		imageUtilityTwo.setIcon(new ImageIcon(BoardGUI.class.getResource("/gui/Images/utilityEnhancment.jpg")));
 		
 		Box property27 = Box.createVerticalBox();
 		property27.setBorder(new LineBorder(new Color(0, 0, 0)));
