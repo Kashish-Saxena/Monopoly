@@ -3,6 +3,10 @@ package Monopoly;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.util.*;
+import javax.swing.*;
 
 
 public class Game {
@@ -52,6 +56,52 @@ public class Game {
             v.handleMonopolyUpdate(e);
         }
     }
+
+    public void createGUI(ArrayList<Player> listPlayers){
+		
+		frame.setResizable(true);
+		frame.setSize(830, 720);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setVisible(true);								
+	    frame.getContentPane().add(BorderLayout.CENTER, center);
+	    frame.setLocationRelativeTo(null);
+	    frame.setBackground(new Color(80, 160, 250));
+	    
+		
+		if(listPlayers.size() >= 2){
+			frame.setSize(920, 560);
+			west = new SideGui();
+			west.setBackground(Color.magenta);
+			frame.getContentPane().add(BorderLayout.WEST, west);
+			west.refreshList(listPlayers.get(0));
+			west.repaint();												//adds panels depending on how many players are playing
+			east = new SideGui();
+			east.setBackground(Color.green);
+			frame.getContentPane().add(BorderLayout.EAST, east);
+			east.refreshList(listPlayers.get(1));
+			east.repaint();
+		}
+		if(listPlayers.size() >= 3){
+			frame.setSize(870, 640);
+			north = new TopGui();
+			north.setBackground(Color.blue);
+			frame.getContentPane().add(BorderLayout.NORTH, north);
+			north.refreshList(listPlayers.get(2));
+			north.repaint();
+		}
+		if(listPlayers.size() == 4){
+			frame.setSize(830, 720);
+			
+			south = new TopGui();
+			south.setBackground(Color.red);
+			frame.getContentPane().add(BorderLayout.SOUTH, south);
+			south.refreshList(listPlayers.get(3));
+			south.repaint();
+		}
+		
+		frame.validate(); //refreshes/makes sure everything is loaded/visible
+
+	}
 
     public void play(){
         printWelcome();
