@@ -13,7 +13,6 @@ public class Game {
     private ArrayList<Player> players;
     private Player currentPlayer;
     private int currentPlayerIndex;
-    private ArrayList<Square> squares = new ArrayList<Square>(40);
     private int currentTurn = 1;
 	private int totalPlayers;
     private int min_players = 2;
