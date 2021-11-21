@@ -19,8 +19,10 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     private Game game;
     private static ArrayList<JLabel> propertyPictures;
     private BoardGUI boardGUI;
-
-    public MonopolyFrame(Game game) throws IOException {
+    JFrame frame = new JFrame("Monopoly");
+    JPanel startingInfo;
+    JPanel moreInfo;
+    public  MonopolyFrame(Game game) throws IOException {
         super("Monopoly");
 
         this.game = game;
@@ -30,7 +32,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         handleInitialSetup();
 
         boardGUI = new BoardGUI(game.getTotalPlayers());
-        JFrame frame = new JFrame("Monopoly");
+
 
         frame.setLayout(new BorderLayout());
 
@@ -87,9 +89,14 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         });
 
-        JPanel playerInfo = new JPanel();
+        startingInfo = new JPanel();
         JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
-        playerInfo.add(info);
+        startingInfo.add(info);
+        JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+        moreInfo = new JPanel();
+        moreInfo.add(more);
+
+
 
         JPanel frameButtonPanel = new JPanel();
         frameButtonPanel.setSize(500, 500);
@@ -100,15 +107,17 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         frame.add(boardGUI, BorderLayout.CENTER);
         frame.add(rightPanel, BorderLayout.EAST);
-        frame.add(playerInfo,BorderLayout.PAGE_END);
-
+        frame.add(startingInfo,BorderLayout.PAGE_END);
+        //frame.add(moreInfo,BorderLayout.PAGE_END);
         frame.setSize(1000, 1000);
         frame.setBackground(Color.lightGray);
 
         frame.setVisible(true);
 
         game.addView(this);
-        game.play();
+        frame.invalidate();
+
+
     }
 
     private void handleInitialSetup(){
@@ -143,8 +152,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
 
     public void propertyPopUp() throws IOException{
-        JFrame frame = new JFrame("Property");
-        frame.setSize(500, 500);
+        JFrame popUpFrame = new JFrame("Property");
+        popUpFrame.setSize(500, 500);
         JPanel panel = new JPanel();
         JButton buy = new JButton();
         JButton pass = new JButton();
@@ -212,21 +221,29 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
             game.passTurn();
-            frame.setVisible(false);
-            JPanel playerInfo = new JPanel();
+            popUpFrame.setVisible(false);
             JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
-            playerInfo.add(info);
-            frame.add(info);
+            JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
+            JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+            startingInfo.removeAll();
+            startingInfo.add(info);
+            startingInfo.add(money);
+            startingInfo.add(more,BorderLayout.EAST);
+            startingInfo.revalidate();
+            startingInfo.repaint();
+            SwingUtilities.updateComponentTreeUI(frame);
+
+
 
 
         });
-        frame.add(panel);
-        frame.add(propertyPictures.get(currentPlayer.currentPosition),BorderLayout.PAGE_END);
+        popUpFrame.add(panel);
+        popUpFrame.add(propertyPictures.get(currentPlayer.currentPosition),BorderLayout.PAGE_END);
 
 
-        frame.setLocationRelativeTo(null);
+        popUpFrame.setLocationRelativeTo(null);
         //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
+        popUpFrame.setVisible(true);
     }
 
     public static void main(String[] args) throws IOException {
