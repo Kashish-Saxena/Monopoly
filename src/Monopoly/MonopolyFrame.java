@@ -1,5 +1,7 @@
 package Monopoly;
 
+
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -22,7 +24,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         super("Monopoly");
 
         this.game = game;
-        propertyPictures = new ArrayList<JLabel>();
+        propertyPictures = new ArrayList<>();
 
 
         handleInitialSetup();
@@ -48,50 +50,49 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         //add buttons
         JButton rollButton = new JButton("roll");
-        rollButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                int diceRoll = game.rollDice();
-                //TODO: Add doubles, which would keep rolled to false so the player can roll again.
-                Player currentPlayer = game.getCurrentPlayer();
+        rollButton.addActionListener(e -> {
+            int diceRoll = game.rollDice();
+            //TODO: Add doubles, which would keep rolled to false so the player can roll again.
+            Player currentPlayer = game.getCurrentPlayer();
 
-                int startingPos = currentPlayer.currentPosition;
-                int endingPos = startingPos + diceRoll;
+            int startingPos = currentPlayer.currentPosition;
+            int endingPos = startingPos + diceRoll;
 
-                if (endingPos > 39) {
-                    int placesBefore39 = 39 - startingPos;
-                    currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
-                } else {
-                    currentPlayer.currentPosition = startingPos + diceRoll;
-                }
-
-                Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-                JOptionPane.showMessageDialog(frame, "You have rolled a " + diceRoll + ".");
-                try {
-                    propertyPopUp();
-
-                } catch (IOException ex) {
-                    ex.printStackTrace();
-                }
-
+            if (endingPos > 39) {
+                int placesBefore39 = 39 - startingPos;
+                currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
+            } else {
+                currentPlayer.currentPosition = startingPos + diceRoll;
             }
+
+            Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
+            JOptionPane.showMessageDialog(frame, "You have rolled a " + diceRoll + ".");
+            try {
+                propertyPopUp();
+
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+
         });
 
         JButton quitButton = new JButton("quit");
-        quitButton.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
+        quitButton.addActionListener(e -> {
 
-                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
-                if (code == JOptionPane.OK_OPTION) {
-                    frame.dispose();
-                }
-
+            int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
+            if (code == JOptionPane.OK_OPTION) {
+                frame.dispose();
+                System.exit(0);
             }
+
         });
 
+        JPanel playerInfo = new JPanel();
+        JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+        playerInfo.add(info);
+
         JPanel frameButtonPanel = new JPanel();
-        frameButtonPanel.setSize(200, 100);
+        frameButtonPanel.setSize(500, 500);
         frameButtonPanel.add(rollButton);
         frameButtonPanel.add(quitButton);
 
@@ -99,8 +100,9 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         frame.add(boardGUI, BorderLayout.CENTER);
         frame.add(rightPanel, BorderLayout.EAST);
+        frame.add(playerInfo,BorderLayout.PAGE_END);
 
-        frame.setSize(1800, 1000);
+        frame.setSize(1000, 1000);
         frame.setBackground(Color.lightGray);
 
         frame.setVisible(true);
@@ -163,66 +165,67 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         JLabel label = new JLabel("Welcome to " + currentProperty.getName());
 
         panel.add(label,BorderLayout.PAGE_START);
-        panel.add(buy,BorderLayout.LINE_START);
+        panel.add(buy,BorderLayout.PAGE_START);
 
 
-        buy.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (!currentProperty.checkAvailability()) {
-                    JPanel warningPanel = new JPanel();
-                    JOptionPane.showMessageDialog(warningPanel, "The property is already owned.");
-                    buy.setEnabled(false);
+        /*
+        if (currentProperty.getColour().equals("none")) {
+                System.out.println("You cannot buy this property.");
+                break;
+            } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
+                System.out.println("You do not have enough funds to buy this property.");
+            } else if (!currentProperty.checkAvailability()) {
+                System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
+            } else {
+                System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
+                Scanner buyScn = new Scanner(System.in);
+                String buyAns = buyScn.nextLine();
+
+                if (buyAns.equals("Y")) {
+
+
+                    break;
+                } else if (buyAns.equals("N")) {
+                    break;
                 } else {
-                    int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
-                    if (code == JOptionPane.OK_OPTION) {
-                        currentPlayer.buyProperty(currentProperty);
-                        currentProperty.setOwner(currentPlayer);
-                        int propertyCost = currentProperty.getPurchasingCost();
-
-                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                    }
+                    System.out.println("Unknown answer, please try the command again.");
+                    break;
                 }
             }
-            /*
-            if (currentProperty.getColour().equals("none")) {
-                    System.out.println("You cannot buy this property.");
-                    break;
-                } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
-                    System.out.println("You do not have enough funds to buy this property.");
-                } else if (!currentProperty.checkAvailability()) {
-                    System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
-                } else {
-                    System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
-                    Scanner buyScn = new Scanner(System.in);
-                    String buyAns = buyScn.nextLine();
+         */
+        buy.addActionListener(e -> {
+            if (!currentProperty.checkAvailability()) {
+                JPanel warningPanel = new JPanel();
+                JOptionPane.showMessageDialog(warningPanel, "The property is already owned.");
+                buy.setEnabled(false);
+            } else {
+                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
+                if (code == JOptionPane.OK_OPTION) {
+                    currentPlayer.buyProperty(currentProperty);
+                    currentProperty.setOwner(currentPlayer);
+                    int propertyCost = currentProperty.getPurchasingCost();
 
-                    if (buyAns.equals("Y")) {
-
-
-                        break;
-                    } else if (buyAns.equals("N")) {
-                        break;
-                    } else {
-                        System.out.println("Unknown answer, please try the command again.");
-                        break;
-                    }
+                    currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
                 }
-             */
+            }
         });
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
-        pass.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                frame.setVisible(false);
-            }
+        pass.addActionListener(e -> {
+            game.passTurn();
+            frame.setVisible(false);
+            JPanel playerInfo = new JPanel();
+            JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+            playerInfo.add(info);
+            frame.add(info);
+
+
         });
         frame.add(panel);
         frame.add(propertyPictures.get(currentPlayer.currentPosition),BorderLayout.PAGE_END);
 
 
         frame.setLocationRelativeTo(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         frame.setVisible(true);
     }
 
