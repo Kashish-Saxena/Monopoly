@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class MonopolyFrame extends JFrame implements MonopolyView {
 
@@ -268,7 +269,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         panel.setLayout(new BorderLayout());
         propertyPictures = new ArrayList<JLabel>();
         for(int i = 0; i < 40; i++) {
-            BufferedImage property1 = ImageIO.read(new File("propertypictures/"+i+".png"));
+            BufferedImage property1 = ImageIO.read(Objects.requireNonNull(getClass().getResource("/Monopoly/propertypictures/" + i + ".png")));
             JLabel label1 = new JLabel(new ImageIcon(property1));
             propertyPictures.add(label1);
         }
@@ -326,11 +327,13 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
                     int propertyCost = currentProperty.getPurchasingCost();
 
                     currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                    buy.setEnabled(false);
                 }
             }
         });
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
+            rollButton.setEnabled(true);
             game.passTurn();
             popUpFrame.setVisible(false);
             JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
@@ -355,6 +358,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         popUpFrame.setLocationRelativeTo(null);
         //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
+        popUpFrame.pack();
         popUpFrame.setVisible(true);
     }
 
