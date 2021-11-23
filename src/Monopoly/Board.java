@@ -70,7 +70,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"6\": {\n" +
             "    \"name\": \"Oriental Avenue\",\n" +
@@ -119,7 +119,7 @@ public class Board {
             "    \"purchasingCost\": \"150\",\n" +
             "    \"baseRentCost\": \"0\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"util\"\n" +
             "  },\n" +
             "  \"13\": {\n" +
             "    \"name\": \"States Avenue\",\n" +
@@ -140,7 +140,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"16\": {\n" +
             "    \"name\": \"St. James Place\",\n" +
@@ -210,7 +210,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"26\": {\n" +
             "    \"name\": \"Atlantic Avenue\",\n" +
@@ -231,7 +231,7 @@ public class Board {
             "    \"purchasingCost\": \"150\",\n" +
             "    \"baseRentCost\": \"0\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"util\"\n" +
             "  },\n" +
             "  \"29\": {\n" +
             "    \"name\": \"Marvin Gardens\",\n" +
@@ -280,7 +280,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"36\": {\n" +
             "    \"name\": \"Free Square (Chance)\",\n" +
