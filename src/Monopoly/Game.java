@@ -9,7 +9,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game {
 
     ArrayList<Property> propertyList;
-    private final InputParser parser;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
@@ -29,7 +28,6 @@ public class Game {
     {
         Board board = new Board();
         propertyList = board.getBoard();
-        parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
         views = new ArrayList<>();
@@ -46,75 +44,6 @@ public class Game {
         for (MonopolyView v : views){
             v.handleMonopolyUpdate(e);
         }
-    }
-
-    public void play(){
-        printWelcome();
-        /*
-        System.out.println("How many people are playing today? Minimum 2, Maximum 6.");
-
-        boolean confirmedPlayers = false;
-        while (!confirmedPlayers) {
-            Scanner sc = new Scanner(System.in);
-            if (!(sc.hasNextInt())) {
-                System.out.println("Unknown entry. Please enter the number again.");
-                continue;
-            }
-
-            totalPlayers = sc.nextInt();
-
-            int maxPlayers = 6;
-            if (totalPlayers > maxPlayers) {
-                System.out.println("Too many players. Please enter the number again.");
-                continue;
-
-            } else if (totalPlayers < 2) {
-                System.out.println("Not enough players. Please enter the number again.");
-                continue;
-            }
-            confirmedPlayers = true;
-        }
-        */
-
-        int i;
-        //int j;
-
-        for (i = 1; i <= totalPlayers; i++){
-            System.out.printf("\nPlease write Player %d's name:\n", i);
-            Scanner username = new Scanner(System.in);
-            String playerName = username.nextLine();
-            Player p = new Player(playerName);
-			players.add(p);
-            //p.setDiceResults(rollDice());
-        }
-
-        /*
-        for (j = 0; j < players.size(); j++) {
-            while (players.get(j).getDiceResults() == players.get(j + 1).getDiceResults()) {
-                players.get(j).setDiceResults(rollDice()); //roll until all players have different results
-            }
-            setPlayerOrder();
-        }
-        */
-
-        currentPlayer = players.get(currentPlayerIndex);
-
-        boolean finished = false;
-        boolean roll = false;
-        System.out.println("\nTurn " + currentTurn + ". It is " + currentPlayer.getPlayerName() + "'s turn.");
-
-        while (!finished) {
-            System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-            Command command = InputParser.getCommand();
-            System.out.println();
-            finished = processCommand(command);
-            if (totalPlayers == 1) {
-                System.out.println(players.get(0).getPlayerName() + " won!");
-                finished = true;
-            }
-
-        }
-        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -163,122 +92,6 @@ public class Game {
     }
 
     /**
-     * Given a command, process (that is: execute) the command.
-     * @param command The command to be processed.
-     * @return true If the command ends the game, false otherwise.
-     */
-    private boolean processCommand(Command command)
-    {
-        boolean wantToQuit = false;
-
-        CommandWord commandWord = Command.getCommandWord();
-        Property currentProperty = propertyList.get(currentPlayer.currentPosition);
-
-        switch (commandWord) {
-            case BUY_PROPERTY:
-
-
-            case DEBUG_ROLL:
-                System.out.println("Welcome to the secret debug roll! Please enter the position you want Player " + currentPlayer.getPlayerName() + " to move to: \n");
-                Scanner posScn = new Scanner(System.in);
-                if (!(posScn.hasNextInt())) {
-                    System.out.println("Unknown entry. Please try the command again.");
-                    break;
-                }
-
-                int newPos = posScn.nextInt();
-                if (newPos > 39) {
-                    System.out.println("Requested position is too high (Maximum is 39). Please try the command again.");
-                    break;
-                }
-                currentPlayer.currentPosition = newPos;
-                System.out.println("Your new position is " + currentPlayer.currentPosition + " (" + propertyList.get(currentPlayer.currentPosition).getName() + ")");
-
-                getDetails(currentPlayer.currentPosition);
-
-                break;
-
-            case HELP:
-                printHelp();
-                break;
-
-            case PASS_TURN:
-                passTurn();
-                break;
-
-            case QUIT:
-                System.out.println("Are you sure you want to quit? The game will end and your progress will be lost. Y/N");
-                Scanner quitScn = new Scanner(System.in);
-                String quitAns = quitScn.nextLine();
-                if (quitAns.equals("Y")) {
-                    wantToQuit = true;
-                    break;
-                } else if (quitAns.equals("N")) {
-                    break;
-                } else {
-                    System.out.println("Unknown answer, please try the command again.");
-                    break;
-                }
-/*
-            case ROLL:
-                System.out.println("Now rolling for your turn!");
-
-                int diceRoll = rollDice();
-                //TODO: Add doubles, which would keep rolled to false so the player can roll again.
-                System.out.println("You have moved " + diceRoll + " positions!");
-
-                int startingPos = currentPlayer.currentPosition;
-                int endingPos = startingPos + diceRoll;
-
-                if (endingPos > 39) {
-                    int placesBefore39 = 39 - startingPos;
-                    currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
-                } else {
-                    currentPlayer.currentPosition = startingPos + diceRoll;
-                }
-
-                getDetails(currentPlayer.currentPosition);
-                break;
-*/
-            case PLAYER_STATE:
-
-                System.out.println("Which player's state?");
-                System.out.println("Options: " + getPlayerList());
-                Scanner playerScn = new Scanner(System.in);
-                String playerAns = playerScn.nextLine();
-
-                for (int i = 0; i < totalPlayers; i++) {
-                    if (playerAns.equals(players.get(i).getPlayerName())) {
-                        System.out.println(players.get(i).getPlayerState());
-                        break;
-                    }
-                }
-                System.out.println("Unknown Entry. Please try the command again.");
-                break;
-
-            case UNKNOWN:
-                System.out.println("Unknown command.");
-                break;
-
-        }
-        return wantToQuit;
-    }
-
-
-    // implementations of user commands:
-
-    /**
-     * Print out some help information.
-     * Here we print some stupid, cryptic message and a list of the
-     * command words.
-     */
-    private void printHelp()
-    {
-        System.out.println("Your command words are:");
-        parser.showCommands();
-    }
-
-    /**
      * Returns the current player from the players list
      */
     public Player getCurrentPlayer(){
@@ -321,26 +134,6 @@ public class Game {
     }
 
     /**
-     * Sets the player starting the game based on their roll results
-     * value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
-     */
-    /*
-    private void setPlayerOrder(){
-        for (int i=0; i<players.size();i++){
-            // i < i+1
-            if (compareDiceRolls(players.get(i), players.get(i+1)) < 0) {
-                Collections.swap(players, i, i + 1);
-                currentPlayer = players.get(i);
-                break;
-            }
-            else
-                // i > i+1
-                currentPlayer = players.get(i);
-        }
-    }
-    */
-
-    /**
      * Returns the total number of players
      */
     int getTotalPlayers(){
@@ -375,16 +168,6 @@ public class Game {
      */
     void addPlayer(Player p){
         players.add(p);
-    }
-
-    /**
-     * Compares two players dice results
-     * @param a Player one
-     * @param b Player two
-     * @return comparison result
-     */
-    private int compareDiceRolls(Player a, Player b){
-        return Integer.compare(a.getDiceResults(), b.getDiceResults());
     }
 
     public void buyHouse(Player player, Property property){
