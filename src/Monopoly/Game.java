@@ -219,7 +219,7 @@ public class Game {
                     System.out.println("Unknown answer, please try the command again.");
                     break;
                 }
-
+/*
             case ROLL:
                 System.out.println("Now rolling for your turn!");
 
@@ -239,7 +239,7 @@ public class Game {
 
                 getDetails(currentPlayer.currentPosition);
                 break;
-
+*/
             case PLAYER_STATE:
 
                 System.out.println("Which player's state?");
@@ -285,10 +285,13 @@ public class Game {
         return players.get(currentPlayerIndex);
     }
 
-    int rollDice() {
+    int[] rollDice() {
+        int[] dices = new int[2];
         int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
         int dice2 = ThreadLocalRandom.current().nextInt(1, 7);
-        return dice1 + dice2;
+        dices[0] = dice1;
+        dices[1] = dice2;
+        return dices;
 
     }
 
