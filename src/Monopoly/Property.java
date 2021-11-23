@@ -14,8 +14,11 @@ public class Property {
     private boolean isAvailable;
     private final int purchasingCost;
     private int rentCost;
+    private int houseCost;
     private final int position;
     private final String colour;
+    private int houses;
+
 
     /**
      * Constructor of the Monopoly.Property class
@@ -23,13 +26,15 @@ public class Property {
      * @param name Name of the property
      * @param initialCost initial cost of the property
      */
-    public Property(String name, int initialCost, int rentCost,  int position, String colour) {
+    public Property(String name, int initialCost, int rentCost,int houseCost,  int position, String colour) {
         this.name = name;
         purchasingCost = initialCost;
         isAvailable = true;
         this.rentCost = rentCost;
         this.position = position;
         this.colour = colour;
+        this.houseCost = houseCost;
+        this.houses = 0;
     }
 
     /**

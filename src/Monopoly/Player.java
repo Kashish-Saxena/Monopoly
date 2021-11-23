@@ -60,19 +60,7 @@ public class Player {
      * @param property the property they want to buy
      */
     public void buyProperty(Property property) {
-        /*
-        if(properties == null){
-            properties = new ArrayList<Property>();
-            ownedProperties.put(player,properties);
-        }else{
-            if(!properties.contains(property)) properties.add(property);
-        }
-         */
-        if (!properties.contains(property)) {
             properties.add(property);
-        }
-
-        else { System.out.println("You already own this property."); }
     }
 
     /**
@@ -82,12 +70,6 @@ public class Player {
         return diceResult;
     }
 
-    /**
-     * Returns the dice result of the player
-     */
-    public void setDiceResults(int result){
-        diceResult = result;
-    }
 
     /**
      * Updates the players position
@@ -104,6 +86,10 @@ public class Player {
     public String getPlayerState(){
         return "Player name: " + playerName + "\nOwned Properties: \n" + getProperties().toString().replace("[", "").replace("]", "") + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
     }
+    public int getCurrentPosition(){
+        return currentPosition;
+    }
+
 
     /**
      * Compares all the values of the players
