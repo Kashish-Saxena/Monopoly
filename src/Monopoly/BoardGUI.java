@@ -6,258 +6,456 @@ import java.awt.Color;
 import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
-/*
- * a class to represent the board gui for the Monopoly game
- */
 
 public class BoardGUI extends JPanel {
     private int[][] boardPosition;
-	JLabel[] players; 
-	JTextArea[] properties;
-	int numPlayers;
-    int numProperties;
-    int numSpaces;
-    int numRailroads;
-    int numUtilities;
-    JLabel[] spaces = new JLabel[40];
+    JLabel[] players;
+    JTextArea[] properties;
+    int numPlayers;
 
-    private String[] playerIcon = {"src\\Monopoly\\Players_Icons\\playerOne.jpg", "src\\Monopoly\\Players_Icons\\playerTwo.jpg", "src\\Monopoly\\Players_Icons\\playerThree.jpg", "src\\Monopoly\\Players_Icons\\playerFour.jpg", "src\\Monopoly\\Players_Icons\\playerFive.jpg", "src\\Monopoly\\Players_Icons\\playerSix.jpg"} ;
+    private String[] playerIcon = {"Players_Icons/playerOne.jpg", "Players_Icons/playerTwo.jpg", "Players_Icons/playerThree.jpg", "Players_Icons/playerFour.jpg", "Players_Icons/playerFive.jpg", "Players_Icons/playerSix.jpg"};
 
-    public BoardGUI(int numPlayers, int numProperties, int numSpaces){
+    public BoardGUI(int numPlayers)
+    {
         this.numPlayers = numPlayers;
-        this.numProperties = numProperties;
-        this.numSpaces = 40;
+        this.boardPosition = new int[40][2];
+        this.players = new JLabel[numPlayers];
+        this.properties = new JTextArea[22];
 
-        this.setSize(1000, 1000);
+        this.setSize(500, 500);
         this.setLayout(null);
-        
-        for(int i = 0; i < numPlayers; i++){
-            players[i] = new JLabel();
-            players[i].setIcon(new ImageIcon(playerIcon[i]));
-            players[i].setBounds(0, 0, 50, 50);
-            this.add(players[i]);
+
+        for(int x = 0; x < numPlayers; x++)
+        {
+            this.players[x] = new JLabel();
+            this.players[x].setIcon(new ImageIcon(BoardGUI.class.getResource(playerIcon[x])));
+            this.players[x].setSize(20, 20);
+            this.movement(x, 0);
+            this.players[x].setOpaque(true);
+            this.add(this.players[x]);
         }
 
-        for(int i = 0; i < numProperties; i++){
-            properties[i] = new JTextArea();
-            properties[i].setBounds(0, 0, 50, 50);
-            this.add(properties[i]);
-        }
 
-        for(int i = 0; i < numSpaces; i++){
-            boardPosition[i][0] = 0;
-            boardPosition[i][1] = 0;
-        }
+        Box createBox = Box.createVerticalBox();
+        createBox.setBorder(new LineBorder(new Color(0, 0, 0)));
+        createBox.setBounds(550, 550, 100, 100);
+        add(createBox);
 
-        Box horizontalBox = Box.createHorizontalBox();
-        horizontalBox.setBounds(0, 0, 1000, 1000);
-        this.add(horizontalBox);
+        Box property1 = Box.createVerticalBox();
+        property1.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property1.setBounds(500, 550, 50, 100);
+        add(property1);
 
-        Box verticalBox = Box.createVerticalBox();
-        verticalBox.setBounds(0, 0, 1000, 1000);
-        this.add(verticalBox);
+        JLabel colourOne = new JLabel("");
+        colourOne.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/purple.jpg")));
+        property1.add(colourOne);
 
-        
-        for(int i = 0; i < 40; i++){
-            spaces[i] = new JLabel();
-            spaces[i].setBounds(0, 0, 50, 50);
-            spaces[i].setBorder(new LineBorder(Color.BLACK));
-            spaces[i].setBackground(Color.WHITE);
-            spaces[i].setOpaque(true);
-            spaces[i].setText(Integer.toString(i));
-            verticalBox.add(spaces[i]);
-        }
+        properties[0] = new JTextArea();
+        properties[0].setEditable(false);
+        properties[0].setLineWrap(true);
+        properties[0].setText("Property");
+        property1.add(properties[0]);
 
-        //method to add colors to the different squares based on the properties
-        public void addColors(){
-            for(int i = 0; i < 40; i++){
-                if(boardPosition[i][0] == 1){
-                    spaces[i].setBackground(Color.RED);
-                }
-                else if(boardPosition[i][0] == 2){
-                    spaces[i].setBackground(Color.GREEN);
-                }
-                else if(boardPosition[i][0] == 3){
-                    spaces[i].setBackground(Color.BLUE);
-                }
-                else if(boardPosition[i][0] == 4){
-                    spaces[i].setBackground(Color.YELLOW);
-                }
-                else if(boardPosition[i][0] == 5){
-                    spaces[i].setBackground(Color.ORANGE);
-                }
-                else if(boardPosition[i][0] == 6){
-                    spaces[i].setBackground(Color.PINK);
-                }
-                else if(boardPosition[i][0] == 7){
-                    spaces[i].setBackground(Color.CYAN);
-                }
-                else if(boardPosition[i][0] == 8){
-                    spaces[i].setBackground(Color.MAGENTA);
-                }
-                else if(boardPosition[i][0] == 9){
-                    spaces[i].setBackground(Color.GRAY);
-                }
-                else if(boardPosition[i][0] == 10){
-                    spaces[i].setBackground(Color.WHITE);
-                }
-            } 
+        Box property2 = Box.createVerticalBox();
+        property2.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property2.setBounds(450, 550, 50, 100);
+        add(property2);
+
+
+        Box property3 = Box.createVerticalBox();
+        property3.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property3.setBounds(400, 550, 50, 100);
+        add(property3);
+
+        JLabel colourTwo = new JLabel("");
+        colourTwo.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/purple.jpg")));
+        property3.add(colourTwo);
+
+        properties[1] = new JTextArea();
+        properties[1].setEditable(false);
+        properties[1].setLineWrap(true);
+        properties[1].setText("Property");
+        property3.add(properties[1]);
+
+        Box property4 = Box.createVerticalBox();
+        property4.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property4.setBounds(350, 550, 50, 100);
+        add(property4);
+
+        Box property5 = Box.createVerticalBox();
+        property5.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property5.setBounds(300, 550, 50, 100);
+        add(property5);
+
+
+        Box property6 = Box.createVerticalBox();
+        property6.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property6.setBounds(250, 550, 50, 100);
+        add(property6);
+
+        JLabel colourThree = new JLabel("");
+        colourThree.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/blue.jpg")));
+        property6.add(colourThree);
+
+        properties[2] = new JTextArea();
+        properties[2].setEditable(false);
+        properties[2].setLineWrap(true);
+        properties[2].setText("Property");
+        property6.add(properties[2]);
+
+        Box property7 = Box.createVerticalBox();
+        property7.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property7.setBounds(200, 550, 50, 100);
+        add(property7);
+
+        Box property8 = Box.createVerticalBox();
+        property8.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property8.setBounds(150, 550, 50, 100);
+        add(property8);
+
+        JLabel colourFour = new JLabel("");
+        colourFour.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/blue.jpg")));
+        property8.add(colourFour);
+
+        properties[3] = new JTextArea();
+        properties[3].setEditable(false);
+        properties[3].setLineWrap(true);
+        properties[3].setText("Property");
+        property8.add(properties[3]);
+
+        Box property9 = Box.createVerticalBox();
+        property9.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property9.setBounds(100, 550, 50, 100);
+        add(property9);
+
+        JLabel colourFive = new JLabel("");
+        colourFive.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/blue.jpg")));
+        property9.add(colourFive);
+
+        properties[4] = new JTextArea();
+        properties[4].setEditable(false);
+        properties[4].setLineWrap(true);
+        properties[4].setText("Property");
+        property9.add(properties[4]);
+
+        Box property10 = Box.createHorizontalBox();
+        property10.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property10.setBounds(0, 500, 100, 50);
+        add(property10);
+
+        properties[5] = new JTextArea();
+        properties[5].setEditable(false);
+        properties[5].setLineWrap(true);
+        properties[5].setText("Property");
+        property10.add(properties[5]);
+
+        JLabel colourSix = new JLabel("");
+        colourSix.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/magenta.jpg")));
+        property10.add(colourSix);
+
+        Box property11 = Box.createHorizontalBox();
+        property11.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property11.setBounds(0, 450, 100, 50);
+        add(property11);
+
+        Box property12 = Box.createHorizontalBox();
+        property12.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property12.setBounds(0, 400, 100, 50);
+        add(property12);
+
+        properties[6] = new JTextArea();
+        properties[6].setEditable(false);
+        properties[6].setLineWrap(true);
+        properties[6].setText("Property");
+        property12.add(properties[6]);
+
+        JLabel colourSeven = new JLabel("");
+        colourSeven.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/magenta.jpg")));
+        property12.add(colourSeven);
+
+        Box property13 = Box.createHorizontalBox();
+        property13.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property13.setBounds(0, 350, 100, 50);
+        add(property13);
+
+        properties[7] = new JTextArea();
+        properties[7].setEditable(false);
+        properties[7].setLineWrap(true);
+        properties[7].setText("Property");
+        property13.add(properties[7]);
+
+        JLabel colourEight = new JLabel("");
+        colourEight.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/magenta.jpg")));
+        property13.add(colourEight);
+
+        Box property14 = Box.createHorizontalBox();
+        property14.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property14.setBounds(0, 300, 100, 50);
+        add(property14);
+
+        Box property15 = Box.createHorizontalBox();
+        property15.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property15.setBounds(0, 250, 100, 50);
+        add(property15);
+
+        properties[8] = new JTextArea();
+        properties[8].setEditable(false);
+        properties[8].setLineWrap(true);
+        properties[8].setText("Property");
+        property15.add(properties[8]);
+
+        JLabel colourNine = new JLabel("");
+        colourNine.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/orange.jpg")));
+        property15.add(colourNine);
+
+        Box property16 = Box.createHorizontalBox();
+        property16.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property16.setBounds(0, 200, 100, 50);
+        add(property16);
+
+        Box property17 = Box.createHorizontalBox();
+        property17.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property17.setBounds(0, 150, 100, 50);
+        add(property17);
+
+        properties[9] = new JTextArea();
+        properties[9].setEditable(false);
+        properties[9].setLineWrap(true);
+        properties[9].setText("Property");
+        property17.add(properties[9]);
+
+        JLabel colourOne0 = new JLabel("");
+        colourOne0.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/orange.jpg")));
+        property17.add(colourOne0);
+
+        Box property18 = Box.createHorizontalBox();
+        property18.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property18.setBounds(0, 100, 100, 50);
+        add(property18);
+
+        properties[10] = new JTextArea();
+        properties[10].setEditable(false);
+        properties[10].setLineWrap(true);
+        properties[10].setText("Property");
+        property18.add(properties[10]);
+
+        JLabel colourOne1 = new JLabel("");
+        colourOne1.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/orange.jpg")));
+        property18.add(colourOne1);
+
+        Box property19 = Box.createVerticalBox();
+        property19.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property19.setBounds(100, 0, 50, 100);
+        add(property19);
+
+        properties[11] = new JTextArea();
+        properties[11].setEditable(false);
+        properties[11].setLineWrap(true);
+        properties[11].setText("Property");
+        property19.add(properties[11]);
+
+        JLabel colourOne2 = new JLabel("");
+        colourOne2.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/red.jpg")));
+        property19.add(colourOne2);
+
+        Box property20 = Box.createVerticalBox();
+        property20.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property20.setBounds(150, 0, 50, 100);
+        add(property20);
+
+        Box property21 = Box.createVerticalBox();
+        property21.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property21.setBounds(200, 0, 50, 100);
+        add(property21);
+
+        properties[12] = new JTextArea();
+        properties[12].setEditable(false);
+        property21.add(properties[12]);
+        properties[12].setLineWrap(true);
+        properties[12].setText("Property");
+
+        JLabel colourOne3 = new JLabel("");
+        colourOne3.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/red.jpg")));
+        colourOne3.setSize(50, 30);
+        property21.add(colourOne3);
+
+        Box property22 = Box.createVerticalBox();
+        property22.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property22.setBounds(250, 0, 50, 100);
+        add(property22);
+
+        properties[13] = new JTextArea();
+        properties[13].setEditable(false);
+        properties[13].setLineWrap(true);
+        properties[13].setText("Property");
+        property22.add(properties[13]);
+
+        JLabel colourOne4 = new JLabel("");
+        colourOne4.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/red.jpg")));
+        property22.add(colourOne4);
+
+        Box property23 = Box.createVerticalBox();
+        property23.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property23.setBounds(300, 0, 50, 100);
+        add(property23);
+
+        Box property24 = Box.createVerticalBox();
+        property24.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property24.setBounds(350, 0, 50, 100);
+        add(property24);
+
+        properties[14] = new JTextArea();
+        properties[14].setEditable(false);
+        properties[14].setLineWrap(true);
+        properties[14].setText("Property");
+        property24.add(properties[14]);
+
+        JLabel colourOne5 = new JLabel("");
+        colourOne5.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/yellow.jpg")));
+        property24.add(colourOne5);
+
+        Box property25 = Box.createVerticalBox();
+        property25.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property25.setBounds(400, 0, 50, 100);
+        add(property25);
+
+        properties[15] = new JTextArea();
+        properties[15].setEditable(false);
+        properties[15].setLineWrap(true);
+        properties[15].setText("Property");
+        property25.add(properties[15]);
+
+        JLabel colourOne6 = new JLabel("");
+        colourOne6.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/yellow.jpg")));
+        property25.add(colourOne6);
+
+        Box property26 = Box.createVerticalBox();
+        property26.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property26.setBounds(450, 0, 50, 100);
+        add(property26);
+
+        Box property27 = Box.createVerticalBox();
+        property27.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property27.setBounds(500, 0, 50, 100);
+        add(property27);
+
+        properties[16] = new JTextArea();
+        properties[16].setEditable(false);
+        properties[16].setLineWrap(true);
+        properties[16].setText("Property");
+        property27.add(properties[16]);
+
+        JLabel colourOne7 = new JLabel("");
+        colourOne7.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/yellow.jpg")));
+        property27.add(colourOne7);
+
+
+        Box property28 = Box.createHorizontalBox();
+        property28.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property28.setBounds(550, 100, 100, 50);
+        add(property28);
+
+        JLabel colourOne8 = new JLabel("");
+        colourOne8.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/green.jpg")));
+        property28.add(colourOne8);
+
+        properties[17] = new JTextArea();
+        properties[17].setEditable(false);
+        properties[17].setLineWrap(true);
+        properties[17].setText("Property");
+        property28.add(properties[17]);
+
+        Box property29 = Box.createHorizontalBox();
+        property29.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property29.setBounds(550, 150, 100, 50);
+        add(property29);
+
+        JLabel colourOne9 = new JLabel("");
+        colourOne9.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/green.jpg")));
+        property29.add(colourOne9);
+
+        properties[18] = new JTextArea();
+        properties[18].setEditable(false);
+        properties[18].setLineWrap(true);
+        properties[18].setText("Property");
+        property29.add(properties[18]);
+
+        Box property30 = Box.createHorizontalBox();
+        property30.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property30.setBounds(550, 200, 100, 50);
+        add(property30);
+
+        Box property31 = Box.createHorizontalBox();
+        property31.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property31.setBounds(550, 250, 100, 50);
+        add(property31);
+
+        JLabel colourTwo0 = new JLabel("");
+        colourTwo0.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/green.jpg")));
+        property31.add(colourTwo0);
+
+        properties[19] = new JTextArea();
+        properties[19].setEditable(false);
+        properties[19].setLineWrap(true);
+        properties[19].setText("Property");
+        property31.add(properties[19]);
+
+        Box property32 = Box.createHorizontalBox();
+        property32.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property32.setBounds(550, 300, 100, 50);
+        add(property32);
+
+
+        Box property33 = Box.createHorizontalBox();
+        property33.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property33.setBounds(550, 350, 100, 50);
+        add(property33);
+
+        Box property34 = Box.createHorizontalBox();
+        property34.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property34.setBounds(550, 400, 100, 50);
+        add(property34);
+
+        JLabel colourTwo1 = new JLabel("");
+        colourTwo1.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/darkBlue.jpg")));
+        property34.add(colourTwo1);
+
+        properties[20] = new JTextArea();
+        properties[20].setEditable(false);
+        properties[20].setLineWrap(true);
+        properties[20].setText("Property");
+        property34.add(properties[20]);
+
+        Box property35 = Box.createHorizontalBox();
+        property35.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property35.setBounds(550, 450, 100, 50);
+        add(property35);
+
+        Box property36 = Box.createHorizontalBox();
+        property36.setBorder(new LineBorder(new Color(0, 0, 0)));
+        property36.setBounds(550, 500, 100, 50);
+        add(property36);
+
+        JLabel colourTwo2 = new JLabel("");
+        colourTwo2.setIcon(new ImageIcon(BoardGUI.class.getResource("/Monopoly/Colours/darkBlue.jpg")));
+        property36.add(colourTwo2);
+
+        properties[21] = new JTextArea();
+        properties[21].setEditable(false);
+        properties[21].setLineWrap(true);
+        properties[21].setText("Property");
+        property36.add(properties[21]);
     }
 
-        //method to add the names and icons of squares
-        public void addNames(){
-            for(int i = 0; i < 40; i++){
-                if(boardPosition[i][1] == 1){
-                    spaces[i].setText("Go");
-                    spaces[i].setIcon(new ImageIcon("src\\Monopoly\\propertypictures\\0.png"));
-                }
-                else if(boardPosition[i][1] == 2){
-                    spaces[i].setText("Mediterranean Avenue");
-                }
-                else if(boardPosition[i][1] == 3){
-                    spaces[i].setText("Community Chest");
-                }
-                else if(boardPosition[i][1] == 4){
-                    spaces[i].setText("Baltic Avenue");
-                }
-                else if(boardPosition[i][1] == 5){
-                    spaces[i].setText("Income Tax");
-                }
-                else if(boardPosition[i][1] == 6){
-                    spaces[i].setText("Reading Railroad");
-                }
-                else if(boardPosition[i][1] == 7){
-                    spaces[i].setText("Oriental Avenue");
-                }
-                else if(boardPosition[i][1] == 8){
-                    spaces[i].setText("Chance");
-                }
-                else if(boardPosition[i][1] == 9){
-                    spaces[i].setText("Vermont Avenue");
-                }
-                else if(boardPosition[i][1] == 10){
-                    spaces[i].setText("Connecticut Avenue");
-                }
-                else if(boardPosition[i][1] == 11){
-                    spaces[i].setText("Jail");
-                }
-                else if(boardPosition[i][1] == 12){
-                    spaces[i].setText("St. Charles Place");
-                }
-                else if(boardPosition[i][1] == 13){
-                    spaces[i].setText("Electric Company");
-                }
-                else if(boardPosition[i][1] == 14){
-                    spaces[i].setText("States Avenue");
-                }
-                else if(boardPosition[i][1] == 15){
-                    spaces[i].setText("Virginia Avenue");
-                }
-                else if(boardPosition[i][1] == 16){
-                    spaces[i].setText("Pennsylvania Railroad");
-                }
-                else if(boardPosition[i][1] == 17){
-                    spaces[i].setText("St. James Place");
-                }
-                else if(boardPosition[i][1] == 18){
-                    spaces[i].setText("Community Chest");
-                }
-                else if(boardPosition[i][1] == 19){
-                    spaces[i].setText("Tennessee Avenue");
-                }
-                else if(boardPosition[i][1] == 20){
-                    spaces[i].setText("New York Avenue");
-                }
-                else if(boardPosition[i][1] == 21){
-                    spaces[i].setText("Free Parking");
-                else if(boardPosition[i][1] == 22){
-                    spaces[i].setText("Kentucky Avenue");
-                }
-                else if(boardPosition[i][1] == 23){
-                    spaces[i].setText("Chance");
-                }
-                else if(boardPosition[i][1] == 24){
-                    spaces[i].setText("Indiana Avenue");
-                }
-                else if(boardPosition[i][1] == 25){
-                    spaces[i].setText("Illinois Avenue");
-                }
-                else if(boardPosition[i][1] == 26){
-                    spaces[i].setText("B & O Railroad");
-                }
-                else if(boardPosition[i][1] == 27){
-                    spaces[i].setText("Atlantic Avenue");
-                }
-                else if(boardPosition[i][1] == 28){
-                    spaces[i].setText("Ventnor Avenue");
-                }
-                else if(boardPosition[i][1] == 29){
-                    spaces[i].setText("Water Works");
-                }
-                else if(boardPosition[i][1] == 30){
-                    spaces[i].setText("Marvin Gardens");
-                }
-                else if(boardPosition[i][1] == 31){
-                    spaces[i].setText("Go To Jail");
-                }
-                else if(boardPosition[i][1] == 32){
-                    spaces[i].setText("Pacific Avenue");
-                }
-                else if(boardPosition[i][1] == 33){
-                    spaces[i].setText("North Carolina Avenue");
-                }
-                else if(boardPosition[i][1] == 34){
-                    spaces[i].setText("Community Chest");
-                }
-                else if(boardPosition[i][1] == 35){
-                    spaces[i].setText("Pennsylvania Avenue");
-                }
-                else if(boardPosition[i][1] == 36){
-                    spaces[i].setText("Short Line");
-                }
-                else if(boardPosition[i][1] == 37){
-                    spaces[i].setText("Chance");
-                }
-                else if(boardPosition[i][1] == 38){
-                    spaces[i].setText("Park Place");
-                }
-                else if(boardPosition[i][1] == 39){
-                    spaces[i].setText("Luxury Tax");
-                }
-                else if(boardPosition[i][1] == 40){
-                    spaces[i].setText("Boardwalk");
-                }
-            }
+    public void movement(int player, int position)
+    {
+        if(position < 11 || (position > 19 && position < 31))
+        {
+            this.players[player].setBounds(this.boardPosition[position][0], this.boardPosition[position][1] + (player*21), 20, 20);
         }
-
-            //method to show all the different player icons' current position on the board gui when they move
-            public void showPlayerIconPosition(int playerPosition){
-                for(int i = 0; i < 40; i++){
-                    if(boardPosition[i][0] == playerPosition){
-                        spaces[i].setIcon(playerIcon);
-                    }
-                }
-            }
-            //method for the player to move to the next square
-            public void movePlayer(int playerPosition, int diceRoll){
-                for(int i = 0; i < 40; i++){
-                    if(boardPosition[i][0] == playerPosition){
-                        spaces[i].setIcon(null);
-                    }
-                }
-                playerPosition += diceRoll;
-                if(playerPosition > 40){
-                    playerPosition -= 40;
-                }
-                for(int i = 0; i < 40; i++){
-                    if(boardPosition[i][0] == playerPosition){
-                        spaces[i].setIcon(playerIcon);
-                    }
-                }
-            }
+        else
+        {
+            this.players[player].setBounds(this.boardPosition[position][0] + (player*21), this.boardPosition[position][1], 20, 20);
         }
-
-
-
-
-
+    }
+}

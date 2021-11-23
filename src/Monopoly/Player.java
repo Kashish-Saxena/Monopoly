@@ -13,6 +13,7 @@ public class Player {
     public int money;
     public int currentPosition;
     private int diceResult;
+    private boolean inJail = false;
 
     /**
      * Constructor for the player
@@ -21,7 +22,7 @@ public class Player {
      */
     public Player(String playerName){
         this.playerName = playerName;
-        this.money = 1000;
+        this.money = 1500;
         this.currentPosition = 0;
 
     }
@@ -71,6 +72,21 @@ public class Player {
     }
 
 
+    /**
+     * returns the jail time state of the player
+     * @return boolean value of if player is in jail or not.
+     */
+    public boolean getJail() {
+        return inJail;
+    }
+
+    /**
+     * Sets jail state of player (in jail if true, not in jail if false)
+     * @param bool value of jail state
+     */
+    public void setJail(boolean bool) {
+        inJail = bool;
+    }
     /**
      * Updates the players position
      * @param amount how many spaces the player moves

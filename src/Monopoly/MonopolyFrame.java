@@ -19,15 +19,21 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     JFrame frame = new JFrame("Monopoly");
     JPanel startingInfo;
     JPanel moreInfo;
+    JButton rollButton;
+    private int count;
+    private int turn = 0;
+
     public  MonopolyFrame(Game game) throws IOException {
         super("Monopoly");
 
         this.game = game;
         propertyPictures = new ArrayList<>();
 
+
         handleInitialSetup();
 
         boardGUI = new BoardGUI(game.getTotalPlayers());
+
 
         frame.setLayout(new BorderLayout());
 
@@ -41,48 +47,12 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         boardGUI = new BoardGUI(game.getTotalPlayers());
 
         //right panel
-
         JPanel rightPanel = new JPanel(new BorderLayout());
         rightPanel.setSize(200, 400);
 
         //add buttons
-        JButton rollButton = new JButton("Roll");
-        rollButton.addActionListener(e -> {
-            int diceRoll = game.rollDice();
-            //TODO: Add doubles, which would keep rolled to false so the player can roll again.
-            Player currentPlayer = game.getCurrentPlayer();
-
-            int startingPos = currentPlayer.currentPosition;
-            int endingPos = startingPos + diceRoll;
-
-            if (endingPos > 39) {
-                int placesBefore39 = 39 - startingPos;
-                currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
-            } else {
-                currentPlayer.currentPosition = startingPos + diceRoll;
-            }
-
-            Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-            JOptionPane.showMessageDialog(frame, "You have rolled a " + diceRoll + ".");
-            try {
-                propertyPopUp();
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-        });
-
-        JButton quitButton = new JButton("Quit");
-        quitButton.addActionListener(e -> {
-
-            int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
-            if (code == JOptionPane.OK_OPTION) {
-                frame.dispose();
-                System.exit(0);
-            }
-
-        });
+        JButton rollButton = createRollButton();
+        JButton quitButton = createQuitButton();
 
         startingInfo = new JPanel();
         JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
@@ -166,7 +136,126 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         handleInitialSetup();
     }
 
+    private JButton createRollButton() {
+        rollButton = new JButton("roll");
+        rollButton.addActionListener(e -> {
 
+            rollButton.setEnabled(false);
+            Player currentPlayer = game.getCurrentPlayer();
+            if (currentPlayer.getJail()) {
+                turn++;
+                Object[] options = {"Pay $50", "Roll"};
+            int input = JOptionPane.showOptionDialog(new JFrame(),"You may pay $50 to get out. " +
+                            "Also, you may roll once per turn until you find doubles," +
+                            " however after three turns you must pay the $50 fine. \n Turn " + turn + ".", "You are in jail!",
+                    JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+
+            if (input == JOptionPane.YES_OPTION) {
+                if (currentPlayer.getMoney() < 50) {
+                    JOptionPane.showMessageDialog(new JFrame(), "You do not have enough money to pay the fine.");
+                    input = JOptionPane.NO_OPTION;
+                } else {
+                   currentPlayer.setMoney(currentPlayer.getMoney() - 50);
+                    JOptionPane.showMessageDialog(new JFrame(), "You are out of jail!");
+                    currentPlayer.setJail(false);
+                }
+            }
+            if (input == JOptionPane.NO_OPTION) {
+                int[] dices = game.rollDice();
+
+                if (dices[0] == dices[1]) {
+                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ". You are out of jail!");
+                    currentPlayer.setJail(false);
+                } else {
+                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou are not out of jail. Passing your turn.");
+                    game.passTurn();
+                    JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+                    JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
+                    JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+                    startingInfo.removeAll();
+                    startingInfo.add(info);
+                    startingInfo.add(money);
+                    startingInfo.add(more,BorderLayout.EAST);
+                    startingInfo.revalidate();
+                    startingInfo.repaint();
+                    SwingUtilities.updateComponentTreeUI(frame);
+                }
+            }
+
+            } else {
+                boolean doubles = false;
+                int[] dices = game.rollDice();
+                int diceRoll = dices[0] + dices[1];
+                if (!(dices[0] == dices[1])) {
+                    rollButton.setEnabled(false);
+                } else {
+                    doubles = true;
+                    rollButton.setEnabled(true);
+                }
+
+
+                if (count == 2) {
+                    count = 0;
+                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled three doubles in a row. You are going to jail for speeding.");
+                    currentPlayer.currentPosition = 10;
+                    currentPlayer.setJail(true);
+
+                } else {
+                    if (doubles) {
+                        JOptionPane.showMessageDialog(frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + "). They are doubles! You may roll again.");
+                        count++;
+                    } else {
+                        JOptionPane.showMessageDialog(frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + ").");
+                        count = 0;
+                    }
+
+                    int startingPos = currentPlayer.currentPosition;
+                    int endingPos = startingPos + diceRoll;
+
+                    if (endingPos > 39) {
+                        int placesBefore39 = 39 - startingPos;
+                        currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
+                        JOptionPane.showMessageDialog(new JFrame(), "You passed on GO! You have received $200");
+                        currentPlayer.setMoney(currentPlayer.getMoney() + 200);
+
+                    } else {
+                        currentPlayer.currentPosition = startingPos + diceRoll;
+                    }
+
+                    if (currentPlayer.currentPosition == 30) {
+                        JOptionPane.showMessageDialog(new JFrame(), "You landed on the go to jail square! You are going to jail.");
+                        currentPlayer.currentPosition = 10;
+                        currentPlayer.setJail(true);
+
+                    } else {
+                        try {
+                            propertyPopUp();
+
+                        } catch (IOException ex) {
+                            ex.printStackTrace();
+                        }
+
+                        //Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
+                    }
+                }
+            }
+        });
+        return rollButton;
+    }
+
+    public JButton createQuitButton() {
+        JButton quitButton = new JButton("quit");
+        quitButton.addActionListener(e -> {
+
+            int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
+            if (code == JOptionPane.OK_OPTION) {
+                frame.dispose();
+                System.exit(0);
+            }
+
+        });
+        return quitButton;
+    }
 
     public void propertyPopUp() throws IOException{
         JFrame popUpFrame = new JFrame("Property");
@@ -179,7 +268,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         panel.setLayout(new BorderLayout());
         propertyPictures = new ArrayList<JLabel>();
         for(int i = 0; i < 40; i++) {
-            BufferedImage property1 = ImageIO.read(new File("property pictures/"+i+".png"));
+            BufferedImage property1 = ImageIO.read(new File("propertypictures/"+i+".png"));
             JLabel label1 = new JLabel(new ImageIcon(property1));
             propertyPictures.add(label1);
         }
@@ -220,9 +309,14 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
             }
          */
         buy.addActionListener(e -> {
-            if (!currentProperty.checkAvailability()) {
-                JPanel warningPanel = new JPanel();
-                JOptionPane.showMessageDialog(warningPanel, "The property is already owned.");
+            if (currentProperty.getColour().equals("none")) {
+                JOptionPane.showMessageDialog(new JPanel(), "You cannot buy this property.");
+                buy.setEnabled(false);
+            } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
+                JOptionPane.showMessageDialog(new JPanel(), "You do not have enough money to buy this property.");
+                buy.setEnabled(false);
+            } else if (!currentProperty.checkAvailability()) {
+                JOptionPane.showMessageDialog(new JPanel(), "The property is already owned.");
                 buy.setEnabled(false);
             } else {
                 int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
