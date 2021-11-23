@@ -1,7 +1,4 @@
 package Monopoly;
-
-
-
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -28,11 +25,9 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         this.game = game;
         propertyPictures = new ArrayList<>();
 
-
         handleInitialSetup();
 
         boardGUI = new BoardGUI(game.getTotalPlayers());
-
 
         frame.setLayout(new BorderLayout());
 
@@ -51,7 +46,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         rightPanel.setSize(200, 400);
 
         //add buttons
-        JButton rollButton = new JButton("roll");
+        JButton rollButton = new JButton("Roll");
         rollButton.addActionListener(e -> {
             int diceRoll = game.rollDice();
             //TODO: Add doubles, which would keep rolled to false so the player can roll again.
@@ -78,7 +73,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         });
 
-        JButton quitButton = new JButton("quit");
+        JButton quitButton = new JButton("Quit");
         quitButton.addActionListener(e -> {
 
             int code = JOptionPane.showConfirmDialog(frame, "Are you sure you want to quit?");
@@ -91,28 +86,50 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
 
         startingInfo = new JPanel();
         JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+        info.setFont(new Font("sans serif", Font.BOLD, 18));
         startingInfo.add(info);
-        JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+        //JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+        JLabel more = new JLabel("");
+        more.setFont(new Font("sans serif", Font.PLAIN, 16));
+        JButton statusButton = new JButton("Player status");
+        statusButton.addActionListener(e -> {
+            Player currentPlayer = game.getCurrentPlayer();
+            more.setText("<html>Player name: " + currentPlayer.getPlayerName() +
+                    "<br>Owned Properties: <br>" + currentPlayer.getProperties().toString().replace("[", "").replace("]", "") +
+                    "<br>Money in the bank: " + currentPlayer.getMoney() +
+                    "<br>Current Position: " + currentPlayer.getCurrentPosition() + "</html>");
+        });
+
+        JButton clearStatusButton = new JButton("Clear status");
+        clearStatusButton.addActionListener(e -> {
+            more.setText("");
+        });
+
         moreInfo = new JPanel();
         moreInfo.add(more);
-
-
 
         JPanel frameButtonPanel = new JPanel();
         frameButtonPanel.setSize(500, 500);
         frameButtonPanel.add(rollButton);
+        frameButtonPanel.add(statusButton);
+        frameButtonPanel.add(clearStatusButton);
         frameButtonPanel.add(quitButton);
 
-        rightPanel.add(frameButtonPanel, BorderLayout.PAGE_END);
+        rightPanel.add(frameButtonPanel);
+
+        JPanel infoPanel = new JPanel(new BorderLayout());
+        infoPanel.add(startingInfo, BorderLayout.NORTH);
+        infoPanel.add(moreInfo, BorderLayout.CENTER);
 
         frame.add(boardGUI, BorderLayout.CENTER);
-        frame.add(rightPanel, BorderLayout.EAST);
-        frame.add(startingInfo,BorderLayout.PAGE_END);
-        //frame.add(moreInfo,BorderLayout.PAGE_END);
-        frame.setSize(1000, 1000);
+        frame.add(rightPanel, BorderLayout.PAGE_END);
+        frame.add(infoPanel,BorderLayout.EAST);
+        //frame.add(moreInfo,BorderLayout.EAST);
+        frame.setSize(1000, 800);
         frame.setBackground(Color.lightGray);
 
         frame.setVisible(true);
+        frame.setResizable(false);
 
         game.addView(this);
         frame.invalidate();
@@ -223,12 +240,13 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
             game.passTurn();
             popUpFrame.setVisible(false);
             JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+            info.setFont(new Font("sans serif", Font.BOLD, 18));
             JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
             JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
             startingInfo.removeAll();
             startingInfo.add(info);
-            startingInfo.add(money);
-            startingInfo.add(more,BorderLayout.EAST);
+            //startingInfo.add(money);
+            //startingInfo.add(more,BorderLayout.EAST);
             startingInfo.revalidate();
             startingInfo.repaint();
             SwingUtilities.updateComponentTreeUI(frame);
