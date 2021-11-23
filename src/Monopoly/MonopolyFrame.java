@@ -95,7 +95,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         statusButton.addActionListener(e -> {
             Player currentPlayer = game.getCurrentPlayer();
             more.setText("<html>Player name: " + currentPlayer.getPlayerName() +
-                    "<br>Owned Properties: <br>" + currentPlayer.getProperties().toString().replace("[", "").replace("]", "") +
+                    "<br>Owned Properties: <br>" + currentPlayer.getPropertyNames()+
                     "<br>Money in the bank: " + currentPlayer.getMoney() +
                     "<br>Current Position: " + currentPlayer.getCurrentPosition() + "</html>");
         });

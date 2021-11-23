@@ -43,6 +43,15 @@ public class Player {
 
     }
 
+    public String getPropertyNames(){
+        String test = "";
+        for(Property p:properties){
+            test+=p.getName()+", \n";
+        }
+
+        return test;
+    }
+
     /**
      * Returns how much money a player has
      * @return int of players money
