@@ -4,11 +4,11 @@ import java.util.*;
 
 public class MonopolyEvent extends EventObject {
 
-    Game.Status status;
+    //Game.Status status;
 
-    public MonopolyEvent(Game game, Game.Status status) {
+    public MonopolyEvent(Game game) {
         super(game);
 
-        this.status = status;
+        //this.status = status;
     }
 }
