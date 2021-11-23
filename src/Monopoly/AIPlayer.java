@@ -16,7 +16,8 @@ public class AIPlayer extends Player {
 	 * Function that mimics the movement of the player
 	 */
      public void playTurn(Game game, ArrayList<Player> players, int currentPlayerIndex) {
-          int diceRoll = game.rollDice();
+          int[] dices = game.rollDice();
+          int diceRoll = dices[0] + dices[1];
           int currentPlayerPosition = players.get(currentPlayerIndex).currentPosition;
           int newPosition = currentPlayerPosition + diceRoll;
           players.get(currentPlayerIndex).updateCurrentPosition(newPosition);
