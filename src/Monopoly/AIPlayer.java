@@ -27,11 +27,11 @@ public class AIPlayer extends Player {
      */
     public void buyProperty(Game game, ArrayList<Player> players, int currentPlayerIndex) {
           int currentPlayerPosition = players.get(currentPlayerIndex).currentPosition;
-          int propertyIndex = game.getPropertyIndex(currentPlayerPosition);
-          Property property = game.getProperty(propertyIndex);
-          if (property.getOwner() == null && players.get(currentPlayerIndex).getMoney() >= property.getPrice()) {
+          int propertyIndex = game.getCurrentPlayer().currentPosition;
+          Property property = game.getPropertyList().get(propertyIndex);
+          if (property.getOwner() == null && players.get(currentPlayerIndex).getMoney() >= property.getPurchasingCost()) {
                property.setOwner(players.get(currentPlayerIndex));
-               players.get(currentPlayerIndex).updateMoney(property.getPrice());
+               players.get(currentPlayerIndex).setMoney(players.get(currentPlayerIndex).getMoney()-property.getPurchasingCost());
           }
      }
 
@@ -40,7 +40,7 @@ public class AIPlayer extends Player {
      */
      public void payRent(Property property, ArrayList<Player> players, int currentPlayerIndex) {
           int currentPlayerPosition = players.get(currentPlayerIndex).currentPosition;
-          int propertyIndex = property.position;
+          int propertyIndex = players.get(currentPlayerIndex).getCurrentPosition();
           if (property.getOwner() != null && property.getOwner() != players.get(currentPlayerIndex)) {
                int rent = property.getRentCost();
                players.get(currentPlayerIndex).setMoney(money - rent);

@@ -21,7 +21,6 @@ public class Game {
 
     private ArrayList<MonopolyView> views;
 
-    public enum Status {PLAYER1_WON, PLAYER2_WON, PLAYER3_WON, PLAYER4_WON, PLAYER5_WON, PLAYER6_WON, UNDECIDED}
 
     /**
      * Create the game and initialise its internal map.
@@ -37,12 +36,7 @@ public class Game {
         currentPlayerIndex = 0;
     }
 
-    /**
-     * Creates the Monopoly board
-     */
-    private void createBoard(){
 
-    }
 
     public void addView(MonopolyView mview){
         views.add(mview);
@@ -390,8 +384,9 @@ public class Game {
         return Integer.compare(a.getDiceResults(), b.getDiceResults());
     }
 
-    /*public static void main(String[] args) {
-        new Game().play();
-    }*/
+    public void buyHouse(Player player, Property property){
+        //String
+    }
+
 
 }
