@@ -106,42 +106,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     }
 
     private void handleInitialSetup(){
-        String str = "";
-        String name = "";
-        int numAI = 0;
-        while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
-
-            try {
-                str = JOptionPane.showInputDialog("How many AI players would you like to create?");
-                if (str != null) {
-                    numAI = Integer.parseInt(str);
-
-                }
-                for (int i = 1; i <= numAI; i++) {
-                    game.addPlayer(new AIPlayer("COM" + i));
-                }
-            } catch (NumberFormatException exception) {
-                game.setTotalPlayers(0);
-            }
-
-            try {
-                str = JOptionPane.showInputDialog("Enter Number of Players (2-" + (6 - numAI) + "):");
-                if (str != null) {
-                    game.setTotalPlayers(Integer.parseInt(str) + numAI);
-                }
-            } catch (NumberFormatException exception) {
-                game.setTotalPlayers(0);
-            }
-        }
-
-        for (int i = 0; i < (game.getTotalPlayers() - numAI) ; i++) {
-            name = "";
-            while (name == null || name.equals("")) {
-                name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
-            }
-            Player player = new Player(name);
-            game.addPlayer(player);
-        }
+        new GameInitializer(game);
     }
 
     @Override

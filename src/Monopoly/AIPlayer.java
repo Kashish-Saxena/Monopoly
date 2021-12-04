@@ -49,4 +49,12 @@ public class AIPlayer extends Player {
           }
      }
 
+    /**
+     * Returns if the player is AI
+     * @return true
+     */
+    public boolean isAI(){
+         return true;
+     }
+
 }
