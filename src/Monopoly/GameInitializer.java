@@ -11,7 +11,7 @@ public class GameInitializer {
         this.game = game;
     }
 
-    /*public void handleSetup(MonopolyEvent e) {
+    public void handleSetup() {
         String str = "";
         while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
             try {
@@ -42,6 +42,6 @@ public class GameInitializer {
                 game.addPlayer(player);
             }
         }
-    }*/
+    }
 
 }

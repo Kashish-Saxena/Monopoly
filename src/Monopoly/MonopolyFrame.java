@@ -106,7 +106,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     }
 
     private void handleInitialSetup(){
-        new GameInitializer(game);
+        GameInitializer gi = new GameInitializer(game);
+        gi.handleSetup();
     }
 
     @Override
