@@ -1,0 +1,282 @@
+{
+  "0": {
+    "name": "Free Square (GO)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "1": {
+    "name": "Mediterranean Avenue",
+    "purchasingCost": "60",
+    "baseRentCost": "2",
+    "houseCost": "50",
+    "colour": "brown"
+  },
+  "2": {
+    "name": "Free Square (Community Chest)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "3": {
+    "name": "Baltic Avenue",
+    "purchasingCost": "60",
+    "baseRentCost": "4",
+    "houseCost": "50",
+    "colour": "brown"
+  },
+  "4": {
+    "name": "Income Tax",
+    "purchasingCost": "0",
+    "baseRentCost": "200",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "5": {
+    "name": "Reading Railroad",
+    "purchasingCost": "200",
+    "baseRentCost": "25",
+    "houseCost": "0",
+    "colour": "rail"
+  },
+  "6": {
+    "name": "Oriental Avenue",
+    "purchasingCost": "100",
+    "baseRentCost": "6",
+    "houseCost": "50",
+    "colour": "lightblue"
+  },
+  "7": {
+    "name": "Free Square (Chance)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "8": {
+    "name": "Vermont Avenue",
+    "purchasingCost": "100",
+    "baseRentCost": "6",
+    "houseCost": "50",
+    "colour": "lightblue"
+  },
+  "9": {
+    "name": "Connecticut Avenue",
+    "purchasingCost": "120",
+    "baseRentCost": "8",
+    "houseCost": "50",
+    "colour": "lightblue"
+  },
+  "10": {
+    "name": "Jail",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "11": {
+    "name": "St. Charles Place",
+    "purchasingCost": "140",
+    "baseRentCost": "10",
+    "houseCost": "100",
+    "colour": "pink"
+  },
+  "12": {
+    "name": "Electric Company",
+    "purchasingCost": "150",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "util"
+  },
+  "13": {
+    "name": "States Avenue",
+    "purchasingCost": "140",
+    "baseRentCost": "10",
+    "houseCost": "100",
+    "colour": "pink"
+  },
+  "14": {
+    "name": "Virginia Avenue",
+    "purchasingCost": "160",
+    "baseRentCost": "12",
+    "houseCost": "100",
+    "colour": "pink"
+  },
+  "15": {
+    "name": "Pennsylvania Railroad",
+    "purchasingCost": "200",
+    "baseRentCost": "25",
+    "houseCost": "0",
+    "colour": "rail"
+  },
+  "16": {
+    "name": "St. James Place",
+    "purchasingCost": "180",
+    "baseRentCost": "14",
+    "houseCost": "100",
+    "colour": "orange"
+  },
+  "17": {
+    "name": "Free Square (Community Chest)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "18": {
+    "name": "Tennessee Avenue",
+    "purchasingCost": "180",
+    "baseRentCost": "14",
+    "houseCost": "100",
+    "colour": "orange"
+  },
+  "19": {
+    "name": "New York Avenue",
+    "purchasingCost": "200",
+    "baseRentCost": "16",
+    "houseCost": "100",
+    "colour": "orange"
+  },
+  "20": {
+    "name": "Free Square (Free Parking)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "21": {
+    "name": "Kentucky Avenue",
+    "purchasingCost": "220",
+    "baseRentCost": "18",
+    "houseCost": "150",
+    "colour": "red"
+  },
+  "22": {
+    "name": "Free Square (Chance)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "23": {
+    "name": "Indiana Avenue",
+    "purchasingCost": "220",
+    "baseRentCost": "18",
+    "houseCost": "150",
+    "colour": "red"
+  },
+  "24": {
+    "name": "Illinois Avenue",
+    "purchasingCost": "240",
+    "baseRentCost": "20",
+    "houseCost": "150",
+    "colour": "red"
+  },
+  "25": {
+    "name": "B&O Railroad",
+    "purchasingCost": "200",
+    "baseRentCost": "25",
+    "houseCost": "0",
+    "colour": "rail"
+  },
+  "26": {
+    "name": "Atlantic Avenue",
+    "purchasingCost": "260",
+    "baseRentCost": "22",
+    "houseCost": "150",
+    "colour": "yellow"
+  },
+  "27": {
+    "name": "Ventnor Avenue",
+    "purchasingCost": "260",
+    "baseRentCost": "22",
+    "houseCost": "150",
+    "colour": "yellow"
+  },
+  "28": {
+    "name": "Waterworks",
+    "purchasingCost": "150",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "util"
+  },
+  "29": {
+    "name": "Marvin Gardens",
+    "purchasingCost": "280",
+    "baseRentCost": "24",
+    "houseCost": "150",
+    "colour": "yellow"
+  },
+  "30": {
+    "name": "Go to Jail",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "31": {
+    "name": "Pacific Avenue",
+    "purchasingCost": "300",
+    "baseRentCost": "26",
+    "houseCost": "200",
+    "colour": "green"
+  },
+  "32": {
+    "name": "North Carolina Avenue",
+    "purchasingCost": "300",
+    "baseRentCost": "26",
+    "houseCost": "200",
+    "colour": "green"
+  },
+  "33": {
+    "name": "Free Square (Community Chest)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "34": {
+    "name": "Pennsylvania Avenue",
+    "purchasingCost": "320",
+    "baseRentCost": "28",
+    "houseCost": "200",
+    "colour": "green"
+  },
+  "35": {
+    "name": "Short Line",
+    "purchasingCost": "200",
+    "baseRentCost": "25",
+    "houseCost": "0",
+    "colour": "rail"
+  },
+  "36": {
+    "name": "Free Square (Chance)",
+    "purchasingCost": "0",
+    "baseRentCost": "0",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "37": {
+    "name": "Park Place",
+    "purchasingCost": "350",
+    "baseRentCost": "35",
+    "houseCost": "200",
+    "colour": "darkblue"
+  },
+  "38": {
+    "name": "Luxury Tax",
+    "purchasingCost": "0",
+    "baseRentCost": "100",
+    "houseCost": "0",
+    "colour": "none"
+  },
+  "39": {
+    "name": "Boardwalk",
+    "purchasingCost": "400",
+    "baseRentCost": "50",
+    "houseCost": "200",
+    "colour": "darkblue"
+  }
+}

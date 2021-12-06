@@ -26,8 +26,7 @@ public class Game implements Serializable {
     /**
      * Create the game and initialise its internal map.
      */
-    public Game()
-    {
+    public Game() throws IOException {
         Board board = new Board();
         propertyList = board.getBoard();
         dice = new ArrayList<>();
@@ -473,7 +472,7 @@ public class Game implements Serializable {
      */
     public void serializeGame (String filename){
         try {
-            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            FileOutputStream fileOut = new FileOutputStream("src/Monopoly/saves/" + filename + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
@@ -489,7 +488,7 @@ public class Game implements Serializable {
      */
     public static Game deserializeGame(String filepath) {
         try {
-            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            FileInputStream fileIn = new FileInputStream("src/Monopoly/saves/" +filepath+ ".ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
             Game game = (Game) objectIn.readObject();

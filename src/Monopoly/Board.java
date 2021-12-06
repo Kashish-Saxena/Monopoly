@@ -1,9 +1,15 @@
 package Monopoly;
 import org.json.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 
 import java.io.*;
+import java.io.File;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 
 public class Board implements Serializable {
@@ -23,7 +29,7 @@ public class Board implements Serializable {
             String val = pos.getString("colour");
             String house = pos.getString("houseCost");
             int hCost = Integer.parseInt(house);
-            propertyList.add(new Property(pos.getString("name"), cost,hCost, rCost, i,val));
+            propertyList.add(new Property(pos.getString("name"), cost,hCost, rCost, i,val,false));
         }
     }
 
@@ -36,7 +42,7 @@ public class Board implements Serializable {
      */
     public void serializeBoard (String filename){
         try {
-            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
@@ -52,7 +58,7 @@ public class Board implements Serializable {
      */
     public static Board deserializeBoard(String filepath) {
         try {
-            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ ".ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
             Board board = (Board) objectIn.readObject();
@@ -356,3 +362,4 @@ public class Board implements Serializable {
             "  }\n" +
             "}";
 }
+
