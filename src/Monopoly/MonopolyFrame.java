@@ -296,6 +296,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         JPanel panel = new JPanel();
         JButton buy = new JButton();
         JButton pass = new JButton();
+        JButton house = new JButton("Buy House");
         buy.setText("BUY");
         pass.setText("Pass Turn");
         panel.setLayout(new BorderLayout());
@@ -362,6 +363,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                     buy.setEnabled(false);
                 }
             }
+
         });
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
@@ -383,6 +385,26 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
 
 
 
+        });
+        panel.add(house,BorderLayout.EAST);
+        house.addActionListener(e -> {
+            if(currentProperty.getColour()=="brown"||currentProperty.getColour()=="darkblue"){
+                if(currentProperty.getColourCount(game.getCurrentPlayer().getProperties(), currentProperty.getColour()) == 2 && game.getCurrentPlayer().getMoney()> currentProperty.getHouseCost() ){
+                    currentProperty.setColourSet();
+                    currentProperty.buyHouse(currentProperty.getHouses());
+                }
+            }
+           else if (currentProperty.getColour()=="lightblue"||currentProperty.getColour()=="pink"||currentProperty.getColour()=="orange"||currentProperty.getColour()=="red"||currentProperty.getColour()=="yellow"||currentProperty.getColour()=="green"){
+               if(currentProperty.getColourCount(game.getCurrentPlayer().getProperties(), currentProperty.getColour()) == 3 && game.getCurrentPlayer().getMoney()> currentProperty.getHouseCost()){
+                    currentProperty.setColourSet();
+                   currentProperty.buyHouse(currentProperty.getHouses());
+                }
+
+            }
+           else{
+                JOptionPane.showMessageDialog(new JPanel(), "You do not own the colour set yet / You do not have enough money for this action");
+                house.setEnabled(false);
+            }
         });
         popUpFrame.add(panel);
         popUpFrame.add(propertyPictures.get(currentPlayer.currentPosition),BorderLayout.PAGE_END);

@@ -24,8 +24,7 @@ public class Game implements Serializable {
     /**
      * Create the game and initialise its internal map.
      */
-    public Game()
-    {
+    public Game() throws IOException {
         Board board = new Board();
         propertyList = board.getBoard();
         dice = new ArrayList<>();
