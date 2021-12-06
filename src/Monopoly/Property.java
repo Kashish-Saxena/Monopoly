@@ -1,4 +1,5 @@
 package Monopoly;
+import java.util.ArrayList;
 import java.util.Objects;
 /**
  * The Monopoly.Property class represents a property in the Monopoly game.
@@ -18,6 +19,7 @@ public class Property {
     private final int position;
     private final String colour;
     private int houses;
+    private boolean colourSet;
 
 
     /**
@@ -26,7 +28,7 @@ public class Property {
      * @param name Name of the property
      * @param initialCost initial cost of the property
      */
-    public Property(String name, int initialCost, int rentCost,int houseCost,  int position, String colour) {
+    public Property(String name, int initialCost, int rentCost,int houseCost,  int position, String colour, boolean colourSet) {
         this.name = name;
         purchasingCost = initialCost;
         isAvailable = true;
@@ -35,6 +37,7 @@ public class Property {
         this.colour = colour;
         this.houseCost = houseCost;
         this.houses = 0;
+        this.colourSet = false;
     }
 
     /**
@@ -115,6 +118,8 @@ public class Property {
         return isAvailable;
     }
 
+    public int getHouses(){return houses;}
+
     /**
      * Returns the string representation of the Monopoly.Property object
      * @return String representation of the Monopoly.Property object
@@ -138,4 +143,41 @@ public class Property {
         return Objects.equals(name, property.name) &&
                 Objects.equals(owner, property.owner);
     }
+
+    public void buyHouse(int housesOnProperty){
+        if(housesOnProperty == 0) {
+            setRentCost(getRentCost()*5);
+        }else if(housesOnProperty == 1){
+            setRentCost(getRentCost()*3);
+        }
+        else if(housesOnProperty == 2){
+            setRentCost(getRentCost()*3);
+        }
+        else if(housesOnProperty==3){
+            setRentCost(getRentCost()*3);
+        }
+        else{
+            buyHotel(getHouses());
+        }
+    }
+    public void buyHotel(int housesOnProperty){
+        if(housesOnProperty ==4){
+            setRentCost(getRentCost()*2);
+        }
+    }
+
+    public int getColourCount(ArrayList<Property> properties,String colour){
+        int count=0;
+        for(int i = 0; i < properties.size();i++){
+            if(properties.get(i).getColour() == colour){
+                count ++;
+            }
+        }
+        return count;
+    }
+
+    public void setColourSet(){
+        colourSet = true;
+    }
+
 }

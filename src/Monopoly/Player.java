@@ -116,6 +116,8 @@ public class Player {
     }
 
 
+
+
     /**
      * Compares all the values of the players
      * @param o the object that is being compared with
@@ -130,4 +132,6 @@ public class Player {
                 Objects.equals(money,player.money) &&
                 Objects.equals(currentPosition,player.currentPosition);
     }
+
+
 }
