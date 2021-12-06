@@ -28,7 +28,7 @@
 
          public void aiRoll (Game game){
              if (game.getCurrentPlayer() == this){
-                 //game.rollDice();
+                 game.rollDice();
                  int[] dices = game.rollDice();
                  int diceRoll = dices[0] + dices[1];
                  JOptionPane.showMessageDialog(new JPanel(), this.getPlayerName() + " has rolled a "+ diceRoll);

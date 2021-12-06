@@ -319,11 +319,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
                         JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
                     }
                     buy.setEnabled(false);
-                    game.passTurn();
-                    if (currentPlayer.isAI()){
-                        AIPlayer p = (AIPlayer) currentPlayer;
-                        p.aiRoll(game);
-                    }
                 }
 
             }
@@ -332,10 +327,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         pass.addActionListener(e -> {
             rollButton.setEnabled(true);
             game.passTurn();
-            if (currentPlayer.isAI()){
-                AIPlayer p = (AIPlayer) currentPlayer;
-                p.aiRoll(game);
-            }
             popUpFrame.setVisible(false);
             JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
             info.setFont(new Font("sans serif", Font.BOLD, 18));

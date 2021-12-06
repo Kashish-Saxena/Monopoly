@@ -105,7 +105,6 @@ public class Game {
         dices[0] = dice1;
         dices[1] = dice2;
         return dices;
-
     }
 
     private String getPlayerList() {
