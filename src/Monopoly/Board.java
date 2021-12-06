@@ -16,10 +16,9 @@ public class Board implements Serializable {
     public ArrayList<Property> propertyList;
     public ArrayList<Property> propertyList2;
 
-    public Board() throws IOException {
-        String myJson = new Scanner(new File("C:\\Users\\Sahil\\Desktop\\School\\Year 4\\Sem 1\\SYSC 3110\\Labs\\Monopoly\\src\\Monopoly\\properties.json")).useDelimiter("\\Z").next();
+    public Board() {
         propertyList = new ArrayList<>();
-        JSONObject o = new JSONObject(myJson);
+        JSONObject o = new JSONObject(json);
         for (int i = 0 ; i < o.length(); i++) {
             String toS = Integer.toString(i);
             JSONObject pos = o.getJSONObject(toS);
@@ -43,7 +42,7 @@ public class Board implements Serializable {
      */
     public void serializeBoard (String filename){
         try {
-            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + ".ser");
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
             out.writeObject(this);
             out.close();
@@ -59,7 +58,7 @@ public class Board implements Serializable {
      */
     public static Board deserializeBoard(String filepath) {
         try {
-            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ ".ser");
             ObjectInputStream objectIn = new ObjectInputStream(fileIn);
 
             Board board = (Board) objectIn.readObject();
@@ -364,4 +363,3 @@ public class Board implements Serializable {
             "}";
 }
 
-}
