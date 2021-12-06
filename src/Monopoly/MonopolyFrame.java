@@ -187,7 +187,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 frame.dispose();
                 System.exit(0);
             }
-
         });
         return quitButton;
     }
