@@ -109,8 +109,12 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
 
 
     }
-
     private void handleInitialSetup(){
+        GameInitializer gi = new GameInitializer(game);
+        gi.handleSetup();
+    }
+
+   /* private void handleInitialSetup(){
         String str = "";
         String name = "";
         int numAI = 0;
@@ -162,7 +166,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         }
         GameInitializer gi = new GameInitializer(game);
         gi.handleSetup();
-    }
+    }*/
 
     @Override
     public void handleMonopolyUpdate(MonopolyEvent e) {
