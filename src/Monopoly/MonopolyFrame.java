@@ -7,9 +7,10 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.*;
 
-public class MonopolyFrame extends JFrame implements MonopolyView {
+public class MonopolyFrame extends JFrame implements MonopolyView, Serializable {
 
     private Game game;
     private static ArrayList<JLabel> propertyPictures;
@@ -18,8 +19,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     JPanel startingInfo;
     JPanel moreInfo;
     JButton rollButton;
-
-
+    JLabel info;
 
     public  MonopolyFrame(Game game) throws IOException {
         super("Monopoly");
@@ -53,7 +53,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         JButton quitButton = createQuitButton();
 
         startingInfo = new JPanel();
-        JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+        info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
         info.setFont(new Font("sans serif", Font.BOLD, 18));
         startingInfo.add(info);
         //JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
@@ -63,7 +63,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         statusButton.addActionListener(e -> {
             Player currentPlayer = game.getCurrentPlayer();
             more.setText("<html>Player name: " + currentPlayer.getPlayerName() +
-                    "<br>Owned Properties: <br>" + currentPlayer.getPropertyNames() +
+                    "<br>Owned Properties: <br>" + currentPlayer.getPropertyNames()+
                     "<br>Money in the bank: " + currentPlayer.getMoney() +
                     "<br>Current Position: " + currentPlayer.getCurrentPosition() + "</html>");
         });
@@ -76,11 +76,16 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         moreInfo = new JPanel();
         moreInfo.add(more);
 
+        JButton saveButton = new JButton("Save Game");
+        saveButton.addActionListener(e -> {
+            saveGame();
+        });
         JPanel frameButtonPanel = new JPanel();
         frameButtonPanel.setSize(500, 500);
         frameButtonPanel.add(rollButton);
         frameButtonPanel.add(statusButton);
         frameButtonPanel.add(clearStatusButton);
+        frameButtonPanel.add(saveButton);
         frameButtonPanel.add(quitButton);
 
         rightPanel.add(frameButtonPanel);
@@ -109,39 +114,51 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         String str = "";
         String name = "";
         int numAI = 0;
-        while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
 
-            try {
-                str = JOptionPane.showInputDialog("How many AI players would you like to create?");
+        Object[] options = {"Load Game", "Start New Game"};
+        int n = JOptionPane.showOptionDialog(frame,
+                "Would you like to load an existing game or start a new one?",
+                "Monopoly", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                options, options[1]);
 
-                if (str != null) {
-                    numAI = Integer.parseInt(str);
-
-                }
-                for (int i = 1; i <= numAI; i++) {
-                    game.addPlayer(new AIPlayer("COM" + i));
-                }
-            } catch (NumberFormatException exception) {
-                game.setTotalPlayers(0);
-            }
-
-            try {
-                str = JOptionPane.showInputDialog("Enter Number of Players (2-" + (6 - numAI) + "):");
-                if (str != null) {
-                    game.setTotalPlayers(Integer.parseInt(str) + numAI);
-                }
-            } catch (NumberFormatException exception) {
-                game.setTotalPlayers(0);
-            }
+        if (n == 0){
+            this.loadGame();
         }
 
-        for (int i = 0; i < (game.getTotalPlayers() - numAI) ; i++) {
-            name = "";
-            while (name == null || name.equals("")) {
-                name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
+        else {
+            while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
+
+                try {
+                    str = JOptionPane.showInputDialog("How many AI players would you like to create?");
+                    if (str != null) {
+                        numAI = Integer.parseInt(str);
+
+                    }
+                    for (int i = 1; i <= numAI; i++) {
+                        game.addPlayer(new AIPlayer("COM" + i));
+                    }
+                } catch (NumberFormatException exception) {
+                    game.setTotalPlayers(0);
+                }
+
+                try {
+                    str = JOptionPane.showInputDialog("Enter Number of Players (2-" + (6 - numAI) + "):");
+                    if (str != null) {
+                        game.setTotalPlayers(Integer.parseInt(str) + numAI);
+                    }
+                } catch (NumberFormatException exception) {
+                    game.setTotalPlayers(0);
+                }
             }
-            Player player = new Player(name);
-            game.addPlayer(player);
+
+            for (int i = 0; i < (game.getTotalPlayers() - numAI) ; i++) {
+                name = "";
+                while (name == null || name.equals("")) {
+                    name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
+                }
+                Player player = new Player(name);
+                game.addPlayer(player);
+            }
         }
     }
 
@@ -277,6 +294,44 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         popUpFrame.pack();
         popUpFrame.setVisible(true);
+    }
+
+    /**
+     * save current game.
+     */
+    private void saveGame() {
+        //prompt user for save file name
+        String saveName = "";
+        while (saveName == null || saveName.equals("")) {
+            saveName = JOptionPane.showInputDialog("Enter a save name:");
+        }
+
+        //serialize game
+        this.game.serializeGame(saveName);
+
+        //serialize board
+       // this.boardGUI.saveState();//telling board to save its static fields into normal non-static fields
+        //this.boardGUI.serializeBoardGUI(saveName);
+    }
+
+    /**
+     * load a game.
+     */
+    private void loadGame(){
+        String loadName = "";
+        while (loadName == null || loadName.equals("")) {
+            loadName = JOptionPane.showInputDialog("Enter a load name (same name that was entered while saving):");
+        }
+
+        Game loadedGame = Game.deserializeGame(loadName);
+       // BoardGUI loadedBoard = BoardGUI.deserializeBoardGUI(loadName);
+
+        //loadedBoard.loadState();//telling board to load its non-static fields that were saved back into the original static fields
+
+        game = loadedGame;
+        //boardGUI = loadedBoard;
+
+        //info.setText(game.getCurrentPlayer().getPlayerName() + "'s turn");
     }
 
     public static void main(String[] args) throws IOException {

@@ -4,10 +4,11 @@
  * @version: October 24 2020
  */
 package Monopoly;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Serializable {
     private String playerName;
     private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;
@@ -43,6 +44,15 @@ public class Player {
     public ArrayList<Property> getProperties() {
         return this.properties;
 
+    }
+
+    public String getPropertyNames(){
+        String test = "";
+        for(Property p:properties){
+            test+=p.getName()+", \n";
+        }
+
+        return test;
     }
 
     /**

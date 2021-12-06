@@ -2,11 +2,13 @@ package Monopoly;
 import org.json.JSONObject;
 
 
+import java.io.*;
 import java.util.ArrayList;
 
 
-public class Board {
+public class Board implements Serializable {
     public ArrayList<Property> propertyList;
+    public ArrayList<Property> propertyList2;
 
     public Board() {
         propertyList = new ArrayList<>();
@@ -27,6 +29,48 @@ public class Board {
 
     public ArrayList<Property> getBoard(){
         return propertyList;
+    }
+
+    /**
+     * saves/serializes this BoardGUI object.
+     */
+    public void serializeBoard (String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * loads/deserializes BoardGUI object.
+     */
+    public static Board deserializeBoard(String filepath) {
+        try {
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Board board = (Board) objectIn.readObject();
+            objectIn.close();
+            return board;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveState(){
+        this.propertyList2 = propertyList;
+    }
+
+    public void loadState(){
+        propertyList = this.propertyList2;
     }
 
     static String json = "{\n" +
@@ -70,7 +114,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"6\": {\n" +
             "    \"name\": \"Oriental Avenue\",\n" +
@@ -119,7 +163,7 @@ public class Board {
             "    \"purchasingCost\": \"150\",\n" +
             "    \"baseRentCost\": \"0\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"util\"\n" +
             "  },\n" +
             "  \"13\": {\n" +
             "    \"name\": \"States Avenue\",\n" +
@@ -140,7 +184,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"16\": {\n" +
             "    \"name\": \"St. James Place\",\n" +
@@ -210,7 +254,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"26\": {\n" +
             "    \"name\": \"Atlantic Avenue\",\n" +
@@ -231,7 +275,7 @@ public class Board {
             "    \"purchasingCost\": \"150\",\n" +
             "    \"baseRentCost\": \"0\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"util\"\n" +
             "  },\n" +
             "  \"29\": {\n" +
             "    \"name\": \"Marvin Gardens\",\n" +
@@ -280,7 +324,7 @@ public class Board {
             "    \"purchasingCost\": \"200\",\n" +
             "    \"baseRentCost\": \"25\",\n" +
             "    \"houseCost\": \"0\",\n" +
-            "    \"colour\": \"none\"\n" +
+            "    \"colour\": \"rail\"\n" +
             "  },\n" +
             "  \"36\": {\n" +
             "    \"name\": \"Free Square (Chance)\",\n" +

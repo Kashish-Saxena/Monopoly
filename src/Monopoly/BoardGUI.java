@@ -3,15 +3,22 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.Box;
 import java.awt.Color;
+import java.io.*;
 import javax.swing.border.LineBorder;
 import javax.swing.ImageIcon;
 import javax.swing.JTextArea;
 
-public class BoardGUI extends JPanel {
+public class BoardGUI extends JPanel implements Serializable {
     private int[][] boardPosition;
     JLabel[] players;
     JTextArea[] properties;
     int numPlayers;
+
+    private int[][] boardPosition2;
+    JLabel[] players2;
+    JTextArea[] properties2;
+    int numPlayers2;
+
 
     private String[] playerIcon = {"Players_Icons/playerOne.jpg", "Players_Icons/playerTwo.jpg", "Players_Icons/playerThree.jpg", "Players_Icons/playerFour.jpg", "Players_Icons/playerFive.jpg", "Players_Icons/playerSix.jpg"};
 
@@ -458,4 +465,53 @@ public class BoardGUI extends JPanel {
             this.players[player].setBounds(this.boardPosition[position][0] + (player*21), this.boardPosition[position][1], 20, 20);
         }
     }
+
+    /**
+     * saves/serializes this BoardGUI object.
+     */
+    public void serializeBoardGUI (String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * loads/deserializes BoardGUI object.
+     */
+    public static BoardGUI deserializeBoardGUI(String filepath) {
+        try {
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            BoardGUI gui = (BoardGUI) objectIn.readObject();
+            objectIn.close();
+            return gui;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveState(){
+        this.boardPosition2 = boardPosition;
+        this.players2 = players;
+        this.properties2 = properties;
+        this.numPlayers2 = numPlayers;
+    }
+
+    public void loadState(){
+        boardPosition = this.boardPosition2;
+        players = this.players2;
+        properties = this.properties2;
+        numPlayers = this.numPlayers2;
+    }
+
 }

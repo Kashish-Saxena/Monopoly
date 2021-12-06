@@ -1,18 +1,15 @@
 package Monopoly;
 
-import javax.swing.*;
-import java.awt.*;
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Game {
+public class Game implements Serializable {
 
     MonopolyFrame mf = new MonopolyFrame(this);
     ArrayList<Property> propertyList;
-    private final InputParser parser;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
@@ -29,11 +26,10 @@ public class Game {
     /**
      * Create the game and initialise its internal map.
      */
-    public Game() throws IOException {
-
+    public Game()
+    {
         Board board = new Board();
         propertyList = board.getBoard();
-        parser = new InputParser();
         dice = new ArrayList<>();
         players = new ArrayList<>();
         views = new ArrayList<>();
@@ -50,75 +46,6 @@ public class Game {
         for (MonopolyView v : views){
             v.handleMonopolyUpdate(e);
         }
-    }
-
-    public void play(){
-        printWelcome();
-        /*
-        System.out.println("How many people are playing today? Minimum 2, Maximum 6.");
-
-        boolean confirmedPlayers = false;
-        while (!confirmedPlayers) {
-            Scanner sc = new Scanner(System.in);
-            if (!(sc.hasNextInt())) {
-                System.out.println("Unknown entry. Please enter the number again.");
-                continue;
-            }
-
-            totalPlayers = sc.nextInt();
-
-            int maxPlayers = 6;
-            if (totalPlayers > maxPlayers) {
-                System.out.println("Too many players. Please enter the number again.");
-                continue;
-
-            } else if (totalPlayers < 2) {
-                System.out.println("Not enough players. Please enter the number again.");
-                continue;
-            }
-            confirmedPlayers = true;
-        }
-        */
-
-        int i;
-        //int j;
-
-        for (i = 1; i <= totalPlayers; i++){
-            System.out.printf("\nPlease write Player %d's name:\n", i);
-            Scanner username = new Scanner(System.in);
-            String playerName = username.nextLine();
-            Player p = new Player(playerName);
-			players.add(p);
-            //p.setDiceResults(rollDice());
-        }
-
-        /*
-        for (j = 0; j < players.size(); j++) {
-            while (players.get(j).getDiceResults() == players.get(j + 1).getDiceResults()) {
-                players.get(j).setDiceResults(rollDice()); //roll until all players have different results
-            }
-            setPlayerOrder();
-        }
-        */
-
-        currentPlayer = players.get(currentPlayerIndex);
-
-        boolean finished = false;
-        boolean roll = false;
-        System.out.println("\nTurn " + currentTurn + ". It is " + currentPlayer.getPlayerName() + "'s turn.");
-
-        while (!finished) {
-            System.out.println("Type '" + CommandWord.HELP + "' if you need help.");
-            Command command = InputParser.getCommand();
-            System.out.println();
-            finished = processCommand(command);
-            if (totalPlayers == 1) {
-                System.out.println(players.get(0).getPlayerName() + " won!");
-                finished = true;
-            }
-
-        }
-        System.out.println("Thank you for playing Monopoly!");
     }
 
     /**
@@ -503,7 +430,7 @@ public class Game {
     /**
      * Returns the total number of players
      */
-    private int getTotalPlayers(){
+    int getTotalPlayers(){
         return totalPlayers;
     }
 
@@ -537,19 +464,41 @@ public class Game {
         players.add(p);
     }
 
-    /**
-     * Compares two players dice results
-     * @param a Player one
-     * @param b Player two
-     * @return comparison result
-     */
-    private int compareDiceRolls(Player a, Player b){
-        return Integer.compare(a.getDiceResults(), b.getDiceResults());
-    }
-
     public void buyHouse(Player player, Property property){
         //String
     }
 
+    /**
+     * saves/serializes this Game object.
+     */
+    public void serializeGame (String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * loads/deserializes Game object.
+     */
+    public static Game deserializeGame(String filepath) {
+        try {
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Game game = (Game) objectIn.readObject();
+            objectIn.close();
+            return game;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }
