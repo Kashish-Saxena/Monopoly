@@ -408,8 +408,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         this.game.serializeGame(saveName);
 
         //serialize board
-        this.boardGUI.saveState();//telling board to save its static fields into normal non-static fields
-        this.boardGUI.serializeBoardGUI(saveName);
+       // this.boardGUI.saveState();//telling board to save its static fields into normal non-static fields
+        //this.boardGUI.serializeBoardGUI(saveName);
     }
 
     /**
@@ -422,14 +422,14 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         }
 
         Game loadedGame = Game.deserializeGame(loadName);
-        BoardGUI loadedBoard = BoardGUI.deserializeBoardGUI(loadName);
+       // BoardGUI loadedBoard = BoardGUI.deserializeBoardGUI(loadName);
 
-        loadedBoard.loadState();//telling board to load its non-static fields that were saved back into the original static fields
+        //loadedBoard.loadState();//telling board to load its non-static fields that were saved back into the original static fields
 
         game = loadedGame;
-        boardGUI = loadedBoard;
+        //boardGUI = loadedBoard;
 
-        info.setText(game.getCurrentPlayer().getPlayerName() + "'s turn");
+        //info.setText(game.getCurrentPlayer().getPlayerName() + "'s turn");
     }
 
     public static void main(String[] args) throws IOException {
