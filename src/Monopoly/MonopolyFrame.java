@@ -7,10 +7,7 @@ import java.awt.event.ActionListener;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class MonopolyFrame extends JFrame implements MonopolyView {
 
@@ -21,8 +18,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     JPanel startingInfo;
     JPanel moreInfo;
     JButton rollButton;
-    private int count;
-    private int turn = 0;
+
+
 
     public  MonopolyFrame(Game game) throws IOException {
         super("Monopoly");
@@ -66,7 +63,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         statusButton.addActionListener(e -> {
             Player currentPlayer = game.getCurrentPlayer();
             more.setText("<html>Player name: " + currentPlayer.getPlayerName() +
-                    "<br>Owned Properties: <br>" + currentPlayer.getProperties().toString().replace("[", "").replace("]", "") +
+                    "<br>Owned Properties: <br>" + currentPlayer.getPropertyNames() +
                     "<br>Money in the bank: " + currentPlayer.getMoney() +
                     "<br>Current Position: " + currentPlayer.getCurrentPosition() + "</html>");
         });
@@ -111,18 +108,34 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
     private void handleInitialSetup(){
         String str = "";
         String name = "";
+        int numAI = 0;
         while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
+
             try {
-                str = JOptionPane.showInputDialog("Enter Number of Players (2-6):");
+                str = JOptionPane.showInputDialog("How many AI players would you like to create?");
+
                 if (str != null) {
-                    game.setTotalPlayers(Integer.parseInt(str));
+                    numAI = Integer.parseInt(str);
+
+                }
+                for (int i = 1; i <= numAI; i++) {
+                    game.addPlayer(new AIPlayer("COM" + i));
+                }
+            } catch (NumberFormatException exception) {
+                game.setTotalPlayers(0);
+            }
+
+            try {
+                str = JOptionPane.showInputDialog("Enter Number of Players (2-" + (6 - numAI) + "):");
+                if (str != null) {
+                    game.setTotalPlayers(Integer.parseInt(str) + numAI);
                 }
             } catch (NumberFormatException exception) {
                 game.setTotalPlayers(0);
             }
         }
 
-        for (int i = 0; i < game.getTotalPlayers(); i++) {
+        for (int i = 0; i < (game.getTotalPlayers() - numAI) ; i++) {
             name = "";
             while (name == null || name.equals("")) {
                 name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
@@ -142,104 +155,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         rollButton.addActionListener(e -> {
 
             rollButton.setEnabled(false);
-            Player currentPlayer = game.getCurrentPlayer();
-            if (currentPlayer.getJail()) {
-                turn++;
-                Object[] options = {"Pay $50", "Roll"};
-            int input = JOptionPane.showOptionDialog(new JFrame(),"You may pay $50 to get out. " +
-                            "Also, you may roll once per turn until you find doubles," +
-                            " however after three turns you must pay the $50 fine. \n Turn " + turn + ".", "You are in jail!",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
+            game.processRoll();
 
-            if (input == JOptionPane.YES_OPTION) {
-                if (currentPlayer.getMoney() < 50) {
-                    JOptionPane.showMessageDialog(new JFrame(), "You do not have enough money to pay the fine.");
-                    input = JOptionPane.NO_OPTION;
-                } else {
-                   currentPlayer.setMoney(currentPlayer.getMoney() - 50);
-                    JOptionPane.showMessageDialog(new JFrame(), "You are out of jail!");
-                    currentPlayer.setJail(false);
-                }
-            }
-            if (input == JOptionPane.NO_OPTION) {
-                int[] dices = game.rollDice();
-
-                if (dices[0] == dices[1]) {
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ". You are out of jail!");
-                    currentPlayer.setJail(false);
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou are not out of jail. Passing your turn.");
-                    game.passTurn();
-                    JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
-                    JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
-                    JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
-                    startingInfo.removeAll();
-                    startingInfo.add(info);
-                    startingInfo.add(money);
-                    startingInfo.add(more,BorderLayout.EAST);
-                    startingInfo.revalidate();
-                    startingInfo.repaint();
-                    SwingUtilities.updateComponentTreeUI(frame);
-                }
-            }
-
-            } else {
-                boolean doubles = false;
-                int[] dices = game.rollDice();
-                int diceRoll = dices[0] + dices[1];
-                if (!(dices[0] == dices[1])) {
-                    rollButton.setEnabled(false);
-                } else {
-                    doubles = true;
-                    rollButton.setEnabled(true);
-                }
-
-
-                if (count == 2) {
-                    count = 0;
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled three doubles in a row. You are going to jail for speeding.");
-                    currentPlayer.currentPosition = 10;
-                    currentPlayer.setJail(true);
-
-                } else {
-                    if (doubles) {
-                        JOptionPane.showMessageDialog(frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + "). They are doubles! You may roll again.");
-                        count++;
-                    } else {
-                        JOptionPane.showMessageDialog(frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + ").");
-                        count = 0;
-                    }
-
-                    int startingPos = currentPlayer.currentPosition;
-                    int endingPos = startingPos + diceRoll;
-
-                    if (endingPos > 39) {
-                        int placesBefore39 = 39 - startingPos;
-                        currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
-                        JOptionPane.showMessageDialog(new JFrame(), "You passed on GO! You have received $200");
-                        currentPlayer.setMoney(currentPlayer.getMoney() + 200);
-
-                    } else {
-                        currentPlayer.currentPosition = startingPos + diceRoll;
-                    }
-
-                    if (currentPlayer.currentPosition == 30) {
-                        JOptionPane.showMessageDialog(new JFrame(), "You landed on the go to jail square! You are going to jail.");
-                        currentPlayer.currentPosition = 10;
-                        currentPlayer.setJail(true);
-
-                    } else {
-                        try {
-                            propertyPopUp();
-
-                        } catch (IOException ex) {
-                            ex.printStackTrace();
-                        }
-
-                        //Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-                    }
-                }
-            }
         });
         return rollButton;
     }

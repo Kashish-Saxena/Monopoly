@@ -14,6 +14,7 @@ public class Player {
     public int currentPosition;
     private int diceResult;
     private boolean inJail = false;
+    private int JailTurn = 0;
 
     /**
      * Constructor for the player
@@ -87,6 +88,11 @@ public class Player {
     public void setJail(boolean bool) {
         inJail = bool;
     }
+
+    public int getJailTurn() { return JailTurn; }
+
+    public void setJailTurn(int turn) { JailTurn = turn; }
+
     /**
      * Updates the players position
      * @param amount how many spaces the player moves
@@ -121,4 +127,6 @@ public class Player {
                 Objects.equals(money,player.money) &&
                 Objects.equals(currentPosition,player.currentPosition);
     }
+
+
 }
