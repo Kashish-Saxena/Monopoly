@@ -160,6 +160,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 game.addPlayer(player);
             }
         }
+        GameInitializer gi = new GameInitializer(game);
+        gi.handleSetup();
     }
 
     @Override
@@ -187,6 +189,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 frame.dispose();
                 System.exit(0);
             }
+
         });
         return quitButton;
     }
@@ -254,15 +257,29 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 JOptionPane.showMessageDialog(new JPanel(), "The property is already owned.");
                 buy.setEnabled(false);
             } else {
-                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
-                if (code == JOptionPane.OK_OPTION) {
-                    currentPlayer.buyProperty(currentProperty);
-                    currentProperty.setOwner(currentPlayer);
-                    int propertyCost = currentProperty.getPurchasingCost();
+                if (!currentPlayer.isAI()){
+                    int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
+                    if (code == JOptionPane.OK_OPTION) {
+                        currentPlayer.buyProperty(currentProperty);
+                        currentProperty.setOwner(currentPlayer);
+                        int propertyCost = currentProperty.getPurchasingCost();
 
-                    currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                        buy.setEnabled(false);
+                    }
+                }
+                else{
+                    AIPlayer player = (AIPlayer) currentPlayer;
+                    player.buyProperty(game, currentProperty, player.getCurrentPosition());
+                    if (player.bought() == true){
+                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " bought this property.");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
+                    }
                     buy.setEnabled(false);
                 }
+
             }
 
         });

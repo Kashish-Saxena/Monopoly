@@ -122,6 +122,13 @@ public class Player implements Serializable {
         return currentPosition;
     }
 
+    /**
+     * Returns if the player is AI
+     * @return false
+     */
+    public boolean isAI(){
+        return false;
+    }
 
 
 

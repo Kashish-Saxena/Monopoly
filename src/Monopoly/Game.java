@@ -12,6 +12,7 @@ public class Game implements Serializable {
 
     MonopolyFrame mf = new MonopolyFrame(this);
     ArrayList<Property> propertyList;
+    private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
     private int currentPlayerIndex;
@@ -30,6 +31,7 @@ public class Game implements Serializable {
     public Game() throws IOException {
         Board board = new Board();
         propertyList = board.getBoard();
+        dice = new ArrayList<>();
         players = new ArrayList<>();
         views = new ArrayList<>();
         currentPlayerIndex = 0;
@@ -339,4 +341,7 @@ public class Game implements Serializable {
         }
     }
 
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
 }
