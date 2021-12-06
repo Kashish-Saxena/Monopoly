@@ -174,5 +174,7 @@ public class Game {
         //String
     }
 
-
+    public ArrayList<Player> getPlayers(){
+        return players;
+    }
 }

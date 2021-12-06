@@ -298,21 +298,44 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
                 JOptionPane.showMessageDialog(new JPanel(), "The property is already owned.");
                 buy.setEnabled(false);
             } else {
-                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
-                if (code == JOptionPane.OK_OPTION) {
-                    currentPlayer.buyProperty(currentProperty);
-                    currentProperty.setOwner(currentPlayer);
-                    int propertyCost = currentProperty.getPurchasingCost();
+                if (!currentPlayer.isAI()){
+                    int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
+                    if (code == JOptionPane.OK_OPTION) {
+                        currentPlayer.buyProperty(currentProperty);
+                        currentProperty.setOwner(currentPlayer);
+                        int propertyCost = currentProperty.getPurchasingCost();
 
-                    currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                    buy.setEnabled(false);
+                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                        buy.setEnabled(false);
+                    }
                 }
+                else{
+                    AIPlayer player = (AIPlayer) currentPlayer;
+                    player.buyProperty(game, currentProperty, player.getCurrentPosition());
+                    if (player.bought() == true){
+                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " bought this property.");
+                    }
+                    else {
+                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
+                    }
+                    buy.setEnabled(false);
+                    game.passTurn();
+                    if (currentPlayer.isAI()){
+                        AIPlayer p = (AIPlayer) currentPlayer;
+                        p.aiRoll(game);
+                    }
+                }
+
             }
         });
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
             rollButton.setEnabled(true);
             game.passTurn();
+            if (currentPlayer.isAI()){
+                AIPlayer p = (AIPlayer) currentPlayer;
+                p.aiRoll(game);
+            }
             popUpFrame.setVisible(false);
             JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
             info.setFont(new Font("sans serif", Font.BOLD, 18));

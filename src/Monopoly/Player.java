@@ -115,6 +115,13 @@ public class Player {
         return currentPosition;
     }
 
+    /**
+     * Returns if the player is AI
+     * @return false
+     */
+    public boolean isAI(){
+        return false;
+    }
 
     /**
      * Compares all the values of the players
