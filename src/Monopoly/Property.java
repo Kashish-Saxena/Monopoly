@@ -179,5 +179,8 @@ public class Property {
     public void setColourSet(){
         colourSet = true;
     }
+    public int getHouseCost(){
+        return houseCost;
+    }
 
 }
