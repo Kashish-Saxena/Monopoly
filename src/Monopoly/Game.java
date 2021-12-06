@@ -1,5 +1,8 @@
 package Monopoly;
 
+import org.json.simple.parser.ParseException;
+
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
@@ -24,8 +27,7 @@ public class Game {
     /**
      * Create the game and initialise its internal map.
      */
-    public Game()
-    {
+    public Game() throws IOException {
         Board board = new Board();
         propertyList = board.getBoard();
         dice = new ArrayList<>();

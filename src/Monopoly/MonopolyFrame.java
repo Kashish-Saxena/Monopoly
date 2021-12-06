@@ -1,4 +1,6 @@
 package Monopoly;
+import org.json.simple.parser.ParseException;
+
 import javax.imageio.ImageIO;
 import javax.swing.*;
 import java.awt.*;
@@ -363,7 +365,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView {
         popUpFrame.setVisible(true);
     }
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) throws IOException, ParseException {
         Game game = new Game();
         MonopolyFrame mainFrame = new MonopolyFrame(game);
     }

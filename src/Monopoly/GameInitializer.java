@@ -34,11 +34,12 @@ public class GameInitializer {
 
             isAI = JOptionPane.showConfirmDialog(null, "Is " + name + " an AI?");
             //0 corresponds to yes button, 1 corresponds to no button
+            Player player;
             if (isAI == 0) {
-                Player player = new AIPlayer(name + " (AI)");
+                player = new AIPlayer(name + " (AI)");
                 game.addPlayer(player);
             } else {
-                Player player = new Player(name);
+                player = new Player(name);
                 game.addPlayer(player);
             }
         }
