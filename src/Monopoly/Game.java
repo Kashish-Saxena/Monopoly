@@ -16,7 +16,7 @@ public class Game implements Serializable {
     private Player currentPlayer;
     private int currentPlayerIndex;
     private int currentTurn = 1;
-	private int totalPlayers;
+	private int totalPlayers = 0;
     private int min_players = 2;
     private int max_players = 6;
     private int doubleCount;
@@ -335,6 +335,8 @@ public class Game implements Serializable {
         } catch (Exception ex) {
             ex.printStackTrace();
             return null;
+
         }
     }
+
 }
