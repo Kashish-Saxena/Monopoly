@@ -1,12 +1,12 @@
 package Monopoly;
 
-import java.io.IOException;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Game {
+public class Game implements Serializable {
 
     ArrayList<Property> propertyList;
     private ArrayList<Integer> dice;
@@ -174,5 +174,37 @@ public class Game {
         //String
     }
 
+    /**
+     * saves/serializes this Game object.
+     */
+    public void serializeGame (String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * loads/deserializes Game object.
+     */
+    public static Game deserializeGame(String filepath) {
+        try {
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Game game = (Game) objectIn.readObject();
+            objectIn.close();
+            return game;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
 }

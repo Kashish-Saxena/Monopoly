@@ -2,11 +2,13 @@ package Monopoly;
 import org.json.JSONObject;
 
 
+import java.io.*;
 import java.util.ArrayList;
 
 
-public class Board {
+public class Board implements Serializable {
     public ArrayList<Property> propertyList;
+    public ArrayList<Property> propertyList2;
 
     public Board() {
         propertyList = new ArrayList<>();
@@ -27,6 +29,48 @@ public class Board {
 
     public ArrayList<Property> getBoard(){
         return propertyList;
+    }
+
+    /**
+     * saves/serializes this BoardGUI object.
+     */
+    public void serializeBoard (String filename){
+        try {
+            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + "_game");
+            ObjectOutputStream out = new ObjectOutputStream(fileOut);
+            out.writeObject(this);
+            out.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * loads/deserializes BoardGUI object.
+     */
+    public static Board deserializeBoard(String filepath) {
+        try {
+            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ "_game");
+            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
+
+            Board board = (Board) objectIn.readObject();
+            objectIn.close();
+            return board;
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return null;
+        }
+    }
+
+    public void saveState(){
+        this.propertyList2 = propertyList;
+    }
+
+    public void loadState(){
+        propertyList = this.propertyList2;
     }
 
     static String json = "{\n" +

@@ -4,10 +4,11 @@
  * @version: October 24 2020
  */
 package Monopoly;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 
-public class Player {
+public class Player implements Serializable {
     private String playerName;
     private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;

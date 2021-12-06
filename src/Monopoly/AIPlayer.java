@@ -1,4 +1,5 @@
 package Monopoly;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Objects;
 /**
@@ -6,7 +7,7 @@ import java.util.Objects;
      * that is able to play against the human player and the user is able to create as many ai players as they want
      * @author Pareena Sumbli November 2021
      */
-public class AIPlayer extends Player {
+public class AIPlayer extends Player implements Serializable {
 
      public AIPlayer(String playerName) {
           super(playerName);

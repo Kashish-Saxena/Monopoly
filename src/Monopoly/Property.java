@@ -1,4 +1,5 @@
 package Monopoly;
+import java.io.Serializable;
 import java.util.Objects;
 /**
  * The Monopoly.Property class represents a property in the Monopoly game.
@@ -7,7 +8,7 @@ import java.util.Objects;
  * @version October 22, 2021
  */
 
-public class Property {
+public class Property implements Serializable {
 
     private final String name;
     private Player owner;
