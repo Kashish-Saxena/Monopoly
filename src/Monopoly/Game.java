@@ -8,7 +8,6 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Game implements Serializable {
 
     ArrayList<Property> propertyList;
-    private ArrayList<Integer> dice;
     private ArrayList<Player> players;
     private Player currentPlayer;
     private int currentPlayerIndex;
@@ -27,7 +26,6 @@ public class Game implements Serializable {
     public Game() throws IOException {
         Board board = new Board();
         propertyList = board.getBoard();
-        dice = new ArrayList<>();
         players = new ArrayList<>();
         views = new ArrayList<>();
         currentPlayerIndex = 0;
