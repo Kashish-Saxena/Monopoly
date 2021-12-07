@@ -1,20 +1,11 @@
 package Monopoly;
+
 import org.json.JSONObject;
-import org.json.simple.parser.JSONParser;
-import org.json.simple.parser.ParseException;
-
-
 import java.io.*;
-import java.io.File;
-import java.io.FileReader;
-import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Scanner;
-
 
 public class Board implements Serializable {
     public ArrayList<Property> propertyList;
-    public ArrayList<Property> propertyList2;
 
     public Board() {
         propertyList = new ArrayList<>();
@@ -35,48 +26,6 @@ public class Board implements Serializable {
 
     public ArrayList<Property> getBoard(){
         return propertyList;
-    }
-
-    /**
-     * saves/serializes this BoardGUI object.
-     */
-    public void serializeBoard (String filename){
-        try {
-            FileOutputStream fileOut = new FileOutputStream("saves/" + filename + ".ser");
-            ObjectOutputStream out = new ObjectOutputStream(fileOut);
-            out.writeObject(this);
-            out.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    /**
-     * loads/deserializes BoardGUI object.
-     */
-    public static Board deserializeBoard(String filepath) {
-        try {
-            FileInputStream fileIn = new FileInputStream("saves/" +filepath+ ".ser");
-            ObjectInputStream objectIn = new ObjectInputStream(fileIn);
-
-            Board board = (Board) objectIn.readObject();
-            objectIn.close();
-            return board;
-
-        } catch (Exception ex) {
-            ex.printStackTrace();
-            return null;
-        }
-    }
-
-    public void saveState(){
-        this.propertyList2 = propertyList;
-    }
-
-    public void loadState(){
-        propertyList = this.propertyList2;
     }
 
     static String json = "{\n" +

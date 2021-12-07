@@ -97,13 +97,6 @@ public class Property implements Serializable {
     }
 
     /**
-     * Returns the position of the property on the board
-     */
-    public int getPosition(){
-        return position;
-    }
-
-    /**
      * Sets the rent of the property to the specified rent
      * @param rentCost specififed rent
      */

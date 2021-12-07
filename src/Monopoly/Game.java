@@ -1,12 +1,9 @@
 package Monopoly;
 
-import javax.swing.*;
-import java.awt.*;
+
 import java.io.*;
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.concurrent.ThreadLocalRandom;
-
 
 public class Game implements Serializable {
 
@@ -72,17 +69,6 @@ public class Game implements Serializable {
 
     }
 
-    private String getPlayerList() {
-        StringBuilder playerList = new StringBuilder();
-        for (int i = 0; i < totalPlayers - 1; i++) {
-            playerList.append(players.get(i).getPlayerName()).append(" ");
-        }
-
-        playerList.append(players.get(totalPlayers - 1).getPlayerName());
-
-        return playerList.toString();
-    }
-
     public ArrayList<Property> getPropertyList() {
         return propertyList;
     }
@@ -144,10 +130,6 @@ public class Game implements Serializable {
         players.add(p);
     }
 
-    public void buyHouse(Player player, Property property){
-        //String
-    }
-
     /**
      * saves/serializes this Game object.
      */
@@ -183,10 +165,6 @@ public class Game implements Serializable {
 
     public int getCurrentPlayerIndex() {
         return currentPlayerIndex;
-    }
-
-    public ArrayList<Player> getPlayers(){
-        return players;
     }
 
     public int getDoubleCount() {

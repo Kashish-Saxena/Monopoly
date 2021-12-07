@@ -13,7 +13,6 @@ public class Player implements Serializable {
     private ArrayList<Property> properties = new ArrayList<Property>();
     public int money;
     public int currentPosition;
-    private int diceResult;
     private boolean inJail = false;
     private int JailTurn = 0;
 
@@ -76,14 +75,6 @@ public class Player implements Serializable {
     }
 
     /**
-     * Returns the dice result of the player
-     */
-    public int getDiceResults(){
-        return diceResult;
-    }
-
-
-    /**
      * returns the jail time state of the player
      * @return boolean value of if player is in jail or not.
      */
@@ -103,21 +94,6 @@ public class Player implements Serializable {
 
     public void setJailTurn(int turn) { JailTurn = turn; }
 
-    /**
-     * Updates the players position
-     * @param amount how many spaces the player moves
-     */
-    void updateCurrentPosition(int amount){
-        currentPosition += amount;
-    }
-
-    /**
-     * The String representation of Monopoly.Player
-     * @return String representation of Monopoly.Player
-     */
-    public String getPlayerState(){
-        return "Player name: " + playerName + "\nOwned Properties: \n" + getProperties().toString().replace("[", "").replace("]", "") + "\nMoney in the bank: " + money + "\nCurrent Position: " + currentPosition;
-    }
     public int getCurrentPosition(){
         return currentPosition;
     }
