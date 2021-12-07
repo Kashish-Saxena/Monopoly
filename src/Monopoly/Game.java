@@ -181,6 +181,10 @@ public class Game implements Serializable {
         }
     }
 
+    public int getCurrentPlayerIndex() {
+        return currentPlayerIndex;
+    }
+
     public ArrayList<Player> getPlayers(){
         return players;
     }

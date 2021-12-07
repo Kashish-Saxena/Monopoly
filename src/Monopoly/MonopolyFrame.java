@@ -22,6 +22,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
     JPanel moreInfo;
     JButton rollButton;
     JLabel info;
+    JFrame popUpFrame;
 
     public  MonopolyFrame(Game game) throws IOException {
         super("Monopoly");
@@ -157,60 +158,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             }
         }
     }
-
-   /* private void handleInitialSetup(){
-        String str = "";
-        String name = "";
-        int numAI = 0;
-
-        Object[] options = {"Load Game", "Start New Game"};
-        int n = JOptionPane.showOptionDialog(frame,
-                "Would you like to load an existing game or start a new one?",
-                "Monopoly", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
-                options, options[1]);
-
-        if (n == 0){
-            this.loadGame();
-        }
-
-        else {
-            while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
-
-                try {
-                    str = JOptionPane.showInputDialog("How many AI players would you like to create?");
-                    if (str != null) {
-                        numAI = Integer.parseInt(str);
-
-                    }
-                    for (int i = 1; i <= numAI; i++) {
-                        game.addPlayer(new AIPlayer("COM" + i));
-                    }
-                } catch (NumberFormatException exception) {
-                    game.setTotalPlayers(0);
-                }
-
-                try {
-                    str = JOptionPane.showInputDialog("Enter Number of Players (2-" + (6 - numAI) + "):");
-                    if (str != null) {
-                        game.setTotalPlayers(Integer.parseInt(str) + numAI);
-                    }
-                } catch (NumberFormatException exception) {
-                    game.setTotalPlayers(0);
-                }
-            }
-
-            for (int i = 0; i < (game.getTotalPlayers() - numAI) ; i++) {
-                name = "";
-                while (name == null || name.equals("")) {
-                    name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
-                }
-                Player player = new Player(name);
-                game.addPlayer(player);
-            }
-        }
-        GameInitializer gi = new GameInitializer(game);
-        gi.handleSetup();
-    }*/
 
     @Override
     public void handleMonopolyUpdate(MonopolyEvent e) {
@@ -379,6 +326,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             try {
                 propertyPopUp();
 
+
             } catch (IOException ex) {
                 ex.printStackTrace();
             }
@@ -387,9 +335,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         }
     }
 
-
     public void propertyPopUp() throws IOException{
-        JFrame popUpFrame = new JFrame("Property");
+        popUpFrame = new JFrame("Property");
         popUpFrame.setSize(500, 500);
         JPanel panel = new JPanel();
         JButton buy = new JButton();
@@ -414,43 +361,16 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         panel.add(label,BorderLayout.PAGE_START);
         panel.add(buy,BorderLayout.PAGE_START);
 
-
-        /*
         if (currentProperty.getColour().equals("none")) {
-                System.out.println("You cannot buy this property.");
-                break;
-            } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
-                System.out.println("You do not have enough funds to buy this property.");
-            } else if (!currentProperty.checkAvailability()) {
-                System.out.println("You cannot buy this property, it belongs to " + currentProperty.getOwner().getPlayerName() + ".");
-            } else {
-                System.out.printf("Are you sure you want to buy %s? Y/N\n", currentProperty.getName());
-                Scanner buyScn = new Scanner(System.in);
-                String buyAns = buyScn.nextLine();
-
-                if (buyAns.equals("Y")) {
-
-
-                    break;
-                } else if (buyAns.equals("N")) {
-                    break;
-                } else {
-                    System.out.println("Unknown answer, please try the command again.");
-                    break;
-                }
-            }
-         */
-
+            buy.setEnabled(false);
+        }
 
         buy.addActionListener(e -> {
-            if (currentProperty.getColour().equals("none")) {
-                JOptionPane.showMessageDialog(new JPanel(), "You cannot buy this property.");
+            if (!currentProperty.checkAvailability()) {
+                JOptionPane.showMessageDialog(new JPanel(), "The property is already owned by " + currentProperty.getOwner().getPlayerName() + ".");
                 buy.setEnabled(false);
             } else if (currentProperty.getPurchasingCost() > currentPlayer.getMoney()) {
                 JOptionPane.showMessageDialog(new JPanel(), "You do not have enough money to buy this property.");
-                buy.setEnabled(false);
-            } else if (!currentProperty.checkAvailability()) {
-                JOptionPane.showMessageDialog(new JPanel(), "The property is already owned.");
                 buy.setEnabled(false);
             } else {
                 int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
@@ -464,10 +384,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 buy.setEnabled(false);
                 }
             }
-
         });
-
-
 
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
@@ -476,10 +393,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             popUpFrame.setVisible(false);
             popUpFrame.dispose();
             refreshInfo();
-
-
-
         });
+
         panel.add(house,BorderLayout.EAST);
         house.addActionListener(e -> {
             if(currentProperty.getColour()=="brown"||currentProperty.getColour()=="darkblue"){
@@ -500,6 +415,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 house.setEnabled(false);
             }
         });
+
         popUpFrame.add(panel);
         popUpFrame.add(propertyPictures.get(currentPlayer.currentPosition),BorderLayout.PAGE_END);
 
@@ -510,10 +426,72 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         popUpFrame.setVisible(true);
         popUpFrame.addWindowListener(new WindowAdapter(){
             public void windowClosing(WindowEvent e){
+                popUpFrame.setVisible(false);
+                popUpFrame.dispose();
                 game.passTurn();
                 refreshInfo();
             }
         });
+
+        //Check for rent
+        Player currentOwner = currentProperty.getOwner();
+        if (currentProperty.getOwner() != null) {
+            boolean payable = true;
+
+            //if landed on utility
+            if (Objects.equals(currentProperty.getColour(), "util")) {
+                int[] dice = game.rollDice();
+                int dices = dice[0] + dice[1];
+                int util1 = dices * 4;
+                int util2 = dices * 10;
+                if (currentProperty.getColourCount(currentOwner.getProperties(), "util") == 2) {
+                    JOptionPane.showMessageDialog(new JPanel(), "This property is owned by " + currentProperty.getOwner().getPlayerName() + ".\nYou must pay the rent cost of " + util2 + ".");
+                    if (currentPlayer.getMoney() < util2) {
+                        payable = false;
+
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "You have paid the rent.");
+                        currentPlayer.setMoney(currentPlayer.getMoney() - util2);
+                        currentOwner.setMoney(currentOwner.getMoney() + util2);
+                    }
+
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "This property is owned by " + currentProperty.getOwner().getPlayerName() + ".\nYou must pay the rent cost of " + util1 + ".");
+                    if (currentPlayer.getMoney() < util1) {
+                        payable = false;
+
+                    } else {
+                        JOptionPane.showMessageDialog(new JPanel(), "You have paid the rent.");
+                        currentPlayer.setMoney(currentPlayer.getMoney() - util1);
+                        currentOwner.setMoney(currentOwner.getMoney() + util1);
+                    }
+                }
+            //if did not land on utility
+            } else {
+                JOptionPane.showMessageDialog(new JPanel(), "This property is owned by " + currentProperty.getOwner().getPlayerName() + ".\nYou must pay the rent cost of " + currentProperty.getRentCost() + ".");
+
+                if (currentPlayer.getMoney() < currentProperty.getRentCost()) {
+                   payable = false;
+
+                } else {
+                    JOptionPane.showMessageDialog(new JPanel(), "You have paid the rent.");
+                    currentPlayer.setMoney(currentPlayer.getMoney() - currentProperty.getRentCost());
+                    currentOwner.setMoney(currentOwner.getMoney() + currentProperty.getRentCost());
+                }
+            }
+            //if cannot afford the rent cost
+            if (!payable) {
+                payable = true;
+                JOptionPane.showMessageDialog(new JPanel(), "You cannot afford the rent.\nYou have paid what you could and gone bankrupt.");
+                currentOwner.setMoney(currentOwner.getMoney() + currentPlayer.getMoney());
+                currentPlayer.setMoney(0);
+                game.goBankrupt(currentPlayer);
+                JOptionPane.showMessageDialog(new JPanel(), currentOwner.getPlayerName() + " lost the game!");
+                game.passTurn();
+                refreshInfo();
+            }
+        }
+
 
         if (currentPlayer.isAI()) {
             AIPlayer player = (AIPlayer) currentPlayer;
@@ -524,14 +502,9 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             else {
                 JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
             }
-            buy.setEnabled(false);
-            popUpFrame.setVisible(false);
-            popUpFrame.dispose();
-            game.passTurn();
-            refreshInfo();
         }
-
     }
+
     public void refreshInfo(){
         JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
         info.setFont(new Font("sans serif", Font.BOLD, 18));
@@ -545,7 +518,6 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         rollButton.setEnabled(true);
 
     }
-
 
     /**
      * save current game.
@@ -580,6 +552,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         //loadedBoard.loadState();//telling board to load its non-static fields that were saved back into the original static fields
 
         game = loadedGame;
+        game.setCurrentPlayer(game.getCurrentPlayerIndex());
         //boardGUI = loadedBoard;
 
         //info.setText(game.getCurrentPlayer().getPlayerName() + "'s turn");
