@@ -10,7 +10,7 @@ public class GameInitializer {
     public GameInitializer(Game game) {
         this.game = game;
     }
-
+/*
     public void handleSetup() {
         String str = "";
         while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
@@ -42,6 +42,6 @@ public class GameInitializer {
                 game.addPlayer(player);
             }
         }
-    }
+    }*/
 
 }
