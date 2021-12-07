@@ -48,117 +48,7 @@ public class Game implements Serializable {
         }
     }
 
-    public void processRoll() {
-        this.setCurrentPlayer(currentPlayerIndex);
-        int[] dices = this.rollDice();
-        int diceRoll = dices[0] + dices[1];
-        //if player in jail
-        if (currentPlayer.getJail()) {
-            currentPlayer.setJailTurn(currentPlayer.getJailTurn() + 1);
 
-            Object[] options = {"Pay $50", "Roll"};
-
-            int input = JOptionPane.showOptionDialog(new JFrame(), "You may pay $50 to get out. " +
-                            "Also, you may roll once per turn until you find doubles," +
-                            " however after three turns you must pay the $50 fine. \n You are at turn " + currentPlayer.getJailTurn() + ".", "You are in jail!",
-                    JOptionPane.YES_NO_OPTION, JOptionPane.PLAIN_MESSAGE, null, options, options[1]);
-
-            //if player agrees to pay the 50$ fine
-            if (input == JOptionPane.YES_OPTION) {
-                if (currentPlayer.getMoney() < 50) {
-                    JOptionPane.showMessageDialog(new JFrame(), "You do not have enough money to pay the fine.");
-                    input = JOptionPane.NO_OPTION;
-                } else {
-                    currentPlayer.setMoney(currentPlayer.getMoney() - 50);
-                    JOptionPane.showMessageDialog(new JFrame(), "You are out of jail!");
-                    currentPlayer.setJailTurn(0);
-                    currentPlayer.setJail(false);
-                }
-            }
-
-            //if player does not pay the fine or does not have enough money to pay for it
-            if (input == JOptionPane.NO_OPTION) {
-
-
-                //if doubles
-                if (dices[0] == dices[1]) {
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ". You are out of jail!");
-                    currentPlayer.setJail(false);
-                    this.move(diceRoll);
-
-                //if not doubles
-                } else {
-
-                    //if player does not have enough money to pay for it, and it has been three turns
-                    if (currentPlayer.getMoney() < 50 && currentPlayer.getJailTurn() == 3) {
-                        JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou do not have sufficient funds to pay for the fine.\nYou have gone bankrupt and lost the game!");
-                        this.goBankrupt(currentPlayer);
-                        this.passTurn();
-                    }
-                    else if (currentPlayer.getMoney() >= 50 && currentPlayer.getJailTurn() == 3) {
-                        JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou have automatically paid the $50 fine.\nYou are out of jail!");
-                        currentPlayer.setJail(false);
-                        this.move(diceRoll);
-                    }
-
-                    //if player has enough money to pay for it, and it has been three turns
-                    else {
-                        JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou are not out of jail. Passing your turn.");
-                        this.passTurn();
-                        /*
-                        JLabel info = new JLabel("Current Player: "+ this.getCurrentPlayer().getPlayerName());
-                        JLabel money = new JLabel("This player has "+ this.getCurrentPlayer().getMoney()+" dollars!");
-                        JLabel more = new JLabel("This player owns: "+ this.getCurrentPlayer().getProperties());
-                        startingInfo.removeAll();
-                        startingInfo.add(info);
-                        startingInfo.add(money);
-                        startingInfo.add(more, BorderLayout.EAST);
-                        startingInfo.revalidate();
-                        startingInfo.repaint();
-                        SwingUtilities.updateComponentTreeUI(frame);*/
-                    }
-                }
-            }
-
-        //if player not in jail
-        } else if (!currentPlayer.getJail()) {
-            boolean doubles = false;
-
-
-            //if not doubles
-            if (!(dices[0] == dices[1])) {
-               mf.rollButton.setEnabled(false);
-            //if doubles
-            } else {
-                doubles = true;
-                mf.rollButton.setEnabled(true);
-            }
-
-            //if rolled two doubles before this double
-            if (doubleCount == 2 && doubles) {
-                doubleCount = 0;
-                JOptionPane.showMessageDialog(new JFrame(), "You have rolled three doubles in a row. You are going to jail for speeding.");
-                currentPlayer.currentPosition = 10;
-                currentPlayer.setJail(true);
-
-            //if not double OR if player didn't roll 2 doubles before this double
-            } else {
-
-                //if double
-                if (doubles) {
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + "). They are doubles! You may roll again.");
-                    doubleCount++;
-
-                //if not double
-                } else {
-                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + ").");
-                    doubleCount = 0;
-                }
-
-                this.move(diceRoll);
-            }
-        }
-    }
 
     /**
      * Returns the current player from the players list
@@ -197,42 +87,6 @@ public class Game implements Serializable {
         return propertyList;
     }
 
-    public void move(int diceRoll) {
-
-        //move player to new position
-        int startingPos = currentPlayer.currentPosition;
-        int endingPos = startingPos + diceRoll;
-
-        //if player reaches the last tile (before looping back)
-        if (endingPos > 39) {
-            int placesBefore39 = 39 - startingPos;
-            currentPlayer.currentPosition = (diceRoll - placesBefore39) - 1;
-            JOptionPane.showMessageDialog(new JFrame(), "You passed on GO! You have received $200");
-            currentPlayer.setMoney(currentPlayer.getMoney() + 200);
-
-            //if player doesn't reach last tile
-        } else {
-            currentPlayer.currentPosition = startingPos + diceRoll;
-        }
-
-        //if player lands on go to jail tile
-        if (currentPlayer.currentPosition == 30) {
-            JOptionPane.showMessageDialog(new JFrame(), "You landed on the go to jail square! You are going to jail.");
-            currentPlayer.currentPosition = 10;
-            currentPlayer.setJail(true);
-
-            //if player lands on anything else
-        } else {
-            try {
-                mf.propertyPopUp();
-
-            } catch (IOException ex) {
-                ex.printStackTrace();
-            }
-
-            //Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-        }
-    }
 
     public void passTurn() {
         currentPlayerIndex++;
@@ -244,7 +98,7 @@ public class Game implements Serializable {
         System.out.println("Turn " + currentTurn + ". It is "+ currentPlayer.getPlayerName() + "'s turn.");
     }
 
-    private void goBankrupt(Player player) {
+    public void goBankrupt(Player player) {
         for (int i = 0; i < player.getProperties().size(); i++) {
             player.getProperties().get(i).removeOwner();
             players.remove(player);
@@ -329,5 +183,13 @@ public class Game implements Serializable {
 
     public ArrayList<Player> getPlayers(){
         return players;
+    }
+
+    public int getDoubleCount() {
+        return doubleCount;
+    }
+
+    public void setDoubleCount(int count) {
+        doubleCount = count;
     }
 }
