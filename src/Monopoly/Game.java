@@ -10,7 +10,7 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game implements Serializable {
 
-    MonopolyFrame mf = new MonopolyFrame(this);
+    //MonopolyFrame mf = new MonopolyFrame(this);
     ArrayList<Property> propertyList;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
@@ -128,11 +128,11 @@ public class Game implements Serializable {
 
             //if not doubles
             if (!(dices[0] == dices[1])) {
-                mf.rollButton.setEnabled(false);
+               //mf.rollButton.setEnabled(false);
             //if doubles
             } else {
                 doubles = true;
-                mf.rollButton.setEnabled(true);
+                //mf.rollButton.setEnabled(true);
             }
 
             //if rolled two doubles before this double
@@ -147,12 +147,12 @@ public class Game implements Serializable {
 
                 //if double
                 if (doubles) {
-                    JOptionPane.showMessageDialog(mf.frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + "). They are doubles! You may roll again.");
+                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + "). They are doubles! You may roll again.");
                     doubleCount++;
 
                 //if not double
                 } else {
-                    JOptionPane.showMessageDialog(mf.frame, "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + ").");
+                    JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + " (" + diceRoll + ").");
                     doubleCount = 0;
                 }
 
@@ -217,7 +217,7 @@ public class Game implements Serializable {
             currentPlayer.setJail(true);
 
             //if player lands on anything else
-        } else {
+        } /*else {
             try {
                 mf.propertyPopUp();
 
@@ -226,7 +226,7 @@ public class Game implements Serializable {
             }
 
             //Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-        }
+        }*/
     }
 
     public void passTurn() {
