@@ -10,7 +10,6 @@ import java.util.concurrent.ThreadLocalRandom;
 
 public class Game implements Serializable {
 
-    //MonopolyFrame mf = new MonopolyFrame(this);
     ArrayList<Property> propertyList;
     private ArrayList<Integer> dice;
     private ArrayList<Player> players;
@@ -50,7 +49,7 @@ public class Game implements Serializable {
     }
 
     public void processRoll() {
-        Player currentPlayer = this.getCurrentPlayer();
+        this.setCurrentPlayer(currentPlayerIndex);
         int[] dices = this.rollDice();
         int diceRoll = dices[0] + dices[1];
         //if player in jail
@@ -128,11 +127,11 @@ public class Game implements Serializable {
 
             //if not doubles
             if (!(dices[0] == dices[1])) {
-               //mf.rollButton.setEnabled(false);
+               mf.rollButton.setEnabled(false);
             //if doubles
             } else {
                 doubles = true;
-                //mf.rollButton.setEnabled(true);
+                mf.rollButton.setEnabled(true);
             }
 
             //if rolled two doubles before this double
@@ -168,6 +167,11 @@ public class Game implements Serializable {
         return players.get(currentPlayerIndex);
     }
 
+    public void setCurrentPlayer(int playerIndex) {
+        currentPlayer = players.get(playerIndex);
+        currentPlayerIndex = playerIndex;
+    }
+
     int[] rollDice() {
         int[] dices = new int[2];
         int dice1 = ThreadLocalRandom.current().nextInt(1, 7);
@@ -194,6 +198,7 @@ public class Game implements Serializable {
     }
 
     public void move(int diceRoll) {
+
         //move player to new position
         int startingPos = currentPlayer.currentPosition;
         int endingPos = startingPos + diceRoll;
@@ -217,7 +222,7 @@ public class Game implements Serializable {
             currentPlayer.setJail(true);
 
             //if player lands on anything else
-        } /*else {
+        } else {
             try {
                 mf.propertyPopUp();
 
@@ -226,15 +231,15 @@ public class Game implements Serializable {
             }
 
             //Property currentProperty = game.getPropertyList().get(currentPlayer.currentPosition);
-        }*/
+        }
     }
 
     public void passTurn() {
         currentPlayerIndex++;
-        if (currentPlayerIndex >= totalPlayers){
+        if (currentPlayerIndex >= totalPlayers) {
             currentPlayerIndex = 0;
         }
-        currentPlayer = players.get(currentPlayerIndex);
+        this.setCurrentPlayer(currentPlayerIndex);
         currentTurn++;
         System.out.println("Turn " + currentTurn + ". It is "+ currentPlayer.getPlayerName() + "'s turn.");
     }
@@ -247,25 +252,6 @@ public class Game implements Serializable {
         }
     }
 
-    /**
-     * Sets the player starting the game based on their roll results
-     * value 0 if x == y; a value less than 0 if x < y; and a value greater than 0 if x > y
-     */
-    /*
-    private void setPlayerOrder(){
-        for (int i=0; i<players.size();i++){
-            // i < i+1
-            if (compareDiceRolls(players.get(i), players.get(i+1)) < 0) {
-                Collections.swap(players, i, i + 1);
-                currentPlayer = players.get(i);
-                break;
-            }
-            else
-                // i > i+1
-                currentPlayer = players.get(i);
-        }
-    }
-    */
 
     /**
      * Returns the total number of players

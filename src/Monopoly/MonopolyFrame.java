@@ -25,10 +25,11 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         super("Monopoly");
 
         this.game = game;
+
         propertyPictures = new ArrayList<>();
 
-
         handleInitialSetup();
+
 
         boardGUI = new BoardGUI(game.getTotalPlayers());
 
@@ -109,9 +110,50 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
 
 
     }
+
     private void handleInitialSetup(){
-        GameInitializer gi = new GameInitializer(game);
-        gi.handleSetup();
+        String str = "";
+
+        Object[] options = {"Load Game", "Start New Game"};
+        int n = JOptionPane.showOptionDialog(new JFrame(),
+                "Would you like to load an existing game or start a new one?",
+                "Monopoly", JOptionPane.YES_NO_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE, null,
+                options, options[1]);
+
+        if (n == 0){
+            loadGame();
+        }
+        else{
+            while (!(game.getTotalPlayers() >= game.getMinPlayers() && game.getTotalPlayers() <= game.getMaxPlayers())) {
+                try {
+                    str = JOptionPane.showInputDialog("Enter Number of Players (2-6):");
+                    if (str != null) { //cannot cancel a player number choice
+                        game.setTotalPlayers(Integer.parseInt(str));
+                    }
+                } catch (NumberFormatException excp) {
+                    game.setTotalPlayers(0);
+                }
+            }
+
+            String name = "";
+            int isAI = 0;
+            for (int i = 0; i < game.getTotalPlayers(); i++) {
+                name = "";
+                while (name == null || name.equals("")) {
+                    name = JOptionPane.showInputDialog("Enter Player " + (i + 1) + "'s name:");
+                }
+
+                isAI = JOptionPane.showConfirmDialog(null, "Is " + name + " an AI?");
+                //0 corresponds to yes button, 1 corresponds to no button
+                if (isAI == 0) {
+                    Player player = new AIPlayer(name + " (AI)");
+                    game.addPlayer(player);
+                } else {
+                    Player player = new Player(name);
+                    game.addPlayer(player);
+                }
+            }
+        }
     }
 
    /* private void handleInitialSetup(){
