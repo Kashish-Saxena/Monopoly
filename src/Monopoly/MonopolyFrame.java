@@ -4,6 +4,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
@@ -300,17 +302,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                     else {
                         JOptionPane.showMessageDialog(new JFrame(), "You have rolled " + dices[0] + " and " + dices[1] + ".\nYou are not out of jail. Passing your turn.");
                         game.passTurn();
-                        /*
-                        JLabel info = new JLabel("Current Player: "+ this.getCurrentPlayer().getPlayerName());
-                        JLabel money = new JLabel("This player has "+ this.getCurrentPlayer().getMoney()+" dollars!");
-                        JLabel more = new JLabel("This player owns: "+ this.getCurrentPlayer().getProperties());
-                        startingInfo.removeAll();
-                        startingInfo.add(info);
-                        startingInfo.add(money);
-                        startingInfo.add(more, BorderLayout.EAST);
-                        startingInfo.revalidate();
-                        startingInfo.repaint();
-                        SwingUtilities.updateComponentTreeUI(frame);*/
+
                     }
                 }
             }
@@ -488,18 +480,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             rollButton.setEnabled(true);
             game.passTurn();
             popUpFrame.setVisible(false);
-            JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
-            info.setFont(new Font("sans serif", Font.BOLD, 18));
-            JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
-            JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
-            startingInfo.removeAll();
-            startingInfo.add(info);
-            //startingInfo.add(money);
-            //startingInfo.add(more,BorderLayout.EAST);
-            startingInfo.revalidate();
-            startingInfo.repaint();
-            SwingUtilities.updateComponentTreeUI(frame);
-
+            refreshInfo();
 
 
 
@@ -532,7 +513,28 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         //frame.setDefaultCloseOperation(frame.EXIT_ON_CLOSE);
         popUpFrame.pack();
         popUpFrame.setVisible(true);
+        popUpFrame.addWindowListener(new WindowAdapter(){
+            public void windowClosing(WindowEvent e){
+                game.passTurn();
+                refreshInfo();
+            }
+        });
+
+
     }
+    public void refreshInfo(){
+        JLabel info = new JLabel("Current Player: "+ game.getCurrentPlayer().getPlayerName());
+        info.setFont(new Font("sans serif", Font.BOLD, 18));
+        JLabel money = new JLabel("This player has "+game.getCurrentPlayer().getMoney()+" dollars!");
+        JLabel more = new JLabel("This player owns: "+game.getCurrentPlayer().getProperties());
+        startingInfo.removeAll();
+        startingInfo.add(info);
+        startingInfo.revalidate();
+        startingInfo.repaint();
+        SwingUtilities.updateComponentTreeUI(frame);
+        rollButton.setEnabled(true);
+    }
+
 
     /**
      * save current game.

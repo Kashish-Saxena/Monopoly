@@ -162,7 +162,7 @@ public class Property implements Serializable {
         }
     }
     public void buyHotel(int housesOnProperty){
-        if(housesOnProperty ==4){
+        if(housesOnProperty == 4){
             setRentCost(getRentCost()*2);
         }
     }
