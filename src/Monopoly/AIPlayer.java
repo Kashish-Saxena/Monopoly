@@ -49,7 +49,7 @@
          }*/
 
          public void buyProperty(Game game, Property property, int currentPlayerIndex) {
-             if (property.checkAvailability() == true && this.getMoney() >= property.getPurchasingCost()){
+             if (property.checkAvailability() == true && this.getMoney() >= property.getPurchasingCost() && !property.getColour().equals("none")){
                  property.setOwner(this);
                  this.getProperties().add(property);
                  this.setMoney(this.getMoney() - property.getPurchasingCost());
@@ -57,7 +57,6 @@
              }
              else{
                  bought = false;
-                 game.passTurn();
              }
          }
 

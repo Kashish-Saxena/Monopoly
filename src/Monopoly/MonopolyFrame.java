@@ -101,7 +101,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         frame.add(rightPanel, BorderLayout.PAGE_END);
         frame.add(infoPanel,BorderLayout.EAST);
         //frame.add(moreInfo,BorderLayout.EAST);
-        frame.setSize(1000, 800);
+        frame.setSize(1500, 1000);
         frame.setBackground(Color.lightGray);
 
         frame.setVisible(true);
@@ -371,6 +371,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             JOptionPane.showMessageDialog(new JFrame(), "You landed on the go to jail square! You are going to jail.");
             currentPlayer.currentPosition = 10;
             currentPlayer.setJail(true);
+            game.passTurn();
+            refreshInfo();
 
             //if player lands on anything else
         } else {
@@ -438,6 +440,8 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 }
             }
          */
+
+
         buy.addActionListener(e -> {
             if (currentProperty.getColour().equals("none")) {
                 JOptionPane.showMessageDialog(new JPanel(), "You cannot buy this property.");
@@ -449,37 +453,28 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 JOptionPane.showMessageDialog(new JPanel(), "The property is already owned.");
                 buy.setEnabled(false);
             } else {
-                if (!currentPlayer.isAI()){
-                    int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
-                    if (code == JOptionPane.OK_OPTION) {
-                        currentPlayer.buyProperty(currentProperty);
-                        currentProperty.setOwner(currentPlayer);
-                        int propertyCost = currentProperty.getPurchasingCost();
+                int code = JOptionPane.showConfirmDialog(frame, "Are you sure you would like to buy this property?");
 
-                        currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
-                        buy.setEnabled(false);
-                    }
-                }
-                else{
-                    AIPlayer player = (AIPlayer) currentPlayer;
-                    player.buyProperty(game, currentProperty, player.getCurrentPosition());
-                    if (player.bought()){
-                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " bought this property.");
-                    }
-                    else {
-                        JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
-                    }
-                    buy.setEnabled(false);
-                }
+                if (code == JOptionPane.OK_OPTION) {
+                currentPlayer.buyProperty(currentProperty);
+                currentProperty.setOwner(currentPlayer);
+                int propertyCost = currentProperty.getPurchasingCost();
 
+                currentPlayer.setMoney(currentPlayer.getMoney() - propertyCost);
+                buy.setEnabled(false);
+                }
             }
 
         });
+
+
+
         panel.add(pass,BorderLayout.AFTER_LAST_LINE);
         pass.addActionListener(e -> {
             rollButton.setEnabled(true);
             game.passTurn();
             popUpFrame.setVisible(false);
+            popUpFrame.dispose();
             refreshInfo();
 
 
@@ -520,6 +515,21 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
             }
         });
 
+        if (currentPlayer.isAI()) {
+            AIPlayer player = (AIPlayer) currentPlayer;
+            player.buyProperty(game, currentProperty, player.getCurrentPosition());
+            if (player.bought()){
+                JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " bought this property.");
+            }
+            else {
+                JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " did not buy this property.");
+            }
+            buy.setEnabled(false);
+            popUpFrame.setVisible(false);
+            popUpFrame.dispose();
+            game.passTurn();
+            refreshInfo();
+        }
 
     }
     public void refreshInfo(){
@@ -533,6 +543,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
         startingInfo.repaint();
         SwingUtilities.updateComponentTreeUI(frame);
         rollButton.setEnabled(true);
+
     }
 
 
