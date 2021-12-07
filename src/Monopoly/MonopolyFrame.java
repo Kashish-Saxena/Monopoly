@@ -471,7 +471,7 @@ public class MonopolyFrame extends JFrame implements MonopolyView, Serializable 
                 else{
                     AIPlayer player = (AIPlayer) currentPlayer;
                     player.buyProperty(game, currentProperty, player.getCurrentPosition());
-                    if (player.bought() == true){
+                    if (player.bought()){
                         JOptionPane.showMessageDialog(new JPanel(), player.getPlayerName() + " bought this property.");
                     }
                     else {
